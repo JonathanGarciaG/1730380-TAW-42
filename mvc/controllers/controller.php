@@ -114,8 +114,8 @@
 
 		//LISTA DE METODOS DE MODELOS A DESARROLLAR
 		/*
-		1. registroUsuarioModel
-		2. ingresarUsuarioModel
+		1. registroUsuarioModel --ok
+		2. ingresarUsuarioModel --ok
 		3. vistaUsuarioModel
 		4. editarUsuarioModel
 		5. actualizarUsuarioModel
