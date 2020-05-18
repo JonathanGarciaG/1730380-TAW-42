@@ -116,11 +116,11 @@
 		/*
 		1. registroUsuarioModel --ok
 		2. ingresarUsuarioModel --ok
-		3. vistaUsuarioModel
-		4. editarUsuarioModel
-		5. actualizarUsuarioModel
-		6. borrarUsuarioModel
-		3. actualizarUsuarioModel
+		3. vistaUsuarioModel --ok
+		4. editarUsuarioModel --ok
+		5. actualizarUsuarioModel --ok
+		6. borrarUsuarioModel --ok
+		3. actualizarUsuarioModel --ok
 		*/
 	}
 
