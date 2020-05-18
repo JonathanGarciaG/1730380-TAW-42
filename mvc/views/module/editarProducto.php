@@ -15,9 +15,9 @@
 <H1>EDITAR USUARIO</H1>
 <form method="POST">
 	<?php
-		//se llama al controlador para ejecutar la vista del formulario para editar y el metodo para detectar la actualizacion
+	//se llama al controlador para ejecutar la vista del formulario para editar y el metodo para detectar la actualizacion
 		$editarUsuario = new MvcController();
-		$editarUsuario -> editarUsuarioController();
-		$editarUsuario -> actualizarUsuarioController();
+		$editarUsuario -> editarProductoController();
+		$editarUsuario -> actualizarProductoController();
 	?>
 </form>

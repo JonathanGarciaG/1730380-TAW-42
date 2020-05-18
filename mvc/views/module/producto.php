@@ -7,36 +7,39 @@
 		exit();
 	}
 
-//se llama al controlador para llamar a la vista de la tabla y el metodo para detectar el borrar
+	//se llama al controlador para llamar a la vista de la tabla y el metodo para detectar el borrar
 	$vistaUsuario = new MvcController();
-	$vistaUsuario -> borrarUsuarioController();
+	$vistaUsuario -> borrarProductoController();
 
 ?>
 <br>
 <br>
 <br>
 
-<H1>USUARIOS</H1>
+<H1>PRODUCTOS</H1>
 
 <TABLE class="table-bordered table-primary">
 	<thead>
 		<tr>
-			<th>Usuario</th>
-			<th>Contraseña</th>
-			<th>Email</th>
+			<th>Nombre</th>
+			<th>Descripcion</th>
+			<th>Precio de venta</th>
+			<th>Precio de compra</th>
+			<th>Inventario</th>
 			<th>¿Editar?</th>
 			<th>¿Eliminar?</th>
 		</tr>
 	</thead>
 	<tbody>
 		<?php
-			$vistaUsuario -> vistaUsuariosController();
+		//vista de los datos de la tabla
+			$vistaUsuario -> vistaProductosController();
 		?>
 	</tbody>
 </TABLE>
 <?php
 	if (isset($_GET["action"])) {
-		if ($_GET["action"] == "cambio") {
+		if ($_GET["action"] == "cambioproduct") {
 			echo "<h4>Cambio exitoso</h4>";
 		}
 	}
