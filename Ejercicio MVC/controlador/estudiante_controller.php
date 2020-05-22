@@ -40,6 +40,24 @@
             include_once('vistas/footer.php');
         }
 
+        //mostar la vista de universidades
+        function universidades(){
+            $query=$this->model_e->getU();
+
+            include_once('vistas/header.php');
+            include_once('vistas/universidades.php');
+            include_once('vistas/footer.php');
+        }
+
+        //mostar la vista de universidades
+        function registrarUniversidades(){
+            $query=$this->model_e->getU();
+
+            include_once('vistas/header.php');
+            include_once('vistas/registrarUniversidad.php');
+            include_once('vistas/footer.php');
+        }
+
         //metodo para mostrar el formulario del estudiante y consultar los datos del estudiante mediante su id si se trata de una modificacion de registro
         function estudiante(){
             $data=NULL;
@@ -76,6 +94,28 @@
             }
             
             header("Location:index.php");
+
+        }
+
+        //metodo para insertar y modificar datos
+        function get_datosU(){
+
+            //se obtienen los datos del formulario
+            $data['id']=$_REQUEST['txt_id'];
+            $data['nombre']=$_REQUEST['txt_nombre'];
+
+            //Se verifica si el id esta vacio de ser asi se identifica como una creacion de registro
+            if ($_REQUEST['id']=="") {
+                //se inserta nuevo registro con los datos del formulario con el metodo del modelo create();
+                $this->model_e->createU($data);
+            }
+            //Se verifica si el id no esta vacio de ser asi se identifica como una modificacion del registro y por lo tanto se toma el id del registro a modificar
+            if($_REQUEST['id']!=""){
+                $date=$_REQUEST['id'];
+                $this->model_e->updateU($data,$date);
+            }
+            
+            header("Location:index.php?m=universidades");
 
         }
 
@@ -123,6 +163,26 @@
 
             if ($_REQUEST['id']!=0) {
                $data=$this->model_e->get_id($_REQUEST['id']);
+            }
+
+            if ($_REQUEST['id']==0) {
+                $date['id']=$_REQUEST['txt_id'];
+                $this->model_e->delete($date['id']);
+                header("Location:index.php");
+            }
+
+            include_once('vistas/header.php');
+            include_once('vistas/confirm.php');
+            include_once('vistas/footer.php');
+        }
+
+        //metodo del controlador para confirmar la eliminacion del registro de universidades y llamar al modelo para realizar una sentencia delete
+        function confirmarDeleteU(){
+
+            $data=NULL;
+
+            if ($_REQUEST['id']!=0) {
+               $data=$this->model_e->get_idU($_REQUEST['id']);
             }
 
             if ($_REQUEST['id']==0) {

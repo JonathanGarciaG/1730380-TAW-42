@@ -22,8 +22,14 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li class="active"><a href="index.php?m=estudiante">Nuevo registro</a></li>
-              <li class="dropdown">
-                <a href="index.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Listar <span class="caret"></span></a>
+              <li>
+                <a href="index.php?m=universidades" role="button" aria-haspopup="true" aria-expanded="false">Universidades</span></a>
+              </li>
+              <li>
+                <a href="index.php?m=carreras" role="button" aria-haspopup="true" aria-expanded="false">Carreras</span></a>
+              </li>
+              <li>
+                <a href="index.php" role="button" aria-haspopup="true" aria-expanded="false">Listar</span></a>
               </li>
                 <li>
                   <a href="index.php?m=salir">Salir</a>
