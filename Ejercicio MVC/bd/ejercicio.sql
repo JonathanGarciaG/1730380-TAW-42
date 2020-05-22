@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 22-05-2020 a las 09:24:10
+-- Tiempo de generación: 22-05-2020 a las 15:38:47
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.2
 
@@ -25,6 +25,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `carreras`
+--
+
+CREATE TABLE `carreras` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `id_universidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `estudiante`
 --
 
@@ -35,6 +47,7 @@ CREATE TABLE `estudiante` (
   `apellidos` varchar(100) NOT NULL,
   `promedio` varchar(100) NOT NULL,
   `edad` varchar(100) NOT NULL,
+  `id_universidad_carrera` int(11) NOT NULL,
   `fecha` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -42,9 +55,20 @@ CREATE TABLE `estudiante` (
 -- Volcado de datos para la tabla `estudiante`
 --
 
-INSERT INTO `estudiante` (`id`, `cedula`, `nombre`, `apellidos`, `promedio`, `edad`, `fecha`) VALUES
-(1, '1730380', 'Jonathan', 'Garcia Gonzalez', '8.31', '22', '2021-05-21'),
-(5, '01010101010', 'demo2', 'demo2', '9.99', '23', '2021-09-16');
+INSERT INTO `estudiante` (`id`, `cedula`, `nombre`, `apellidos`, `promedio`, `edad`, `id_universidad_carrera`, `fecha`) VALUES
+(1, '1730380', 'Jonathan', 'Garcia Gonzalez', '8.31', '22', 0, '2021-05-21'),
+(5, '01010101010', 'demo2', 'demo2', '9.99', '23', 0, '2020-09-16');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `universidades`
+--
+
+CREATE TABLE `universidades` (
+  `id` int(11) NOT NULL,
+  `nombre` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -74,9 +98,21 @@ INSERT INTO `usuarios` (`id`, `usuario`, `contraseña`, `email`) VALUES
 --
 
 --
+-- Indices de la tabla `carreras`
+--
+ALTER TABLE `carreras`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `universidades`
+--
+ALTER TABLE `universidades`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -90,10 +126,22 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `carreras`
+--
+ALTER TABLE `carreras`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `universidades`
+--
+ALTER TABLE `universidades`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
