@@ -18,13 +18,13 @@
             //Se define el tipo de form con el metodo que se requiere
             // form para crear registro, se llama al metodo get_datosE para decidir el registro o la modificacion de los datos
             if (!isset($data)){ ?>
-                <form action="index.php?m=getDatosU" method="post">
+                <form action="index.php?m=get_datosU" method="post">
             <?php } ?>
             <?php 
             //form para modigicar un registro, se envia el parametro el id del registro que se desea modificar
             if (isset($data['id']))
                 if($data['id']!=""){ ?>
-            <form action="index.php?m=getDatosU&id=<?php echo $data['id'];?>" method="post">
+            <form action="index.php?m=get_datosU&id=<?php echo $data['id'];?>" method="post">
             <?php } ?>
                 <div class="form-group">
                     <label class=" col-sm-2 control-label" for="txt_nombre">NOMBRE:</label>

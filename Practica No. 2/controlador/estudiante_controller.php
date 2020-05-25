@@ -49,12 +49,36 @@
             include_once('vistas/footer.php');
         }
 
-        //mostar la vista de universidades
-        function registrarUniversidades(){
-            $query=$this->model_e->getU();
+        //mostar la vista de carreras
+        function carreras(){
+            $query=$this->model_e->getC();
 
             include_once('vistas/header.php');
+            include_once('vistas/carreras.php');
+            include_once('vistas/footer.php');
+        }
+
+        //mostar la vista de universidades
+        function registrarUniversidades(){
+            $data=NULL;
+            if(isset($_REQUEST['id'])){
+                $data=$this->model_e->get_idU($_REQUEST['id']);    
+            }
+            $query=$this->model_e->getU();
+            include_once('vistas/header.php');
             include_once('vistas/registrarUniversidad.php');
+            include_once('vistas/footer.php');
+        }
+
+        //mostar la vista de universidades
+        function registrarCarrera(){
+            $data=NULL;
+            if(isset($_REQUEST['id'])){
+                $data=$this->model_e->get_idC($_REQUEST['id']);   
+            }
+            $query=$this->model_e->getU();
+            include_once('vistas/header.php');
+            include_once('vistas/registrarCarrera.php');
             include_once('vistas/footer.php');
         }
 
@@ -64,13 +88,13 @@
             if(isset($_REQUEST['id'])){
                 $data=$this->model_e->get_id($_REQUEST['id']);    
             }
-            $query=$this->model_e->get();
+            $query=$this->model_e->getC();
             include_once('vistas/header.php');
             include_once('vistas/estudiante.php');
             include_once('vistas/footer.php');
         }
 
-        //metodo para insertar y modificar datos
+        //metodo para insertar y modificar datos - estudiantes
         function get_datosE(){
 
             //se obtienen los datos del formulario
@@ -81,6 +105,7 @@
             $data['promedio']=$_REQUEST['txt_promedio'];
             $data['edad']=$_REQUEST['txt_edad'];
             $data['fecha']=$_REQUEST['txt_fecha'];
+            $data['carrera']=$_REQUEST['txt_carrera'];
 
             //Se verifica si el id esta vacio de ser asi se identifica como una creacion de registro
             if ($_REQUEST['id']=="") {
@@ -97,7 +122,7 @@
 
         }
 
-        //metodo para insertar y modificar datos
+        //metodo para insertar y modificar datos - universidades
         function get_datosU(){
 
             //se obtienen los datos del formulario
@@ -116,6 +141,29 @@
             }
             
             header("Location:index.php?m=universidades");
+
+        }
+
+        //metodo para insertar y modificar datos - carreras
+        function get_datosC(){
+
+            //se obtienen los datos del formulario
+            $data['id']=$_REQUEST['txt_id'];
+            $data['nombre']=$_REQUEST['txt_nombre'];
+            $data['universidad']=$_REQUEST['txt_universidad'];
+
+            //Se verifica si el id esta vacio de ser asi se identifica como una creacion de registro
+            if ($_REQUEST['id']=="") {
+                //se inserta nuevo registro con los datos del formulario con el metodo del modelo create();
+                $this->model_e->createC($data);
+            }
+            //Se verifica si el id no esta vacio de ser asi se identifica como una modificacion del registro y por lo tanto se toma el id del registro a modificar
+            if($_REQUEST['id']!=""){
+                $date=$_REQUEST['id'];
+                $this->model_e->updateC($data,$date);
+            }
+            
+            header("Location:index.php?m=carreras");
 
         }
 
@@ -187,8 +235,28 @@
 
             if ($_REQUEST['id']==0) {
                 $date['id']=$_REQUEST['txt_id'];
-                $this->model_e->delete($date['id']);
-                header("Location:index.php");
+                $this->model_e->deleteU($date['id']);
+                header("Location:index.php?m=universidades");
+            }
+
+            include_once('vistas/header.php');
+            include_once('vistas/confirm.php');
+            include_once('vistas/footer.php');
+        }
+
+        //metodo del controlador para confirmar la eliminacion del registro de carreras y llamar al modelo para realizar una sentencia delete
+        function confirmarDeleteC(){
+
+            $data=NULL;
+
+            if ($_REQUEST['id']!=0) {
+               $data=$this->model_e->get_idC($_REQUEST['id']);
+            }
+
+            if ($_REQUEST['id']==0) {
+                $date['id']=$_REQUEST['txt_id'];
+                $this->model_e->deleteC($date['id']);
+                header("Location:index.php?m=carreras");
             }
 
             include_once('vistas/header.php');

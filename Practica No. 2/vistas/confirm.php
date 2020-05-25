@@ -1,7 +1,22 @@
 <!-- Pagina de confirmacion de eliminacion de registro -->
 <section class="container">
     <div class="row">
+    <?php
+    	if($_GET["m"]=="confirmarDeleteU"){
+
+    ?>
+    <form method="post" action="index.php?m=confirmarDeleteU&id=<?php echo "0";?>">
+    <?php
+    }else if ($_GET["m"]=="confirmarDeleteC") {
+        ?> 
+    <form method="post" action="index.php?m=confirmarDeleteC&id=<?php echo "0";?>">
+        <?php
+    }else{
+    ?>
     <form method="post" action="index.php?m=confirmarDelete&id=<?php echo "0";?>">
+    <?php
+}
+    ?>
         <div class="col-md-6 col-md-offset-3">
             <label>¿Deseas eliminar este registro?</label>
             <input type="hidden" name="txt_id" value="<?php echo $data['id']; ?>">

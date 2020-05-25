@@ -21,7 +21,7 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="index.php?m=estudiante">Nuevo registro</a></li>
+              <li class="active"><a href="index.php?m=estudiante">Nuevo registro Estudiantes</a></li>
               <li>
                 <a href="index.php?m=universidades" role="button" aria-haspopup="true" aria-expanded="false">Universidades</span></a>
               </li>
@@ -29,7 +29,7 @@
                 <a href="index.php?m=carreras" role="button" aria-haspopup="true" aria-expanded="false">Carreras</span></a>
               </li>
               <li>
-                <a href="index.php" role="button" aria-haspopup="true" aria-expanded="false">Listar</span></a>
+                <a href="index.php" role="button" aria-haspopup="true" aria-expanded="false">Estudiantes</span></a>
               </li>
                 <li>
                   <a href="index.php?m=salir">Salir</a>
