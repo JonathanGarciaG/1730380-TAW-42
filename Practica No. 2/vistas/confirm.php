@@ -2,20 +2,23 @@
 <section class="container">
     <div class="row">
     <?php
-    	if($_GET["m"]=="confirmarDeleteU"){
-
+    //aqui se decide que tipo de etiqueta form se utilizara y que tipo de action se tomara en base a que tipo de registro se esta utilizando
+    if($_GET["m"]=="confirmarDeleteU"){
+        //confirma eliminar Universidad
     ?>
     <form method="post" action="index.php?m=confirmarDeleteU&id=<?php echo "0";?>">
     <?php
     }else if ($_GET["m"]=="confirmarDeleteC") {
+        //confirmar eliminar Carrera
         ?> 
     <form method="post" action="index.php?m=confirmarDeleteC&id=<?php echo "0";?>">
         <?php
     }else{
+        //confirmar eliminar Estudiante
     ?>
     <form method="post" action="index.php?m=confirmarDelete&id=<?php echo "0";?>">
     <?php
-}
+    }
     ?>
         <div class="col-md-6 col-md-offset-3">
             <label>¿Deseas eliminar este registro?</label>

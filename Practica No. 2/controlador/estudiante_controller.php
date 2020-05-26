@@ -58,7 +58,7 @@
             include_once('vistas/footer.php');
         }
 
-        //mostar la vista de universidades
+        //mostar la vista de registrar universidades, consulta sus datos en caso de tratarse de una modificacion
         function registrarUniversidades(){
             $data=NULL;
             if(isset($_REQUEST['id'])){
@@ -70,12 +70,13 @@
             include_once('vistas/footer.php');
         }
 
-        //mostar la vista de universidades
+        //mostar la vista de registrar Carreras, consulta sus datos en caso de tratarse de una modificacion
         function registrarCarrera(){
             $data=NULL;
             if(isset($_REQUEST['id'])){
                 $data=$this->model_e->get_idC($_REQUEST['id']);   
             }
+            //se obtiene el query de las universidades para asignarlas a la carrera
             $query=$this->model_e->getU();
             include_once('vistas/header.php');
             include_once('vistas/registrarCarrera.php');
@@ -88,6 +89,7 @@
             if(isset($_REQUEST['id'])){
                 $data=$this->model_e->get_id($_REQUEST['id']);    
             }
+            //se obtiene query de las carreras para asignarlas a los estudiantes
             $query=$this->model_e->getC();
             include_once('vistas/header.php');
             include_once('vistas/estudiante.php');
@@ -118,6 +120,7 @@
                 $this->model_e->update($data,$date);
             }
             
+            //redirige a la vista index y por consecuencia a la vista de los estudiantes
             header("Location:index.php");
 
         }
@@ -140,6 +143,7 @@
                 $this->model_e->updateU($data,$date);
             }
             
+            //se redirige a la vista de las universidades
             header("Location:index.php?m=universidades");
 
         }
@@ -163,6 +167,7 @@
                 $this->model_e->updateC($data,$date);
             }
             
+            //redirige a la vista de las carreras
             header("Location:index.php?m=carreras");
 
         }
