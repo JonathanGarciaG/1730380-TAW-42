@@ -1,6 +1,6 @@
 <?php
-include_once "models/crud.php";
-include_once "models/crudProd.php";
+//include_once "models/crud.php";
+//include_once "models/crudProd.php";
 
 	class MvcController{
 		
@@ -111,25 +111,27 @@ include_once "models/crudProd.php";
 			}
 		}
 
-		//VISTA DE USUARIOS
-		public function vistaUsuariosController(){
-			$respuesta = Datos:: vistaUsuariosModel("users");
-			//Utilizar un foreach para iterar un array e imprimir la consulta del modelo
-
-			foreach ($respuesta as $row => $item) {
-				echo '<tr>
-					<td>'.$item["usuario"].'</td>
-					<td>'.$item["password"].'</td>
-					<td>'.$item["email"].'</td>
-					<td><a href="index.php?action=editar&UserEditar='.$item["id"].
-					'"><button class="btn btn-primary" >Editar</button></a></td>
-					<td><a href="index.php?action=usuarios&idBorrar='.$item["id"].
-					'"><button class="btn btn-danger" >Borrar</button></a></td>
-					<td>'.$item["firstname"].'</td>
-					<td>'.$item['lastmane'].'</td>
-					<td>'.$item['email'].'</td>';
-			}
-		}
+		//Controlador para cargar todos los datos de lo usuarios, la contraeña no se puede cargar debido a que independientemente de si se muestra o no, esta está encriptada.
+        public function vistaUsersController(){
+            $respuesta = Datos::vistaUsersModel("users");
+            foreach ($respuesta as $row => $item){
+                echo '
+                    <tr>
+                        <td>
+                            <a href="index.php?action=usuarios&idUserEditar='.$item["id"].'" class="btn btn-warning btn-sm btn-icon" title="Editar" data-toggle="tooltip"><i class=fa fa-edit"></i></a>
+                        </td>
+                        <td>
+                        <a href="index.php?action=usuarios&idBorrar='.$item["id"].'" class="btn btn-warning btn-sm btn-icon" title="Eliminar" data-toggle="tooltip"><i class=fa fa-trash"></i></a>
+                        </td>
+                        <td>'.$item["firstname"].'</td>
+                        <td>'.$item["lastname"].'</td>
+                        <td>'.$item["user_name"].'</td>
+                        <td>'.$item["user_email"].'</td>
+                        <td>'.$item["date_added"].'</td>
+                    </tr>
+                ';
+            }
+        }
 
 		//VISTA DE PRODUCTOS
 		public function vistaProductosController(){
