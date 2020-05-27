@@ -21,6 +21,39 @@
 			include $respuesta;
 		}
 
+		public function vistaUserController(){
+			?>
+			<div class="col-md-6 mt-3">
+				<div class="card card-primary">
+					<div class="card-header">
+						<h4><b>Registro</b> de Usuario</h4>
+					</div>
+					<div class="card-body">
+						<form method="post" action="index.php?action=usuarios">
+							<div class="form-group">
+								<label>Nombre: </label>
+								<input class="form-control" type="text" name="nusuariotxt" placeholder="Ingrese nombre" required>
+							</div>
+							<div class="form-group">
+								<label>Apellido: </label>
+								<input class="form-control" type="text" name="nusuariotxt" placeholder="Ingrese nombre" required>
+							</div>
+							<div class="form-group">
+								<label>Contraseña: </label>
+								<input class="form-control" type="text" name="nusuariotxt" placeholder="Ingrese nombre" required>
+							</div>
+							<div class="form-group">
+								<label>Correo Electronico: </label>
+								<input class="form-control" type="text" name="nusuariotxt" placeholder="Ingrese nombre" required>
+							</div>
+							<button class="btn btn-primary" type="submit">Agregar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<?php
+		}
+
 		// REGISTRO DE USUARIOS
 		public function registrarUsuarioController(){
 			if(isset($_POST["usuarioRegistro"])){
