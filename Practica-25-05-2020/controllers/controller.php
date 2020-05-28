@@ -63,7 +63,7 @@
 				
 				$_POST["ncontratxt"] = password_hash($_POST["ncontratxt"],PASSWORD_DEFAULT);
 
-				$datosController = array["nusuario"=>$_POST["nusuariotxt"],"ausuario"=>$_POST["ausuariotxt"],"usuario"=>$_POST["usuariotxt"],"contra"=>$_POST["ucontratxt"],"email"=>$_POST["uemailtxt"];
+				$datosController = array["nusuario" -> $_POST["nusuariotxt"],"ausuario" -> $_POST["ausuariotxt"],"usuario" -> $_POST["usuariotxt"],"contra" -> $_POST["ucontratxt"],"email"->$_POST["uemailtxt"];
 
 				$respuesta = Datos::insertarUserModel($datosController,"users");
 
@@ -100,7 +100,7 @@
 		public function editarUserController(){
 			$datosController = $_GET["idUserEditar"];
 			$respuesta = Datos::editarUserModel($datosController,"users");
-			?>
+?>
             <div class="col-md-6 mt-3">
                 <div class="card card-warning">
                     <div class="card-header">
@@ -170,6 +170,43 @@
 									Error
 								</h5>
 								Se ha producido un error al momento de agregar un usuario
+							</div>
+						</div>
+					';
+				}
+        	}
+        }
+
+
+        public function eliminarUserController(){
+        	if (isset($_GET["idBorrar"])) {
+        		$datosController = $_GET["idBorrar"];
+
+        		$respuesta = Datos::eliminarUserModel($datosController,"users");
+
+        		if ($respuesta == "success") {
+					echo '
+						<div class="col-md-6 mt-3">
+							<div class="alert alert-success alert-dismissible">
+								<button>x</button>
+								<h5>
+									<i class="icon">
+									Exito
+								</h5>
+								Usuario eliminado con exito
+							</div>
+						</div>
+						';
+				}else{
+					echo '
+						<div class="col-md-6 mt-3">
+							<div class="alert alert-success alert-dismissible">
+								<button>x</button>
+								<h5>
+									<i class="icon">
+									Error
+								</h5>
+								Se ha producido un error al momento de eliminar un usuario
 							</div>
 						</div>
 					';
