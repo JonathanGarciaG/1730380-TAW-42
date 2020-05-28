@@ -100,7 +100,7 @@
 		public function editarUserController(){
 			$datosController = $_GET["idUserEditar"];
 			$respuesta = Datos::editarUserModel($datosController,"users");
-?>
+			?>
             <div class="col-md-6 mt-3">
                 <div class="card card-warning">
                     <div class="card-header">
