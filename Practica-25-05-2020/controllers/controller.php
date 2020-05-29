@@ -63,7 +63,7 @@
 				
 				$_POST["ncontratxt"] = password_hash($_POST["ncontratxt"],PASSWORD_DEFAULT);
 
-				$datosController = array["nusuario" -> $_POST["nusuariotxt"],"ausuario" -> $_POST["ausuariotxt"],"usuario" -> $_POST["usuariotxt"],"contra" -> $_POST["ucontratxt"],"email"->$_POST["uemailtxt"];
+				$datosController = array["nusuario" => $_POST["nusuariotxt"],"ausuario" => $_POST["ausuariotxt"],"usuario" => $_POST["usuariotxt"],"contra" => $_POST["ucontratxt"],"email"=>$_POST["uemailtxt"];
 
 				$respuesta = Datos::insertarUserModel($datosController,"users");
 
@@ -257,4 +257,23 @@
                 ';
             }
         }
+
+        public function contarFilas(){
+        	$respuesta_users = Datos::contarFilasModel("users");
+
+        	echo '
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>'.$respuesta_users["filas"].'</h3>
+                            <p>Total de Usuarios</p>
+                        </div>
+                        <div class="icon">
+                            <i class="far fa-address-card"></i>
+                        </div>
+                        <a class="small-box-footer" href="index.php?action=usuarios">Más <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>';
+        }
+        
 ?>

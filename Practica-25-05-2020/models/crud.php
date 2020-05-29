@@ -75,6 +75,15 @@
 			$stmt->close();
 		}
 
+		// MODELO PARA EL TABLERO //
+        /*-- Este modelo permite conocer el numero de filas en determinada tabla, se utiliza para mostrar información en el tablero --*/
+        public function contarFilasModel($tabla) {
+            $stmt = Conexion::conectar()->prepare("SELECT COUNT(*) AS 'filas' FROM $tabla");
+            $stmt->execute();
+            return $stmt->fetch();
+            $stmt->close();
+        }
+
 		
 	}
 
