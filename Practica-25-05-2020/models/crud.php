@@ -1,5 +1,5 @@
 <?php
-	include "conexion.php";
+	include "models/conexion.php";
 
 	class Datos extends Conexion {
 
@@ -13,14 +13,14 @@
 		}
 
 		public function vistaUserModel($tabla){
-			$stmt = Conexion::conectar()->prepare("SELECT user_ud AS 'id',firstname,lastname,user_name, user_password,user_email,date_added FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT user_id,firstname,lastname,user_name, user_password,user_email,date_added FROM $tabla");
 			
 			$stmt->execute();
 			return $stmt->fetchAll();
 			$stmt->close();
 		}
 
-		public function inserarUserModel(){
+		public function insertarUserModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (firstname,lastname,user_name,user_password,user_email) VALUES (:nusuario,:ausuario,:usuario,:contra,:email)");
 			
 			$stmt->bindParam(":nusuario",$datosModel["nusuario"],PDO::PARAM_STR);
@@ -38,10 +38,10 @@
 		}
 
 		public function editarUserModel($datosModel,$tabla){
-			$stmt = Conexion::conectar()->prepare("SELECT user_id AS 'id', firstname AS 'nusuario', lastname AS 'ausuario', user_name AS 'usuario', user_password AS 'contra', user_email AS 'email' FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT user_id AS 'id', firstname AS 'nusuario', lastname AS 'ausuario', user_name AS 'usuario', user_password AS 'contra', user_email AS 'email' FROM $tabla WHERE user_id=:id");
 			
 			$stmt->bindParam(":id",$datosModel,PDO::PARAM_INT);
-			$stmt->execute()
+			$stmt->execute();
 			return $stmt->fetch();
 			$stmt->close();
 		}

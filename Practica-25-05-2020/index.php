@@ -6,7 +6,7 @@ require_once "models/enlaces.php";
 //require_once "models/crudProd.php";
 
 //Se activa el almacenamiento del bufer para poder accceder a los valores guardados en los arreglos asociativos $_GET y $_SESSION sin ningún problema
-ob_start();
+//ob_start();
 
 //Controlador
 //Creacion de los objetos, que es la logica del negocio

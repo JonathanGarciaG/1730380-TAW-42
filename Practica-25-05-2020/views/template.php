@@ -33,37 +33,37 @@
 <?php
   session_start();
   if(isset($_SESSION['validar']) && $_SESSION['validar'] == true){
-    include "modules/navegacion";
+    include "modules/navegacion.php";
+  }
 ?>
 <div class="wrapper">
-  <div class="content-wrapper"></div>
+  <div class="content-wrapper">
     <section class="content">
       <div class="container-fluid">
 
         <div class="row mr-3 mt-2 mb-2">
           <?php
             if ($_GET['action']=='tablero') {
-        
           ?>
           <div class="col-sm-12">
             <h1><b>Tablero</b></h1>
           </div>
           <?php
-            }
-          ?>
-          <?php
           }
           $mvc = new MvcController();
           $mvc -> enlacesPaginasController();
+
           ?>
 
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </div>
+</div>
+
 
   <?php
-    if ($_GET['action' != 'ingresar']) {
+    if ($_GET['action'] != 'ingresar') {
   ?>
 
   <?php

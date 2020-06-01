@@ -1,5 +1,5 @@
 <?php
-//include_once "models/crud.php";
+include_once "models/crud.php";
 //include_once "models/crudProd.php";
 
 	class MvcController{
@@ -14,11 +14,72 @@
 			if (isset($_GET['action'])) {
 				$enlaces = $_GET['action'];
 			}else{
-				$enlaces = 'index';
+				$enlaces = 'tablero';
 			}
 			//Es el momento en que el controlador invoca al modelo llamado enlacesPaginasModel para que muestre el listado de paginas
 			$respuesta = Paginas::enlacesPaginasModel($enlaces);
 			include $respuesta;
+		}
+
+		public function registrarUserController(){
+			?>
+			<div class="card">
+			    <div class="card-body register-card-body">
+			      <p class="login-box-msg">Registrar nuevo Usuario</p>
+
+			      <form action="index.php?action=usuarios" method="post">
+			        <div class="input-group mb-3">
+			          <input type="text" class="form-control" name="nusuariotxt" placeholder="Nombre">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-user"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="input-group mb-3">
+			          <input type="text" class="form-control" name="ausuariotxt" placeholder="Apellido">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-user"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="input-group mb-3">
+			          <input type="text" class="form-control" name="usuariotxt" placeholder="Nombre de usuario">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-user"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="input-group mb-3">
+			          <input type="email" class="form-control" name="uemailtxt" placeholder="Email">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-envelope"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="input-group mb-3">
+			          <input type="password" class="form-control" name="ucontratxt" placeholder="Contraseña">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-lock"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="row">
+			          <!-- /.col -->
+			          <div class="col-12">
+			            <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+			          </div>
+			          <!-- /.col -->
+			        </div>
+			      </form>
+			    </div>
+			    <!-- /.form-box -->
+			  </div><!-- /.card -->
+			<?php
 		}
 
 		public function vistaUserController(){
@@ -36,19 +97,19 @@
 							</div>
 							<div class="form-group">
 								<label>Apellido: </label>
-								<input class="form-control" type="text" name="ausuariotxt" placeholder="Ingrese nombre" required>
+								<input class="form-control" type="text" name="ausuariotxt" placeholder="Ingrese Apellido" required>
 							</div>
 							<div class="form-group">
 								<label>Usuario: </label>
-								<input class="form-control" type="text" name="usuariotxt" placeholder="Ingrese nombre" required>
+								<input class="form-control" type="text" name="usuariotxt" placeholder="Ingrese Usuario" required>
 							</div>
 							<div class="form-group">
 								<label>Contraseña: </label>
-								<input class="form-control" type="text" name="ucontratxt" placeholder="Ingrese nombre" required>
+								<input class="form-control" type="text" name="ucontratxt" placeholder="Ingrese Contraseña" required>
 							</div>
 							<div class="form-group">
 								<label>Correo Electronico: </label>
-								<input class="form-control" type="text" name="nusuariotxt" placeholder="Ingrese nombre" required>
+								<input class="form-control" type="text" name="uemailtxt" placeholder="Ingrese Correo" required>
 							</div>
 							<button class="btn btn-primary" type="submit">Agregar</button>
 						</form>
@@ -61,9 +122,9 @@
 		public function insertarUserController(){
 			if (isset($_POST["nusuariotxt"])) {
 				
-				$_POST["ncontratxt"] = password_hash($_POST["ncontratxt"],PASSWORD_DEFAULT);
+				$_POST["ucontratxt"] = password_hash($_POST["ucontratxt"],PASSWORD_DEFAULT);
 
-				$datosController = array["nusuario" => $_POST["nusuariotxt"],"ausuario" => $_POST["ausuariotxt"],"usuario" => $_POST["usuariotxt"],"contra" => $_POST["ucontratxt"],"email"=>$_POST["uemailtxt"];
+				$datosController = array("nusuario"=>$_POST["nusuariotxt"],"ausuario"=>$_POST["ausuariotxt"],"usuario"=>$_POST["usuariotxt"],"contra"=>$_POST["ucontratxt"],"email"=>$_POST["uemailtxt"]);
 
 				$respuesta = Datos::insertarUserModel($datosController,"users");
 
@@ -71,7 +132,6 @@
 					echo '
 						<div class="col-md-6 mt-3">
 							<div class="alert alert-success alert-dismissible">
-								<button>x</button>
 								<h5>
 									<i class="icon">
 									Exito
@@ -83,8 +143,7 @@
 				}else{
 					echo '
 						<div class="col-md-6 mt-3">
-							<div class="alert alert-success alert-dismissible">
-								<button>x</button>
+							<div class="alert alert-danger alert-dismissible">
 								<h5>
 									<i class="icon">
 									Error
@@ -109,7 +168,7 @@
                     <div class="card-body">
                         <form method="post" action="index.php?action=usuarios">
                             <div class="form-group">
-                                <input type="hidden" name="idUserEditar" class="form-control" value="<?php echo $respuesta["id"]; ?>" required>
+                                <input type="hidden" name="iduserEditar" class="form-control" value="<?php echo $respuesta["id"]; ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="nusuariotxtEditar">Nombre: </label>
@@ -125,7 +184,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="contratxtEditar">Contraseña: </label>
-                                <input class="form-control" type="password" name="contratxtEditar" id="contratxtEditar" placeholder="Ingrese la nueva contraseña" required>
+                                <input class="form-control" type="password" name="ucontratxtEditar" id="ucontratxtEditar" placeholder="Ingrese la nueva contraseña" required>
                             </div>
                             <div class="form-group">
                                 <label for="uemailtxtEditar">Correo Electrónico: </label>
@@ -134,16 +193,15 @@
                             <button class="btn btn-primary" type="submit">Editar</button>
                         </form>
                     </div>
-                    </div>
+                </div>
             </div>
-            <?php
-        }
+<?php } 
 
         public function actualizarUserController(){
         	if (isset($_POST["nusuariotxtEditar"])) {
-        		$_POST["contratxtEditar"]=password_hash($_POST["contratxtEditar"],PASSWORD_DEFAULT);
+        		$_POST["contratxtEditar"]=password_hash($_POST["ucontratxtEditar"],PASSWORD_DEFAULT);
 
-        		$datosController = array["nusuario"=>$_POST["nusuariotxt"],"ausuario"=>$_POST["ausuariotxt"],"usuario"=>$_POST["usuariotxt"],"contra"=>$_POST["ucontratxt"],"email"=>$_POST["uemailtxt"];
+        		$datosController = array("nusuario"=>$_POST["nusuariotxtEditar"],"ausuario"=>$_POST["ausuariotxtEditar"],"usuario"=>$_POST["usuariotxtEditar"],"contra"=>$_POST["ucontratxtEditar"],"email"=>$_POST["uemailtxtEditar"],"id"=>$_POST["iduserEditar"]);
 
 				$respuesta = Datos::actualizarUserModel($datosController,"users");
 
@@ -151,25 +209,23 @@
 					echo '
 						<div class="col-md-6 mt-3">
 							<div class="alert alert-success alert-dismissible">
-								<button>x</button>
 								<h5>
 									<i class="icon">
 									Exito
 								</h5>
-								Usuario agregado con exito
+								Usuario actualizado con exito
 							</div>
 						</div>
 						';
 				}else{
 					echo '
 						<div class="col-md-6 mt-3">
-							<div class="alert alert-success alert-dismissible">
-								<button>x</button>
+							<div class="alert alert-danger alert-dismissible">
 								<h5>
 									<i class="icon">
 									Error
 								</h5>
-								Se ha producido un error al momento de agregar un usuario
+								Se ha producido un error al momento de actualizar un usuario
 							</div>
 						</div>
 					';
@@ -188,7 +244,6 @@
 					echo '
 						<div class="col-md-6 mt-3">
 							<div class="alert alert-success alert-dismissible">
-								<button>x</button>
 								<h5>
 									<i class="icon">
 									Exito
@@ -200,8 +255,7 @@
 				}else{
 					echo '
 						<div class="col-md-6 mt-3">
-							<div class="alert alert-success alert-dismissible">
-								<button>x</button>
+							<div class="alert alert-danger alert-dismissible">
 								<h5>
 									<i class="icon">
 									Error
@@ -217,36 +271,38 @@
 
 		//INGRESO USUARIOS
 		public function ingresoUserController(){
-			if (isset($_POST["usuarioIngreso"]) && isset($_POST["txtPassword"])){
+			if (isset($_POST["txtuser"]) && isset($_POST["txtpassword"])){
 				$datosController=array("user" => $_POST["txtUser"],
-										 "password" => $_POST["txtPasswordIngreso"]);
+										 "password" => $_POST["txtPassword"]);
 				$respuesta = Datos::ingresoUsuarioModel($datosController, "usuarios");
 
 				//Validar la respuesta del modelo para ver si es un usuario correcto.
-				if($respuesta["usuario"] == $_POST["txtUser"] && $respuesta["password"] == $_POST["txtPassword"]){
+				if($respuesta["usuario"] == $_POST["txtUser"] && $respuesta["contrasena"] == $_POST["txtPassword"]){
 					session_start();
 					$_SESSION["validar"] = true;
-					$_SESSION["nombre_usuario"] = $respuesta["nombre_usuario"];
+					$_SESSION["nombre_usuario"] = $respuesta["usuario"];
 					$_SESSION["id"]=$respuesta["id"];
 					header("location:index.php?action=tablero");
 				}else{
 					header("location: index.php?action=fallo&res=fallo");
 				}
 
+			}else{
+				//echo ''.$_POST['txtuser']." ".$_POST['txtpassword'];
 			}
 		}
 
 		//Controlador para cargar todos los datos de lo usuarios, la contraeña no se puede cargar debido a que independientemente de si se muestra o no, esta está encriptada.
         public function vistaUsersController(){
-            $respuesta = Datos::vistaUsersModel("users");
+            $respuesta = Datos::vistaUserModel("users");
             foreach ($respuesta as $row => $item){
                 echo '
                     <tr>
                         <td>
-                            <a href="index.php?action=usuarios&idUserEditar='.$item["id"].'" class="btn btn-warning btn-sm btn-icon" title="Editar" data-toggle="tooltip"><i class=fa fa-edit"></i></a>
+                            <a href="index.php?action=usuarios&idUserEditar='.$item["user_id"].'" class="btn btn-warning btn-sm btn-icon" title="Editar" data-toggle="tooltip"><i class="fa fa-edit">Editar</i></a>
                         </td>
                         <td>
-                        <a href="index.php?action=usuarios&idBorrar='.$item["id"].'" class="btn btn-warning btn-sm btn-icon" title="Eliminar" data-toggle="tooltip"><i class=fa fa-trash"></i></a>
+                        	<a href="index.php?action=usuarios&idBorrar='.$item["user_id"].'" class="btn btn-danger btn-sm btn-icon" title="Eliminar" data-toggle="tooltip"><i class="fa fa-trash">Eliminar</i></a>
                         </td>
                         <td>'.$item["firstname"].'</td>
                         <td>'.$item["lastname"].'</td>
@@ -275,5 +331,6 @@
                     </div>
                 </div>';
         }
+	}
         
-?>
+  ?>

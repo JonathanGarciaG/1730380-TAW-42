@@ -1,6 +1,5 @@
 <?php
-
-	if (isset($_SESSION['validar'])) {
+	if (!isset($_SESSION['validar'])) {
 		header('location: index.php');
 		exit();
 	}

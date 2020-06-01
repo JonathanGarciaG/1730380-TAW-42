@@ -2,7 +2,26 @@
     //Clase para el Modelo de enlaces web 
 	class Paginas{
 		public function enlacesPaginasModel($enlaces){
-	
+			$pagina = 'views/modules/tablero.php';
+			if ($enlaces == 'tablero') {
+				$pagina = 'views/modules/tablero.php';
+			}else if ($enlaces == 'usuarios') {
+				$pagina = 'views/modules/usuarios.php';
+			}else if ($enlaces == 'ingresar') {
+				$pagina = 'views/modules/login.php';	
+			}else if ($enlaces == 'registrarUsuario') {
+				$pagina = 'views/modules/registro.php';
+			}else if ($enlaces == 'editarUsuario') {
+				$pagina = 'views/modules/login.php';
+			}else if ($enlaces == 'eliminarUsuario') {
+				$pagina = 'views/modules/login.php';
+			}else if ($enlaces == 'salir') {
+				$pagina = 'views/modules/salir.php';
+			}else{
+				$pagina = 'views/modules/tablero.php';
+			}
+
+			return $pagina;
 		}
 	}
 ?>
