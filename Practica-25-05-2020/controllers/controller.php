@@ -371,6 +371,44 @@ include_once "models/crud.php";
 			}
 		}
 
+		public function actualizar2StockController(){
+			if (isset($_POST["delstocktxt"])) {
+				$datosController = array("id"=>$_POST["idProductDel"],"stock"=>$_POST["delstocktxt"]);
+				$respuesta = Datos::pullProductsModel($datosController,"products");
+
+				if ($respuesta == "success") {
+					//$respuesta3 = Datos::ultimoProductsModel("products");
+					$datosController2 = array("user"=>$_SESSION["id"],"cantidad"=>$_POST["delstocktxt"],"producto"=>$_POST["idProductDel"],"note"=>$_SESSION["nombre_usuario"]." quito","reference"=>$_POST["referenciatxtdel"]);
+					$respuesta2 = Datos::insertarHistorialModel($datosController2,"historial");
+					echo '
+						<div class="col-md-6 mt-3">
+							<button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+							<div class="alert alert-success alert-dismissible">
+								<h5>
+									<i class="icon" fas fa-check>
+									¡Éxito!
+								</h5>
+								Stock modificado con éxito
+							</div>
+						</div>
+						';
+				}else{
+					echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Error!
+                                </h5>
+                                Se ha producido un error al momento de modificar el Stock del producto, trate de nuevo.
+                            </div>
+                        </div>
+                    ';
+				}
+			}
+		}
+
 		public function vistaUserController(){
 			?>
 			<div class="col-md-6 mt-3">
