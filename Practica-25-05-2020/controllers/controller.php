@@ -409,6 +409,103 @@ include_once "models/crud.php";
 			}
 		}
 
+		public function delProductController(){
+			$datosController=$_GET["idProductDel"];
+			$respuesta = Datos::editarProductsModel($datosController,"products");
+			?>
+			<div class="col-md-6 mt-3">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h4><b>Eliminar</b> stock al Producto</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="index.php?action=inventario">
+                            <div class="form-group">
+                                <input type="hidden" name="idProductDel" class="form-control" value="<?php echo $respuesta["id"]; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="stock">Stock: </label>
+                                <input class="form-control" type="number" min="1" max="<?php echo $respuesta["stock"]; ?>" value="<?php echo $respuesta["stock"]; ?>" name="delstocktxt" id="stock" placeholder="Stock del producto" value required>
+                            </div>
+                            <div class="form-group">
+                                <label for="motivo">Motivo: </label>
+                                <input class="form-control" type="text" name="referenciatxtdel" id="referencia" placeholder="Referencia de producto" required>
+                            </div>
+                           
+                            <button class="btn btn-primary" type="submit">Realizar Cambio</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+			<?php
+		}
+
+		public function vistaHistorialController(){
+			$respuesta = Datos::vistaHistorialModel()
+			$respuesta = Datos::vistaHistorialModel("historial");
+			foreach ($respuesta as $row => $item) {
+				echo '
+					<tr>
+                        <td>'.$item["usuario"].'</td>
+                        <td>'.$item["producto"].'</td>
+                        <td>'.$item["nota"].'</td>
+                        <td>'.$item["cantidad"].'</td>
+                        <td>'.$item["referencia"].'</td>
+                        <td>'.$item["fecha"].'</td>
+                    </tr>
+					';
+			}
+
+		}
+
+		//Controlador para cargar todos los datos de lo usuarios, la contraeña no se puede cargar debido a que independientemente de si se muestra o no, esta está encriptada.
+        public function vistaCategoriesController(){
+            $respuesta = Datos::vistaCategoriesModel("categories");
+            foreach ($respuesta as $row => $item){
+                echo '
+                    <tr>
+                        <td>
+                            <a href="index.php?action=categorias&idCategoryEditar='.$item["idc"].'" class="btn btn-warning btn-sm btn-icon" title="Editar" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+                        </td>
+                        <td>
+                        	<a href="index.php?action=categorias&idBorrar='.$item["idc"].'" class="btn btn-danger btn-sm btn-icon" title="Eliminar" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
+                        </td>
+                        <td>'.$item["idc"].'</td>
+                        <td>'.$item["ncategoria"].'</td>
+                        <td>'.$item["dcategoria"].'</td>
+                        <td>'.$item["fcategoria"].'</td>
+                    </tr>
+                ';
+            }
+        }
+
+        public function registrarCategoryController(){
+			?>
+            <div class="col-md-6 mt-3">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h4><b>Registro</b> de Categorias</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="index.php?action=categorias">
+                           
+                            <div class="form-group">
+                                <label for="nusuariotxtEditar">Nombre de la Categoría: </label>
+                                <input class="form-control" type="text" name="ncategoriatxt" id="ncategoriatxt" placeholder="Ingrese Nombre de categoria" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ausuariotxtEditar">Descripcion de la Categoría: </label>
+                                <input class="form-control" type="text" name="dcategoriatxt" id="dcategoriatxt" placeholder="Descripcion de categoria" required>
+                            </div>
+                            
+                            <button class="btn btn-primary" type="submit">Agregar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+<?php } 
+
+
 		public function vistaUserController(){
 			?>
 			<div class="col-md-6 mt-3">
