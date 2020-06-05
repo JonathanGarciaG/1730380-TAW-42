@@ -503,7 +503,77 @@ include_once "models/crud.php";
                     </div>
                 </div>
             </div>
-<?php } 
+<?php 	}
+
+
+		 public function insertarCateoryController(){
+			if (isset($_POST["ncategoriatxt"]) && isset($_POST["dcategoriatxt"])) {
+				$datosController = array("nombre_categoria"=>$_POST["ncategoriatxt"],"descripcion_categoria"=>$_POST["dcategoriatxt"]);
+				$respuesta = Datos::insertarCategoryModel($datosController,"categories");
+
+				if ($respuesta == "success") {
+					$datosController2 = array("user"=>$_SESSION["id"],"cantidad"=>$_POST["delstocktxt"],"producto"=>$_POST["idProductDel"],"note"=>$_SESSION["nombre_usuario"]." quito","reference"=>$_POST["referenciatxtdel"]);
+					$respuesta2 = Datos::insertarHistorialModel($datosController2,"historial");
+					echo '
+						<div class="col-md-6 mt-3">
+							<button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+							<div class="alert alert-success alert-dismissible">
+								<h5>
+									<i class="icon" fas fa-check>
+									¡Éxito!
+								</h5>
+								Categoria agregada con éxito
+							</div>
+						</div>
+						';
+				}else{
+					echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Error!
+                                </h5>
+                                Se ha producido un error al agregar Categoria, trate de nuevo.
+                            </div>
+                        </div>
+                    ';
+				}
+			}
+		}
+
+
+		public function editarCategoryController(){
+			$datosController = $_GET["idCategoryEditar"];
+			$respuesta = Datos::editarCategoryModel($datosController,"categories");
+			?>
+            <div class="col-md-6 mt-3">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h4><b>Editor</b> de Categorias</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="index.php?action=categorias">
+                            <div class="form-group">
+                                <input type="hidden" name="idCategoryEditar" class="form-control" value="<?php echo $respuesta["id"]; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nusuariotxtEditar">Nombre de Categoria: </label>
+                                <input class="form-control" type="text" name="ncategoriatxt" id="ncateopriatxt" placeholder="Ingrese el nombre de la categoria" value="<?php echo $respuesta["nombre_categoria"]; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ausuariotxtEditar">Descripcion: </label>
+                                <input class="form-control" type="text" name="dcategoriatxt" id="dcategoriatxt" placeholder="Ingrese la descripción de la categoria" value="<?php echo $respuesta["descripcion_categoria"]; ?>" required>
+                            </div>
+                            
+                            <button class="btn btn-primary" type="submit">Editar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+		<?php 	
+		} 
 
 
 		public function vistaUserController(){
