@@ -180,7 +180,6 @@
 			$stmt->close();
 		}
 
-		 //modelo para insertar nueva categoria en la base de datos
         public function editarProductsModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("SELECT id_product AS 'id',code_producto AS 'codigo',name_product AS 'producto', price_product AS 'precio', stock AS 'stock' FROM $tabla WHERE id_product = :id");
 			
@@ -234,6 +233,40 @@
 		public function eliminarProductsModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_product = :id");
 			$stmt->bindParam(":id",$datosModel,PDO::PARAM_INT);
+			if ($stmt->execute()) {
+				return "success";
+			}else{
+				return "error";
+			}
+			$stmt->close();
+		}
+
+        public function ultimoProductsModel($datosModel,$tabla){
+			$stmt = Conexion::conectar()->prepare("SELECT id_product AS 'id' FROM $tabla ORDER BY id_product DESC LIMIT 1");
+			$stmt->execute();
+			return $stmt->fetch();
+			$stmt->close();
+		}
+
+		//modelo para mostrar la informacion de cada categoria
+        public function vistaHistorialModel($tabla){
+        	$stmt = Conexion::conectar()->prepare("SELECT CONCAT(u.firstname,':',u.user_name) AS 'usuario' p.name_product AS 'producto',h.date AS 'fecha', h.reference AS 'referencia', h.note AS 'nota', h.quantity AS 'cantidad' FROM $tabla h INNER JOIN products p ON h.id_producto = p.id_product INNER JOIN users u ON h.user_id = u.user_id");
+			
+			$stmt->execute();
+			return $stmt->fetchAll();
+			$stmt->close();
+        }
+
+        //modelo para insertar nuevo historial en la base de datos
+        public function insertarHistorialModel($datosModel,$tabla){
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (user_id,quantity,id_producto,note,reference) VALUES (:user,:cantidad,:producto,:note,:reference)");
+			
+			$stmt->bindParam(":user",$datosModel["user"],PDO::PARAM_INT);
+			$stmt->bindParam(":cantidad",$datosModel["cantidad"],PDO::PARAM_INT);
+			$stmt->bindParam(":producto",$datosModel["producto"],PDO::PARAM_INT);
+			$stmt->bindParam(":note",$datosModel["note"],PDO::PARAM_STR);
+			$stmt->bindParam(":reference",$datosModel["reference"],PDO::PARAM_STR);
+
 			if ($stmt->execute()) {
 				return "success";
 			}else{
