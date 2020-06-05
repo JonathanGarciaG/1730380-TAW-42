@@ -84,6 +84,7 @@
             $stmt->close();
         }
 
+		//modelo para mostrar la informacion de cada categoria
         public function vistaCategoriesModel($tabla){
         	$stmt = Conexion::conectar()->prepare("SELECT id_category AS 'idc',name_category AS 'ncategoria',description_category AS 'dcategoria', date_added AS 'fcategoria' FROM $tabla");
 			
@@ -92,11 +93,37 @@
 			$stmt->close();
         }
 
+        //modelo para insertar nueva categoria en la base de datos
         public function insertarUserModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (name_category,description_category) VALUES (:ncategoria,:dcategoria)");
 			
 			$stmt->bindParam(":ncategoria",$datosModel["nombre_categoria"],PDO::PARAM_STR);
 			$stmt->bindParam(":dcategoria",$datosModel["description_category"],PDO::PARAM_STR);
+
+			if ($stmt->execute()) {
+				return "success";
+			}else{
+				return "error";
+			}
+			$stmt->close();
+		}
+
+
+		public function editarCategoryModel($datosModel,$tabla){
+			$stmt = Conexion::conectar()->prepare("SELECT id_category AS 'id', name_category AS 'nombre_categoria', description_category AS 'descripcion_categoria' FROM $tabla WHERE id_category=:id");
+			
+			$stmt->bindParam(":id",$datosModel,PDO::PARAM_INT);
+			$stmt->execute();
+			return $stmt->fetch();
+			$stmt->close();
+		}
+
+		public function actualizarUserModel($datosModel,$tabla){
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET name_category = :nombre_categoria, description_category = :descripcion_categoria WHERE id_category = :id");
+			
+			$stmt->bindParam(":nombre_categoria",$datosModel["nombre_categoria"],PDO::PARAM_STR);
+			$stmt->bindParam(":descripcion_categoria",$datosModel["descripcion_categoria"],PDO::PARAM_STR);
+			$stmt->bindParam(":id",$datosModel["id"],PDO::PARAM_INT);
 
 			if ($stmt->execute()) {
 				return "success";
