@@ -559,11 +559,11 @@ include_once "models/crud.php";
                                 <input type="hidden" name="idCategoryEditar" class="form-control" value="<?php echo $respuesta["id"]; ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="nusuariotxtEditar">Nombre de Categoria: </label>
+                                <label for="nusuariotxtEditar">Nombre de Categoría: </label>
                                 <input class="form-control" type="text" name="ncategoriatxt" id="ncateopriatxt" placeholder="Ingrese el nombre de la categoria" value="<?php echo $respuesta["nombre_categoria"]; ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="ausuariotxtEditar">Descripcion: </label>
+                                <label for="ausuariotxtEditar">Descripcion de la Categoría: </label>
                                 <input class="form-control" type="text" name="dcategoriatxt" id="dcategoriatxt" placeholder="Ingrese la descripción de la categoria" value="<?php echo $respuesta["descripcion_categoria"]; ?>" required>
                             </div>
                             
@@ -574,6 +574,75 @@ include_once "models/crud.php";
             </div>
 		<?php 	
 		} 
+
+
+		public function actualizarCateoryController(){
+			if (isset($_POST["ncategoriatxteditar"]) && isset($_POST["dcategoriatxteditar"])) {
+				$datosController = array("id"=>$_POST["idCategoryEditar"],"nombre_categoria"=>$_POST["ncategoriatxteditar"],"descripcion_categoria"=>$_POST["dcategoriatxteditar"]);
+				$respuesta = Datos::actualizarCategoryModel($datosController,"categories");
+				if ($respuesta == "success") {
+					echo '
+						<div class="col-md-6 mt-3">
+							<button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+							<div class="alert alert-success alert-dismissible">
+								<h5>
+									<i class="icon" fas fa-check>
+									¡Éxito!
+								</h5>
+								Categoría editada con éxito
+							</div>
+						</div>
+						';
+				}else{
+					echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Error!
+                                </h5>
+                                Se ha producido un error al editar Categoría, trate de nuevo.
+                            </div>
+                        </div>
+                    ';
+				}
+			}
+		}
+
+		public function eliminarCateoryController(){
+			if (isset($_GET["idBorrar"])) {
+				$datosController = $_GET["idBorrar"];
+				$respuesta = Datos::eliminarCategoryModel($datosController,"categories");
+				if ($respuesta == "success") {
+					echo '
+						<div class="col-md-6 mt-3">
+							<button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+							<div class="alert alert-success alert-dismissible">
+								<h5>
+									<i class="icon" fas fa-check>
+									¡Éxito!
+								</h5>
+								Categoría eliminada con éxito
+							</div>
+						</div>
+						';
+				}else{
+					echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Error!
+                                </h5>
+                                Se ha producido un error al eliminar Categoría, trate de nuevo.
+                            </div>
+                        </div>
+                    ';
+				}
+			}
+		}
 
 
 		public function vistaUserController(){
