@@ -84,6 +84,27 @@
             $stmt->close();
         }
 
+        public function vistaCategoriesModel($tabla){
+        	$stmt = Conexion::conectar()->prepare("SELECT id_category AS 'idc',name_category AS 'ncategoria',description_category AS 'dcategoria', date_added AS 'fcategoria' FROM $tabla");
+			
+			$stmt->execute();
+			return $stmt->fetchAll();
+			$stmt->close();
+        }
+
+        public function insertarUserModel($datosModel,$tabla){
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (name_category,description_category) VALUES (:ncategoria,:dcategoria)");
+			
+			$stmt->bindParam(":ncategoria",$datosModel["nombre_categoria"],PDO::PARAM_STR);
+			$stmt->bindParam(":dcategoria",$datosModel["description_category"],PDO::PARAM_STR);
+
+			if ($stmt->execute()) {
+				return "success";
+			}else{
+				return "error";
+			}
+			$stmt->close();
+		}
 		
 	}
 
