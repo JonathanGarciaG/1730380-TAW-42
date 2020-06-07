@@ -49,16 +49,16 @@
 					</a>
 				</li>
 
-			<!--	<li class="nav-item">
-					<a href="index.php?action=usuarios" class="nav-link">
-						<i class="nav-icon fas fa-users">
+				<li class="nav-item">
+					<a href="index.php?action=inventario" class="nav-link">
+						<i class="nav-icon fas fa-boxes">
 							
 						</i>
 						<p>Usuarios</p>
 					</a>
 				</li>
 				
-				<li class="nav-item">
+			<!--	<li class="nav-item">
 					<a href="index.php?action=productos" class="nav-link">
 						<i class="nav-icon fas fa-users">
 							

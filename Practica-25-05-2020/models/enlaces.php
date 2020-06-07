@@ -7,6 +7,8 @@
 				$pagina = 'views/modules/tablero.php';
 			}else if ($enlaces == 'usuarios') {
 				$pagina = 'views/modules/usuarios.php';
+			}else if ($enlaces == 'inventario') {
+				$pagina = 'views/modules/inventario.php';
 			}else if ($enlaces == 'ingresar') {
 				$pagina = 'views/modules/login.php';	
 			}else if ($enlaces == 'registrarUsuario') {

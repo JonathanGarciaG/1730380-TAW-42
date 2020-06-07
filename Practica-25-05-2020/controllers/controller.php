@@ -84,6 +84,7 @@ include_once "models/crud.php";
 
 		public function registrarProductController(){
 			?>
+			<div class="col-md-6 mt-3">
 			<div class="card card-primary">
 			<div class="card-header">
 				<h4><b>Registro</b> de Productos</h4>
@@ -92,69 +93,40 @@ include_once "models/crud.php";
 			      <p class="login-box-msg">Registro de Productos</p>
 
 			      <form action="index.php?action=inventario" method="post">
-			        <div class="form-group">
-			        	<label>Codigo: </label>
-			          	<input type="text" class="form-control" name="codigotxt" placeholder="Codigo">
-			        </div>
-			        <div class="input-group mb-3">
+			      <div class="form-group">
+			        <label>Codigo: </label>
+			          	<input type="text" class="form-control" name="codigotxt" placeholder="Codigo" required>
+			      </div>
+			      <div class="form-group">
 			        <label>Nombre: </label>
-			          <input type="text" class="form-control" name="nombretxt" placeholder="Nombre">
-			          <div class="input-group-append">
-			            <div class="input-group-text">
-			              <span class="fas fa-user"></span>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="input-group mb-3">
+			          <input type="text" class="form-control" name="nombretxt" placeholder="Nombre" required>
+			      </div>
+			      <div class="form-group"> 
 			        <label>Precio: </label>
-			          <input type="number" class="form-control" name="preciotxt" placeholder="Precio">
-			          <div class="input-group-append">
-			            <div class="input-group-text">
-			              <span class="fas fa-user"></span>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="input-group mb-3">
+			          <input type="number" class="form-control" name="preciotxt" placeholder="Precio" required>
+			      </div>
+			      <div class="form-group">
 			        <label>Stock: </label>
-			          <input type="number" class="form-control" name="stocktxt" placeholder="Stock">
-			          <div class="input-group-append">
-			            <div class="input-group-text">
-			              <span class="fas fa-envelope"></span>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="input-group mb-3">
+			          <input type="number" class="form-control" name="stocktxt" placeholder="Stock" required>
+			      </div>
+			      <div class="form-group">
 			        <label>Motivo: </label>
-			          <input type="number" class="form-control" name="referenciatxt" placeholder="Motivo">
-			          <div class="input-group-append">
-			            <div class="input-group-text">
-			              <span class="fas fa-envelope"></span>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="input-group mb-3">
-			        <label>Stock: </label>
-			          <input type="number" class="form-control" name="uemailtxt" placeholder="Stock">
-			          <div class="input-group-append">
-			            <div class="input-group-text">
-			              <span class="fas fa-envelope"></span>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="form-group">
-			        	<label>Categoria: </label>
-			        	<select name="categoria" class="form-control">
+			          <input type="text" class="form-control" name="referenciatxt" placeholder="Motivo" rquired>
+			      </div>
+			      <div class="form-group">
+			        <label>Categoria: </label>
+			        <select name="categoria" class="form-control">
 			        		<?php
 			        			$respuesta_categoria = Datos::obtenerCategoryModel("categories");
 			        			foreach($respuesta_categoria as $row => $item) {
 			        		?>
-			        			<option value="<?php echo %item["id"]; ?>"><?php echo $item["categoria"]; ?></option>
+			        			<option value="<?php echo $item["id"]; ?>"><?php echo $item["categoria"]; ?></option>
 			        		<?php
 			        			}
 			        		?>
-			        	</select>
+			        </select>
+			       </div>
 
-			        </div>
 			        <div class="row">
 			          <!-- /.col -->
 			          <div class="col-12">
@@ -166,6 +138,7 @@ include_once "models/crud.php";
 			    </div>
 			    <!-- /.form-box -->
 			  </div><!-- /.card -->
+			  </div>
 			<?php
 		}
 
@@ -173,12 +146,12 @@ include_once "models/crud.php";
         tenemos que checar si la respuesta fue afirmativa hubo un error y mostrara los respectivas alerta,para insertar datos en la tabla de historial se tiene que mandar a un modelollamado ultimoproductmodel este traera el ultimo dato insertado que es el id del producto que se manda en elarray de datoscontroller2 junto al nombre de la tabla asi insertando los datos en la tabla historial --*/
 		public function insertarProductController(){
 			if (isset($_POST["codigotxt"])) {
-				$datosController = array("codigo"=>$_POST["nusuariotxt"],"precio"=>$_POST["ausuariotxt"],"categoria"=>$_POST["usuariotxt"],"nombre"=>$_POST["ucontratxt"],"stock"=>$_POST["uemailtxt"]);
+                $datosController = array("codigo"=>$_POST["codigotxt"], "precio"=>$_POST["preciotxt"], "stock"=>$_POST["stocktxt"], "categoria"=>$_POST["categoria"], "nombre"=>$_POST["nombretxt"]);
 				$respuesta = Datos::insertarProductsModel($datosController,"products");
 
 				if ($respuesta == "success") {
 					$respuesta3 = Datos::ultimoProductsModel("products");
-					$datosController2 = array("user"=>$_SESSION["id"],"cantidad"=>$_POST["stocktxt"],"producto"=>$respuesta3["id"],"note"=>$_SESSION["nombre_usuario"]." agrego/compra","reference"=>$_POST["referencialtxt"]);
+					$datosController2 = array("user"=>$_SESSION["id"],"cantidad"=>$_POST["stocktxt"],"producto"=>$respuesta3["id"],"note"=>$_SESSION["nombre_usuario"]." agrego/compra","reference"=>$_POST["referenciatxt"]);
 					echo '
 						<div class="col-md-6 mt-3">
 							<button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
@@ -222,38 +195,45 @@ include_once "models/crud.php";
                             <div class="form-group">
                                 <input type="hidden" name="idProductEditar" class="form-control" value="<?php echo $respuesta["id"]; ?>" required>
                             </div>
+                            
                             <div class="form-group">
-                                <label for="nusuariotxtEditar">Codigo: </label>
-                                <input class="form-control" type="text" name="codigotxteditar" id="nusuariotxtEditar" placeholder="Codigo del producto" value="<?php echo $respuesta["nusuario"]; ?>" required>
+                                <label for="codigotxteditar">Código:</label>
+                                <input type="text" name="codigotxteditar" id="codigotxteditar" class="form-control" value="<?php echo $respuesta["codigo"]; ?>" placeholder="Código de producto" required>
                             </div>
+
                             <div class="form-group">
-                                <label for="ausuariotxtEditar">Nombre: </label>
-                                <input class="form-control" type="text" name="nombretxteditar" id="nombretxteditar" placeholder="Nombre de producto" value="<?php echo $respuesta["nombre"]; ?>" required>
+                                <label for="nombretxteditar">Nombre del producto:</label>
+                                <input type="text" name="nombretxteditar" id="nombretxteditar" class="form-control" value="<?php echo $respuesta["nombre"]; ?>" placeholder="Nombre del producto" required>
                             </div>
+
                             <div class="form-group">
-                                <label for="usuariotxtEditar">Precio: </label>
-                                <input class="form-control" type="number" name="preciotxteditar" id="preciotxteditar" placeholder="Precio de producto" min="1" value="<?php echo $respuesta["precio"]; ?>" required>
+                                <label for="preciotxteditar">Precio del producto:</label>
+                                <input class="form-control" name="preciotxteditar" id="preciotxteditar" type="number" min="1" value="<?php echo $respuesta["precio"]; ?>" placeholder="Precio del producto" required>
                             </div>
+
                             <div class="form-group">
-                                <label for="contratxtEditar">Stock: </label>
-                                <input class="form-control" type="password" name="stocktxteditar" id="ucontratxtEditar" placeholder="Stock del producto" required>
+                                <label for="stocktxteditar">Stock:</label>
+                                <input class="form-control" name="stocktxteditar" id="stocktxteditar" type="number" min="1" value="<?php echo $respuesta["stock"]; ?>" placeholder="Stock del producto" required>
                             </div>
+
                             <div class="form-group">
-                                <label for="uemailtxtEditar">Motivo: </label>
-                                <input class="form-control" type="email" name="referenciatxt" id="uemailtxtEditar" placeholder="Referencia de producto" value="<?php echo $respuesta["email"]; ?>" required>
+                                <label for="referenciatxteditar">Motivo:</label>
+                                <input type="text" name="referenciatxteditar" id="referenciatxteditar" class="form-control" placeholder="Mótivo de la modificación" required>
                             </div>
+
                             <div class="form-group">
-                                <label for="uemailtxtEditar">Categoria: </label>
-                                <select name="categoriaeditar" class="form-control">
-                                	<?php
-                                		$respuesta_categoria = Datos::obtenerCategoryModel("categories");
-                                		foreach ($respuesta_categoria as $row => $item) {
-                                		
-                                	?>
-                                	<option value="<?php echo $item["id"]; ?>"><?php echo $item["nombre"]; ?></option>
-                                	<?php 
-                                	}
-                                	?>
+                                <label for="categoriaeditar">Categoría:</label>
+                                <select name="categoriaeditar" id="categoriaeditar" class="form-control">
+                                    <?php
+                                        $respuesta_categoria = Datos::obtenerCategoryModel("categories");
+                                        foreach ($respuesta_categoria as $row => $item){
+                                    ?>
+                                        <option value="<?php echo $item["id"]; ?>">
+                                            <?php echo $item["categoria"]; ?>
+                                        </option>
+                                    <?php
+                                        }  
+                                    ?>
                                 </select>
                             </div>
                             <button class="btn btn-primary" type="submit">Editar</button>
@@ -301,6 +281,41 @@ include_once "models/crud.php";
 				}
 			}
 		}
+
+		//Controlador para eliminar un producto.
+        public function eliminarProductController(){
+            if(isset($_GET["idBorrar"])){
+                $datosController = $_GET["idBorrar"];
+                $respuesta = Datos::eliminarProductsModel($datosController, "products");
+                if($respuesta == "success"){
+                    echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-success alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-check"></i>
+                                    ¡Éxito!
+                                </h5>
+                                Producto eliminado con éxito.
+                            </div>
+                        </div>
+                    ';
+                } else {
+                    echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Error!
+                                </h5>
+                                Se ha producido un error al momento de eliminar el producto, trate de nuevo.
+                            </div>
+                        </div>
+                    ';
+                }
+            }
+        }
 
 		public function addProductController(){
 			$datosController=$_GET["idProductAdd"];
@@ -441,7 +456,6 @@ include_once "models/crud.php";
 		}
 
 		public function vistaHistorialController(){
-			$respuesta = Datos::vistaHistorialModel()
 			$respuesta = Datos::vistaHistorialModel("historial");
 			foreach ($respuesta as $row => $item) {
 				echo '
@@ -835,15 +849,15 @@ include_once "models/crud.php";
 		//INGRESO USUARIOS
 		public function ingresoUserController(){
 			if (isset($_POST["txtuser"]) && isset($_POST["txtpassword"])){
-				$datosController=array("user" => $_POST["txtUser"],
-										 "password" => $_POST["txtPassword"]);
-				$respuesta = Datos::ingresoUsuarioModel($datosController, "usuarios");
+				$datosController=array("user" => $_POST["txtuser"],
+										 "password" => $_POST["txtpassword"]);
+				$respuesta = Datos::ingresoUsuarioModel($datosController, "users");
 
 				//Validar la respuesta del modelo para ver si es un usuario correcto.
-				if($respuesta["usuario"] == $_POST["txtUser"] && $respuesta["contrasena"] == $_POST["txtPassword"]){
+				if($respuesta["usuario"] == $_POST["txtuser"] && $respuesta["contrasena"] == $_POST["txtpassword"]){
 					session_start();
 					$_SESSION["validar"] = true;
-					$_SESSION["nombre_usuario"] = $respuesta["usuario"];
+					$_SESSION["nombre_usuario"] = $respuesta["nombre_usuario"];
 					$_SESSION["id"]=$respuesta["id"];
 					header("location:index.php?action=tablero");
 				}else{
@@ -884,10 +898,10 @@ include_once "models/crud.php";
                 echo '
                     <tr>
                         <td>
-                            <a href="index.php?action=inventario&idProductEditar='.$item["id"].'" class="btn btn-warning btn-sm btn-icon" title="Editar" data-toggle="tooltip"><i class="fa fa-edit">Editar</i></a>
+                            <a href="index.php?action=inventario&idProductEditar='.$item["id"].'" class="btn btn-warning btn-sm btn-icon" title="Editar" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
                         </td>
                         <td>
-                        	<a href="index.php?action=inventarios&idBorrar='.$item["id"].'" class="btn btn-danger btn-sm btn-icon" title="Eliminar" data-toggle="tooltip"><i class="fa fa-trash">Eliminar</i></a>
+                            <a href="index.php?action=inventario&idBorrar='.$item["id"].'" class="btn btn-danger btn-sm btn-icon" title="Eliminar" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
                         </td>
                         <td>'.$item["id"].'</td>
                         <td>'.$item["codigo"].'</td>
@@ -896,12 +910,8 @@ include_once "models/crud.php";
                         <td>'.$item["precio"].'</td>
                         <td>'.$item["stock"].'</td>
                         <td>'.$item["categoria"].'</td>
-                        <td>
-                            <a href="index.php?action=inventario&idProductAdd='.$item["id"].'" class="btn btn-warning btn-sm btn-icon" title="Editar" data-toggle="tooltip"><i class="fa fa-edit">Editar</i></a>
-                        </td>
-                        <td>
-                        	<a href="index.php?action=inventarios&idProductDel='.$item["id"].'" class="btn btn-danger btn-sm btn-icon" title="Eliminar" data-toggle="tooltip"><i class="fa fa-trash">Eliminar</i></a>
-                        </td>
+                        <td><a href="index.php?action=inventario&idProductAdd='.$item["id"].'" class="btn btn-warning btn-sm btn-icon" title="Agregar Stock" data-toggle="tooltip"><i class="fa fa-edit"></i></a></td>
+                        <td><a href="index.php?action=inventario&idProductDel='.$item["id"].'" class="btn btn-danger btn-sm btn-icon" title="Quitar de Stock" data-toggle="tooltip"><i class="fa fa-edit"></i></a></td>
                     </tr>
                 ';
             }
@@ -909,6 +919,9 @@ include_once "models/crud.php";
 
         public function contarFilas(){
         	$respuesta_users = Datos::contarFilasModel("users");
+        	$respuesta_products = Datos::contarFilasModel("products");
+        	$respuesta_historial = Datos::contarFilasModel("historial");
+        	$respuesta_categories = Datos::contarFilasModel("categories");
 
         	echo '
                 <div class="col-lg-3 col-6">
@@ -921,6 +934,41 @@ include_once "models/crud.php";
                             <i class="far fa-address-card"></i>
                         </div>
                         <a class="small-box-footer" href="index.php?action=usuarios">Más <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>'.$respuesta_products["filas"].'</h3>
+                            <p>Total de Productos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <a class="small-box-footer" href="index.php?action=inventario">Más <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div><div class="col-lg-3 col-6">
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h3>'.$respuesta_categories["filas"].'</h3>
+                            <p>Total de Categorias</p>
+                        </div>
+                        <div class="icon">
+                            <i class="far fa-address-card"></i>
+                        </div>
+                        <a class="small-box-footer" href="index.php?action=catergorias">Más <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>'.$respuesta_historial["filas"].'</h3>
+                            <p>Total de Historial</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <a class="small-box-footer" href="index.php?action=inventario">Más <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>';
         }
