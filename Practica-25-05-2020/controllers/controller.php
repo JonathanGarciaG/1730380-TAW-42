@@ -520,14 +520,12 @@ include_once "models/crud.php";
 <?php 	}
 
 
-		 public function insertarCateoryController(){
+		 public function insertarCategoryController(){
 			if (isset($_POST["ncategoriatxt"]) && isset($_POST["dcategoriatxt"])) {
 				$datosController = array("nombre_categoria"=>$_POST["ncategoriatxt"],"descripcion_categoria"=>$_POST["dcategoriatxt"]);
 				$respuesta = Datos::insertarCategoryModel($datosController,"categories");
 
 				if ($respuesta == "success") {
-					$datosController2 = array("user"=>$_SESSION["id"],"cantidad"=>$_POST["delstocktxt"],"producto"=>$_POST["idProductDel"],"note"=>$_SESSION["nombre_usuario"]." quito","reference"=>$_POST["referenciatxtdel"]);
-					$respuesta2 = Datos::insertarHistorialModel($datosController2,"historial");
 					echo '
 						<div class="col-md-6 mt-3">
 							<button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
@@ -573,12 +571,12 @@ include_once "models/crud.php";
                                 <input type="hidden" name="idCategoryEditar" class="form-control" value="<?php echo $respuesta["id"]; ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="nusuariotxtEditar">Nombre de Categoría: </label>
-                                <input class="form-control" type="text" name="ncategoriatxt" id="ncateopriatxt" placeholder="Ingrese el nombre de la categoria" value="<?php echo $respuesta["nombre_categoria"]; ?>" required>
+                                <label for="n">Nombre de Categoría: </label>
+                                <input class="form-control" type="text" name="ncategoriatxteditar" id="ncateopriatxt" placeholder="Ingrese el nombre de la categoria" value="<?php echo $respuesta["nombre_categoria"]; ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="ausuariotxtEditar">Descripcion de la Categoría: </label>
-                                <input class="form-control" type="text" name="dcategoriatxt" id="dcategoriatxt" placeholder="Ingrese la descripción de la categoria" value="<?php echo $respuesta["descripcion_categoria"]; ?>" required>
+                                <label for="a">Descripcion de la Categoría: </label>
+                                <input class="form-control" type="text" name="dcategoriatxteditar" id="dcategoriatxt" placeholder="Ingrese la descripción de la categoria" value="<?php echo $respuesta["descripcion_categoria"]; ?>" required>
                             </div>
                             
                             <button class="btn btn-primary" type="submit">Editar</button>
@@ -590,7 +588,7 @@ include_once "models/crud.php";
 		} 
 
 
-		public function actualizarCateoryController(){
+		public function actualizarCategoryController(){
 			if (isset($_POST["ncategoriatxteditar"]) && isset($_POST["dcategoriatxteditar"])) {
 				$datosController = array("id"=>$_POST["idCategoryEditar"],"nombre_categoria"=>$_POST["ncategoriatxteditar"],"descripcion_categoria"=>$_POST["dcategoriatxteditar"]);
 				$respuesta = Datos::actualizarCategoryModel($datosController,"categories");
@@ -624,7 +622,7 @@ include_once "models/crud.php";
 			}
 		}
 
-		public function eliminarCateoryController(){
+		public function eliminarCategoryController(){
 			if (isset($_GET["idBorrar"])) {
 				$datosController = $_GET["idBorrar"];
 				$respuesta = Datos::eliminarCategoryModel($datosController,"categories");
@@ -917,6 +915,141 @@ include_once "models/crud.php";
             }
         }
 
+        public function registrarVentaController(){
+            ?>
+
+        <div class="row">
+            <div class="col-12 col-sm-7">
+            <div class="card">
+              <div class="card-header bg-secondary">
+                <h3 class="card-title">Detalles de la venta</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th>Precio Unitario</th>
+                      <th>Cantidad</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Xbox Series X</td>
+                      <td>$ 2300.00</td>
+                      <td>2</td>
+                      <td>$ 4600.00</td>
+                    </tr>
+                    <tr>
+                        <td>Vulcan 920</td>
+                        <td>$ 5120.00</td>
+                        <td>1</td>
+                        <td>$ 5120.00</td>
+                      </tr>
+                  </tbody>
+                  <tfooter>
+                    <tr style="text-align: right;">
+                        <th colspan="1">Recuento de productos (2)</th>
+                        <th colspan="2">Impuesto neto excluido</th>
+                        <td colspan="1">$ 11,720.00</td>
+                    </tr>
+                    <tr style="text-align: right;">
+                        <th colspan="3">Descuento en carro</th>
+                        <td colspan="1">$ 0.00</td>
+                    </tr>
+                    <tr style="text-align: right;">
+                        <th colspan="3">Envío</th>
+                        <td colspan="1">$ 0.00</td>
+                    </tr>
+                    <tr style="text-align: right;">
+                        <th colspan="1">Total impuestos</th>
+                        <td colspan="1">$ 0.00</td>
+                        <th colspan="1">Pago Neto</th>
+                        <td colspan="1">$ 11,720.00</td>
+                    </tr>
+                    
+                  </tfooter>
+                </table>
+              </div><!-- /.card-body -->
+            </div><!-- /.card -->
+
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">Pagar</button>
+                <button type="button" class="btn btn-default">En espera</button>
+                <button type="button" class="btn btn-default">Descuento</button>
+                <button type="button" class="btn btn-default">Cancelar</button>
+              </div>
+
+            </div><!-- /.col-sm-6 izquierda-->
+
+            <div class="col-12 col-sm-5">
+            <div class="card card-secondary card-tabs">
+              <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                  <li class="pt-2 px-3"><h3 class="card-title"><b>Categorías</b></h3></li>
+
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Consolas</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#custom-tabs-two-profile" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Plástico</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill" href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages" aria-selected="false">Drogas</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill" href="#custom-tabs-two-settings" role="tab" aria-controls="custom-tabs-two-settings" aria-selected="false">Armas</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body" style="height: 500px; overflow: scroll;">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                  <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                    
+                    <div class="row mt-2">
+                        <div class="col-sm-4" style="text-align: center;">
+                            <span class="mailbox-attachment-icon has-img"><img src="views/assets/dist/img/photo2.png" alt="Attachment"></span>
+                            <div class="mailbox-attachment-info">
+                                <a href="#" class="mailbox-attachment-name">
+                                    <small>Xbox Series X <br/> 2,300.00 (5)</small>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4" style="text-align: center;">
+                            <span class="mailbox-attachment-icon has-img"><img src="views/assets/dist/img/photo2.png" alt="Attachment"></span>
+                            <div class="mailbox-attachment-info">
+                                <a href="#" class="mailbox-attachment-name">
+                                    <small>PS5 <br/> 6,300.00 (2)</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div><!-- /.row mt-2 -->
+                  </div>
+
+                  <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
+                 
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
+                    
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
+                    
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div><!-- /. col-sm-6 derecha -->
+        </div>
+
+
+            <?php
+        }
+
         public function contarFilas(){
         	$respuesta_users = Datos::contarFilasModel("users");
         	$respuesta_products = Datos::contarFilasModel("products");
@@ -954,9 +1087,9 @@ include_once "models/crud.php";
                             <p>Total de Categorias</p>
                         </div>
                         <div class="icon">
-                            <i class="far fa-address-card"></i>
+                            <i class="fas fa-th-large"></i>
                         </div>
-                        <a class="small-box-footer" href="index.php?action=catergorias">Más <i class="fas fa-arrow-circle-right"></i></a>
+                        <a class="small-box-footer" href="index.php?action=categorias">Más <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
@@ -969,6 +1102,19 @@ include_once "models/crud.php";
                             <i class="fas fa-list"></i>
                         </div>
                         <a class="small-box-footer" href="index.php?action=inventario">Más <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>'.$respuesta_historial["filas"].'</h3>
+                            <p>Total de Ventas</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <a class="small-box-footer" href="index.php?action=ventas">Más <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>';
         }

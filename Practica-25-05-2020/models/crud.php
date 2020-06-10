@@ -104,7 +104,7 @@
 			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (name_category,description_category) VALUES (:ncategoria,:dcategoria)");
 			
 			$stmt->bindParam(":ncategoria",$datosModel["nombre_categoria"],PDO::PARAM_STR);
-			$stmt->bindParam(":dcategoria",$datosModel["description_category"],PDO::PARAM_STR);
+			$stmt->bindParam(":dcategoria",$datosModel["descripcion_categoria"],PDO::PARAM_STR);
 
 			if ($stmt->execute()) {
 				return "success";

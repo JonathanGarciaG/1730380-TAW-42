@@ -54,26 +54,26 @@
 						<i class="nav-icon fas fa-boxes">
 							
 						</i>
-						<p>Usuarios</p>
+						<p>Productos</p>
 					</a>
 				</li>
 				
-			<!--	<li class="nav-item">
-					<a href="index.php?action=productos" class="nav-link">
-						<i class="nav-icon fas fa-users">
+				<li class="nav-item">
+					<a href="index.php?action=categorias" class="nav-link">
+						<i class="nav-icon fas fa-th-large">
 							
 						</i>
-						<p>Productos</p>
+						<p>Categorias</p>
 					</a>
 				</li>
 
 				<li class="nav-item">
-					<a href="index.php?action=categorias" class="nav-link">
-						<i class="nav-icon fas fa-users">					
+					<a href="index.php?action=ventas" class="nav-link">
+						<i class="nav-icon fas fa-dollar-sign">					
 						</i>
-						<p>Cantegorias</p>
+						<p>Ventas</p>
 					</a>
-				</li>-->
+				</li>
 
 				<li class="nav-item">
 					<a href="index.php?action=salir" class="nav-link">
