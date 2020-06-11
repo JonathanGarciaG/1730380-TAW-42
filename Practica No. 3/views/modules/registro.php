@@ -52,6 +52,17 @@ $registro->insertarUserController();
             </div>
           </div>
         </div>
+        <div class="input-group mb-3">
+                <select class="form-control" name="tipo" required>
+              <option value="Cajero">Cajero</option>
+              <option value="Administrador">Administrador</option>
+            </select>
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
         <div class="row">
           <!-- /.col -->
           <div class="col-12">

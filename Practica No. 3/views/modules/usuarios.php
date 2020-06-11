@@ -10,7 +10,7 @@
 	$usuarios -> eliminarUserController();
 
 	if (isset($_GET['registrar'])) {
-		$usuarios->registrarUserController();
+		$usuarios->vistaUserController();
 	}else if (isset($_GET['idUserEditar'])){
 		$usuarios->editarUserController();
 	}
@@ -39,6 +39,7 @@
 									<th>Apellido</th>
 									<th>Usuario</th>
 									<th>Email</th>
+									<th>Tipo de Usuario</th>
 									<th>Fecha de insercion</th>
 								</tr>
 							</thead>

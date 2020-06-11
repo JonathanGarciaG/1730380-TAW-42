@@ -41,10 +41,12 @@
                                     <th>ID</th>
                                     <th>Código del Producto</th>
                                     <th>Nombre del Producto</th>
-                                    <th>Fecha de Inserción</th>
-                                    <th>Precio</th>
-                                    <th>Stock</th>
-                                    <th>Categoría</th>
+                                    <th>Cliente</th>
+                                    <th>Total</th>
+                                    <th>Tipo de Pago</th>
+                                    <th>Pago</th>
+                                    <th>Fecha</th>
+                                    <th>Venta hecha por</th>
                                 </tr>
                             </thead>
                             <tbody>

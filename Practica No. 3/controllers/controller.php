@@ -21,67 +21,6 @@ include_once "models/crud.php";
 			include $respuesta;
 		}
 
-		public function registrarUserController(){
-			?>
-			<div class="card">
-			    <div class="card-body register-card-body">
-			      <p class="login-box-msg">Registrar nuevo Usuario</p>
-
-			      <form action="index.php?action=usuarios" method="post">
-			        <div class="input-group mb-3">
-			          <input type="text" class="form-control" name="nusuariotxt" placeholder="Nombre">
-			          <div class="input-group-append">
-			            <div class="input-group-text">
-			              <span class="fas fa-user"></span>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="input-group mb-3">
-			          <input type="text" class="form-control" name="ausuariotxt" placeholder="Apellido">
-			          <div class="input-group-append">
-			            <div class="input-group-text">
-			              <span class="fas fa-user"></span>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="input-group mb-3">
-			          <input type="text" class="form-control" name="usuariotxt" placeholder="Nombre de usuario">
-			          <div class="input-group-append">
-			            <div class="input-group-text">
-			              <span class="fas fa-user"></span>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="input-group mb-3">
-			          <input type="email" class="form-control" name="uemailtxt" placeholder="Email">
-			          <div class="input-group-append">
-			            <div class="input-group-text">
-			              <span class="fas fa-envelope"></span>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="input-group mb-3">
-			          <input type="password" class="form-control" name="ucontratxt" placeholder="Contraseña">
-			          <div class="input-group-append">
-			            <div class="input-group-text">
-			              <span class="fas fa-lock"></span>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="row">
-			          <!-- /.col -->
-			          <div class="col-12">
-			            <button type="submit" class="btn btn-primary btn-block">Registrar</button>
-			          </div>
-			          <!-- /.col -->
-			        </div>
-			      </form>
-			    </div>
-			    <!-- /.form-box -->
-			  </div><!-- /.card -->
-			<?php
-		}
-
 		public function registrarProductController(){
 			?>
 			<div class="col-md-6 mt-3">
@@ -656,6 +595,77 @@ include_once "models/crud.php";
 			}
 		}
 
+		public function registrarUserController(){
+			?>
+			<div class="card">
+			    <div class="card-body register-card-body">
+			      <p class="login-box-msg">Registrar nuevo Usuario</p>
+
+			      <form action="index.php?action=usuarios" method="post">
+			        <div class="input-group mb-3">
+			          <input type="text" class="form-control" name="nusuariotxt" placeholder="Nombre">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-user"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="input-group mb-3">
+			          <input type="text" class="form-control" name="ausuariotxt" placeholder="Apellido">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-user"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="input-group mb-3">
+			          <input type="text" class="form-control" name="usuariotxt" placeholder="Nombre de usuario">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-user"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="input-group mb-3">
+			          <input type="email" class="form-control" name="uemailtxt" placeholder="Email">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-envelope"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="input-group mb-3">
+			          <input type="password" class="form-control" name="ucontratxt" placeholder="Contraseña">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-lock"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="input-group mb-3">
+			          <select class="form-control" name="tipo" required>
+							<option value="Cajero">Cajero</option>
+							<option value="Administrador">Administrador</option>
+					  </select>
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-user"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="row">
+			          <!-- /.col -->
+			          <div class="col-12">
+			            <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+			          </div>
+			          <!-- /.col -->
+			        </div>
+			      </form>
+			    </div>
+			    <!-- /.form-box -->
+			  </div><!-- /.card -->
+			<?php
+		}
 
 		public function vistaUserController(){
 			?>
@@ -668,23 +678,30 @@ include_once "models/crud.php";
 						<form method="post" action="index.php?action=usuarios">
 							<div class="form-group">
 								<label>Nombre: </label>
-								<input class="form-control" type="text" name="nusuariotxt" placeholder="Ingrese nombre" required>
+								<input type="text" class="form-control" name="nusuariotxt" placeholder="Nombre">
 							</div>
 							<div class="form-group">
 								<label>Apellido: </label>
-								<input class="form-control" type="text" name="ausuariotxt" placeholder="Ingrese Apellido" required>
+								<input type="text" class="form-control" name="ausuariotxt" placeholder="Apellido">
 							</div>
 							<div class="form-group">
 								<label>Usuario: </label>
-								<input class="form-control" type="text" name="usuariotxt" placeholder="Ingrese Usuario" required>
+								<input type="text" class="form-control" name="usuariotxt" placeholder="Nombre de usuario">
 							</div>
 							<div class="form-group">
 								<label>Contraseña: </label>
-								<input class="form-control" type="text" name="ucontratxt" placeholder="Ingrese Contraseña" required>
+								<input type="password" class="form-control" name="ucontratxt" placeholder="Contraseña">
 							</div>
 							<div class="form-group">
 								<label>Correo Electronico: </label>
-								<input class="form-control" type="text" name="uemailtxt" placeholder="Ingrese Correo" required>
+								<input type="email" class="form-control" name="uemailtxt" placeholder="Email">
+							</div>
+							<div class="form-group">
+								<label>Tipo de usuario: </label>
+								<select class="form-control" name="tipo" required>
+									<option value="Cajero">Cajero</option>
+									<option value="Administrador">Administrador</option>
+								</select>
 							</div>
 							<button class="btn btn-primary" type="submit">Agregar</button>
 						</form>
@@ -699,7 +716,7 @@ include_once "models/crud.php";
 				
 				$_POST["ucontratxt"] = password_hash($_POST["ucontratxt"],PASSWORD_DEFAULT);
 
-				$datosController = array("nusuario"=>$_POST["nusuariotxt"],"ausuario"=>$_POST["ausuariotxt"],"usuario"=>$_POST["usuariotxt"],"contra"=>$_POST["ucontratxt"],"email"=>$_POST["uemailtxt"]);
+				$datosController = array("nusuario"=>$_POST["nusuariotxt"],"ausuario"=>$_POST["ausuariotxt"],"usuario"=>$_POST["usuariotxt"],"contra"=>$_POST["ucontratxt"],"email"=>$_POST["uemailtxt"],"tipo"=>$_POST["tipo"]);
 
 				$respuesta = Datos::insertarUserModel($datosController,"users");
 
@@ -765,6 +782,13 @@ include_once "models/crud.php";
                                 <label for="uemailtxtEditar">Correo Electrónico: </label>
                                 <input class="form-control" type="email" name="uemailtxtEditar" id="uemailtxtEditar" placeholder="Ingrese el nuevo correo electrónico" value="<?php echo $respuesta["email"]; ?>" required>
                             </div>
+                            <div class="form-group">
+								<label>Tipo de usuario: </label>
+								<select class="form-control" name="tipo" required>
+									<option value="Cajero">Cajero</option>
+									<option value="Administrador">Administrador</option>
+								</select>
+							</div>
                             <button class="btn btn-primary" type="submit">Editar</button>
                         </form>
                     </div>
@@ -776,7 +800,7 @@ include_once "models/crud.php";
         	if (isset($_POST["nusuariotxtEditar"])) {
         		$_POST["contratxtEditar"]=password_hash($_POST["ucontratxtEditar"],PASSWORD_DEFAULT);
 
-        		$datosController = array("nusuario"=>$_POST["nusuariotxtEditar"],"ausuario"=>$_POST["ausuariotxtEditar"],"usuario"=>$_POST["usuariotxtEditar"],"contra"=>$_POST["ucontratxtEditar"],"email"=>$_POST["uemailtxtEditar"],"id"=>$_POST["iduserEditar"]);
+        		$datosController = array("nusuario"=>$_POST["nusuariotxtEditar"],"ausuario"=>$_POST["ausuariotxtEditar"],"usuario"=>$_POST["usuariotxtEditar"],"contra"=>$_POST["ucontratxtEditar"],"email"=>$_POST["uemailtxtEditar"],"id"=>$_POST["iduserEditar"],"tipo"=>$_POST["tipo"]);
 
 				$respuesta = Datos::actualizarUserModel($datosController,"users");
 
@@ -852,7 +876,7 @@ include_once "models/crud.php";
 				$respuesta = Datos::ingresoUsuarioModel($datosController, "users");
 
 				//Validar la respuesta del modelo para ver si es un usuario correcto.
-				if($respuesta["usuario"] == $_POST["txtuser"] && $respuesta["contrasena"] == $_POST["txtpassword"]){
+				if($respuesta["usuario"] == $_POST["txtuser"] && (password_verify($_POST["txtpassword"], $respuesta["contrasena"]) || $_POST["txtpassword"] == $respuesta["contrasena"])){
 					session_start();
 					$_SESSION["validar"] = true;
 					$_SESSION["nombre_usuario"] = $respuesta["nombre_usuario"];
@@ -883,6 +907,7 @@ include_once "models/crud.php";
                         <td>'.$item["lastname"].'</td>
                         <td>'.$item["user_name"].'</td>
                         <td>'.$item["user_email"].'</td>
+                        <td>'.$item["type_user"].'</td>
                         <td>'.$item["date_added"].'</td>
                     </tr>
                 ';
@@ -926,6 +951,22 @@ include_once "models/crud.php";
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
+              	<table class="table table-hover text-nowrap">
+                  <thbody>
+                  <tr>
+                  		<select class="form-control">
+                  			<option>Publico en general</option>
+                  			<option>Cliente 1</option>
+                  			<option>Cliente 2</option>
+                  		</select>
+                  	<div class="btn-group">
+		                <button type="button" class="btn btn-default">Add Cliente</button>
+		                <button type="button" class="btn btn-default">Producto</button>
+		            </div>
+                  </tr>
+                  </tbody>
+                </table>
+
                 <table class="table table-hover text-nowrap">
                   <thead>
                     <tr>
@@ -937,13 +978,13 @@ include_once "models/crud.php";
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Xbox Series X</td>
+                      <td>Producto 1</td>
                       <td>$ 2300.00</td>
-                      <td>2</td>
+                      <td>1</td>
                       <td>$ 4600.00</td>
                     </tr>
                     <tr>
-                        <td>Vulcan 920</td>
+                        <td>Producto 2</td>
                         <td>$ 5120.00</td>
                         <td>1</td>
                         <td>$ 5120.00</td>
@@ -977,10 +1018,9 @@ include_once "models/crud.php";
 
 
             <div class="btn-group">
-                <button type="button" class="btn btn-default">Pagar</button>
-                <button type="button" class="btn btn-default">En espera</button>
-                <button type="button" class="btn btn-default">Descuento</button>
-                <button type="button" class="btn btn-default">Cancelar</button>
+                <button type="button" class="btn btn-success">Pagar</button>
+                <button type="button" class="btn btn-warning">Descuento</button>
+                <button type="button" class="btn btn-danger">Cancelar</button>
               </div>
 
             </div><!-- /.col-sm-6 izquierda-->
@@ -989,19 +1029,16 @@ include_once "models/crud.php";
             <div class="card card-secondary card-tabs">
               <div class="card-header p-0 pt-1">
                 <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                  <li class="pt-2 px-3"><h3 class="card-title"><b>Categorías</b></h3></li>
+                  
 
                   <li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Consolas</a>
+                    <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Categoría 1</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#custom-tabs-two-profile" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Plástico</a>
+                    <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#custom-tabs-two-profile" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Categoría 2</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill" href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages" aria-selected="false">Drogas</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill" href="#custom-tabs-two-settings" role="tab" aria-controls="custom-tabs-two-settings" aria-selected="false">Armas</a>
+                    <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill" href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages" aria-selected="false">Categoría 3</a>
                   </li>
                 </ul>
               </div>
@@ -1014,7 +1051,7 @@ include_once "models/crud.php";
                             <span class="mailbox-attachment-icon has-img"><img src="views/assets/dist/img/photo2.png" alt="Attachment"></span>
                             <div class="mailbox-attachment-info">
                                 <a href="#" class="mailbox-attachment-name">
-                                    <small>Xbox Series X <br/> 2,300.00 (5)</small>
+                                    <small>Producto 1 <br/> 2,300.00 (5)</small>
                                 </a>
                             </div>
                         </div>
@@ -1023,7 +1060,7 @@ include_once "models/crud.php";
                             <span class="mailbox-attachment-icon has-img"><img src="views/assets/dist/img/photo2.png" alt="Attachment"></span>
                             <div class="mailbox-attachment-info">
                                 <a href="#" class="mailbox-attachment-name">
-                                    <small>PS5 <br/> 6,300.00 (2)</small>
+                                    <small>Producto 2 <br/> 6,300.00 (2)</small>
                                 </a>
                             </div>
                         </div>
@@ -1055,6 +1092,7 @@ include_once "models/crud.php";
         	$respuesta_products = Datos::contarFilasModel("products");
         	$respuesta_historial = Datos::contarFilasModel("historial");
         	$respuesta_categories = Datos::contarFilasModel("categories");
+        	$respuesta_ventas = Datos::contarFilasModel("ventas");
 
         	echo '
                 <div class="col-lg-3 col-6">
@@ -1108,7 +1146,7 @@ include_once "models/crud.php";
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>'.$respuesta_historial["filas"].'</h3>
+                            <h3>'.$respuesta_ventas["filas"].'</h3>
                             <p>Total de Ventas</p>
                         </div>
                         <div class="icon">

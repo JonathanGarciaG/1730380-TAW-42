@@ -15,7 +15,7 @@
 
 		//trae los registros de usuarios para generar la vista de usuario
 		public function vistaUserModel($tabla){
-			$stmt = Conexion::conectar()->prepare("SELECT user_id,firstname,lastname,user_name, user_password,user_email,date_added FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT user_id,firstname,lastname,user_name, user_password,user_email,date_added,type_user FROM $tabla");
 			
 			$stmt->execute();
 			return $stmt->fetchAll();
@@ -24,13 +24,14 @@
 
 		//modelo para insertar un nuevo usuario (registro de usuario)
 		public function insertarUserModel($datosModel,$tabla){
-			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (firstname,lastname,user_name,user_password,user_email) VALUES (:nusuario,:ausuario,:usuario,:contra,:email)");
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (firstname,lastname,user_name,user_password,user_email,type_user) VALUES (:nusuario,:ausuario,:usuario,:contra,:email,:tipo)");
 			
 			$stmt->bindParam(":nusuario",$datosModel["nusuario"],PDO::PARAM_STR);
 			$stmt->bindParam(":ausuario",$datosModel["ausuario"],PDO::PARAM_STR);
 			$stmt->bindParam(":usuario",$datosModel["usuario"],PDO::PARAM_STR);
 			$stmt->bindParam(":contra",$datosModel["contra"],PDO::PARAM_STR);
 			$stmt->bindParam(":email",$datosModel["email"],PDO::PARAM_STR);
+			$stmt->bindParam(":tipo",$datosModel["tipo"],PDO::PARAM_STR);
 
 			if ($stmt->execute()) {
 				return "success";
@@ -52,13 +53,14 @@
 
 		//modelo para actualizar usuario
 		public function actualizarUserModel($datosModel,$tabla){
-			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET firstname = :nusuario, lastname = :ausuario, user_name = :usuario, user_password = :contra, user_email = :email WHERE user_id = :id");
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET firstname = :nusuario, lastname = :ausuario, user_name = :usuario, user_password = :contra, user_email = :email,type_user = :tipo WHERE user_id = :id");
 			
 			$stmt->bindParam(":nusuario",$datosModel["nusuario"],PDO::PARAM_STR);
 			$stmt->bindParam(":ausuario",$datosModel["ausuario"],PDO::PARAM_STR);
 			$stmt->bindParam(":usuario",$datosModel["usuario"],PDO::PARAM_STR);
 			$stmt->bindParam(":contra",$datosModel["contra"],PDO::PARAM_STR);
 			$stmt->bindParam(":email",$datosModel["email"],PDO::PARAM_STR);
+			$stmt->bindParam(":tipo",$datosModel["tipo"],PDO::PARAM_STR);
 			$stmt->bindParam(":id",$datosModel["id"],PDO::PARAM_INT);
 
 			if ($stmt->execute()) {
