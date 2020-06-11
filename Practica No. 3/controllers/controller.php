@@ -21,6 +21,7 @@ include_once "models/crud.php";
 			include $respuesta;
 		}
 
+		//controlador del formulario registro de producto
 		public function registrarProductController(){
 			?>
 			<div class="col-md-6 mt-3">
@@ -120,8 +121,10 @@ include_once "models/crud.php";
 			}
 		}
 
+		//controlador para la vista de editar producto
 		public function editarProductController(){
 			$datosController = $_GET["idProductEditar"];
+			//llama al modelo para ejecutar sentencia select y traer los datos del producto a editar
 			$respuesta = Datos::editarProductsModel($datosController,"products");
 			?>
             <div class="col-md-6 mt-3">
@@ -183,13 +186,15 @@ include_once "models/crud.php";
 		<?php 	
 		} 
 
+		//controlador para actualizar datos del producto
 		public function actualizarProductController(){
 			if (isset($_POST["codigotxteditar"])) {
 				$datosController = array("id"=>$_POST["idProductEditar"],"codigo"=>$_POST["codigotxteditar"],"precio"=>$_POST["preciotxteditar"],"stock"=>$_POST["stocktxteditar"],"categoria"=>$_POST["categoriaeditar"],"nombre"=>$_POST["nombretxteditar"]);
+				//lama al modelo para ejecutar sentencia update
 				$respuesta = Datos::actualizarProductsModel($datosController,"products");
 
 				if ($respuesta == "success") {
-					//$respuesta3 = Datos::ultimoProductsModel("products");
+					//se insertar registro de los cambios en tabla historial
 					$datosController2 = array("user"=>$_SESSION["id"],"cantidad"=>$_POST["stocktxteditar"],"producto"=>$_POST["idProductEditar"],"note"=>$_SESSION["nombre_usuario"]." agrego/compra","reference"=>$_POST["referenciatxteditar"]);
 					$respuesta2 = Datos::insertarHistorialModel($datosController2,"historial");
 					echo '
@@ -256,6 +261,7 @@ include_once "models/crud.php";
             }
         }
 
+        //controlador para añadir piezas a stock del producto
 		public function addProductController(){
 			$datosController=$_GET["idProductAdd"];
 			$respuesta = Datos::editarProductsModel($datosController,"products");
@@ -287,13 +293,14 @@ include_once "models/crud.php";
 			<?php
 		}
 
+		//metodo actualiza la cantidad en el stock en edicion
 		public function actualizarStockController(){
 			if (isset($_POST["addstocktxt"])) {
 				$datosController = array("id"=>$_POST["idProductAdd"],"stock"=>$_POST["addstocktxt"]);
 				$respuesta = Datos::pushProductsModel($datosController,"products");
 
 				if ($respuesta == "success") {
-					//$respuesta3 = Datos::ultimoProductsModel("products");
+					//realiza insert en el histrorial sobre los cambios realizados
 					$datosController2 = array("user"=>$_SESSION["id"],"cantidad"=>$_POST["addstocktxt"],"producto"=>$_POST["idProductAdd"],"note"=>$_SESSION["nombre_usuario"]." agrego/compra","reference"=>$_POST["referenciatxtadd"]);
 					$respuesta2 = Datos::insertarHistorialModel($datosController2,"historial");
 					echo '
@@ -325,6 +332,7 @@ include_once "models/crud.php";
 			}
 		}
 
+		//metodo para actualizar la cantidad del stock restado
 		public function actualizar2StockController(){
 			if (isset($_POST["delstocktxt"])) {
 				$datosController = array("id"=>$_POST["idProductDel"],"stock"=>$_POST["delstocktxt"]);
@@ -363,6 +371,7 @@ include_once "models/crud.php";
 			}
 		}
 
+		//metodo para la vista de eliminar en el stock del producto
 		public function delProductController(){
 			$datosController=$_GET["idProductDel"];
 			$respuesta = Datos::editarProductsModel($datosController,"products");
@@ -394,6 +403,7 @@ include_once "models/crud.php";
 			<?php
 		}
 
+		//metodo para mostrar vista del historial
 		public function vistaHistorialController(){
 			$respuesta = Datos::vistaHistorialModel("historial");
 			foreach ($respuesta as $row => $item) {
@@ -432,6 +442,7 @@ include_once "models/crud.php";
             }
         }
 
+        //controlador para mostrar vista de registrar nueva categoria
         public function registrarCategoryController(){
 			?>
             <div class="col-md-6 mt-3">
@@ -458,7 +469,7 @@ include_once "models/crud.php";
             </div>
 <?php 	}
 
-
+		//controlador para realizar el insert de una nueva categoria
 		 public function insertarCategoryController(){
 			if (isset($_POST["ncategoriatxt"]) && isset($_POST["dcategoriatxt"])) {
 				$datosController = array("nombre_categoria"=>$_POST["ncategoriatxt"],"descripcion_categoria"=>$_POST["dcategoriatxt"]);
@@ -494,7 +505,7 @@ include_once "models/crud.php";
 			}
 		}
 
-
+		//contrlador para vista de edicion de una categoria
 		public function editarCategoryController(){
 			$datosController = $_GET["idCategoryEditar"];
 			$respuesta = Datos::editarCategoryModel($datosController,"categories");
@@ -526,7 +537,7 @@ include_once "models/crud.php";
 		<?php 	
 		} 
 
-
+		//controlador para llamar al modelo para realizar la sentencia update y actualizar la categoria
 		public function actualizarCategoryController(){
 			if (isset($_POST["ncategoriatxteditar"]) && isset($_POST["dcategoriatxteditar"])) {
 				$datosController = array("id"=>$_POST["idCategoryEditar"],"nombre_categoria"=>$_POST["ncategoriatxteditar"],"descripcion_categoria"=>$_POST["dcategoriatxteditar"]);
@@ -561,6 +572,7 @@ include_once "models/crud.php";
 			}
 		}
 
+		//controlador para eliminar la categoria, llama al modelo para ejecutar la sentencia delete
 		public function eliminarCategoryController(){
 			if (isset($_GET["idBorrar"])) {
 				$datosController = $_GET["idBorrar"];
@@ -595,6 +607,7 @@ include_once "models/crud.php";
 			}
 		}
 
+		//controlador para vista de registro de un nuevo usuario, vista de ingreso(login)
 		public function registrarUserController(){
 			?>
 			<div class="card">
@@ -667,6 +680,7 @@ include_once "models/crud.php";
 			<?php
 		}
 
+		//controlador para mostrar vista de registro de nuevo usuario, vista de lista de usuarios.
 		public function vistaUserController(){
 			?>
 			<div class="col-md-6 mt-3">
@@ -711,6 +725,7 @@ include_once "models/crud.php";
 			<?php
 		}
 
+		//controlador para insertar usuario, se llama al modelo para realizar insert a la tabla users
 		public function insertarUserController(){
 			if (isset($_POST["nusuariotxt"])) {
 				
@@ -748,6 +763,7 @@ include_once "models/crud.php";
 			}
 		}
 
+		//controlador para mostrar vista de edicion de usuarios, ejecuta el modelo para traer el registro del usuario a editar.
 		public function editarUserController(){
 			$datosController = $_GET["idUserEditar"];
 			$respuesta = Datos::editarUserModel($datosController,"users");
@@ -796,6 +812,7 @@ include_once "models/crud.php";
             </div>
 <?php } 
 
+		//controlador para actualizar el usuario, llama al modelo para realizar la sentencia update
         public function actualizarUserController(){
         	if (isset($_POST["nusuariotxtEditar"])) {
         		$_POST["contratxtEditar"]=password_hash($_POST["ucontratxtEditar"],PASSWORD_DEFAULT);
@@ -832,7 +849,7 @@ include_once "models/crud.php";
         	}
         }
 
-
+        //controlador para eliminar el usuario, llama al modelo delete
         public function eliminarUserController(){
         	if (isset($_GET["idBorrar"])) {
         		$datosController = $_GET["idBorrar"];
@@ -914,7 +931,7 @@ include_once "models/crud.php";
             }
         }
 
-        //Controlador para cargar todos los datos de lo usuarios, la contraeña no se puede cargar debido a que independientemente de si se muestra o no, esta está encriptada.
+        //Controlador para mostrar la vista de los registro de la tabla productos
         public function vistaProductsController(){
             $respuesta = Datos::vistaProductsModel("products");
             foreach ($respuesta as $row => $item){
@@ -940,6 +957,7 @@ include_once "models/crud.php";
             }
         }
 
+        //controlador para mostrar vista del registro de ventas
         public function registrarVentaController(){
             ?>
 
@@ -1087,6 +1105,7 @@ include_once "models/crud.php";
             <?php
         }
 
+        //controlador para mostrar los boxes de las filas de las tablas, vista del tablero
         public function contarFilas(){
         	$respuesta_users = Datos::contarFilasModel("users");
         	$respuesta_products = Datos::contarFilasModel("products");
