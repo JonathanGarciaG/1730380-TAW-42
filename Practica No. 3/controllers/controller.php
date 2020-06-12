@@ -121,7 +121,7 @@ include_once "models/crud.php";
 			}
 		}
 
-		//controlador para la vista de editar producto
+		//controlador para la vista de editar producto, llama al modelo para traer el registro a editar de la tabla productos
 		public function editarProductController(){
 			$datosController = $_GET["idProductEditar"];
 			//llama al modelo para ejecutar sentencia select y traer los datos del producto a editar
@@ -186,7 +186,7 @@ include_once "models/crud.php";
 		<?php 	
 		} 
 
-		//controlador para actualizar datos del producto
+		//controlador para actualizar datos del producto, llama al modelo para ejecutar un update al registro de la tabla products
 		public function actualizarProductController(){
 			if (isset($_POST["codigotxteditar"])) {
 				$datosController = array("id"=>$_POST["idProductEditar"],"codigo"=>$_POST["codigotxteditar"],"precio"=>$_POST["preciotxteditar"],"stock"=>$_POST["stocktxteditar"],"categoria"=>$_POST["categoriaeditar"],"nombre"=>$_POST["nombretxteditar"]);
@@ -226,7 +226,7 @@ include_once "models/crud.php";
 			}
 		}
 
-		//Controlador para eliminar un producto.
+		//Controlador para eliminar un producto, llama al modelo para ejecutar una sentencia delete a la tabla productos.
         public function eliminarProductController(){
             if(isset($_GET["idBorrar"])){
                 $datosController = $_GET["idBorrar"];
@@ -261,7 +261,7 @@ include_once "models/crud.php";
             }
         }
 
-        //controlador para añadir piezas a stock del producto
+        //controlador para añadir piezas a stock del producto, se llama al modelo para traer el stock del registro a editar
 		public function addProductController(){
 			$datosController=$_GET["idProductAdd"];
 			$respuesta = Datos::editarProductsModel($datosController,"products");
@@ -293,7 +293,7 @@ include_once "models/crud.php";
 			<?php
 		}
 
-		//metodo actualiza la cantidad en el stock en edicion
+		//metodo actualiza la cantidad en el stock en edicion, se llama al modelo para realizar un update a el stock del registro
 		public function actualizarStockController(){
 			if (isset($_POST["addstocktxt"])) {
 				$datosController = array("id"=>$_POST["idProductAdd"],"stock"=>$_POST["addstocktxt"]);
@@ -332,7 +332,7 @@ include_once "models/crud.php";
 			}
 		}
 
-		//metodo para actualizar la cantidad del stock restado
+		//metodo para actualizar la cantidad del stock restado, se llama al modelo para realizar un update a el stock del registro
 		public function actualizar2StockController(){
 			if (isset($_POST["delstocktxt"])) {
 				$datosController = array("id"=>$_POST["idProductDel"],"stock"=>$_POST["delstocktxt"]);
@@ -371,7 +371,7 @@ include_once "models/crud.php";
 			}
 		}
 
-		//metodo para la vista de eliminar en el stock del producto
+		//metodo para la vista de eliminar en el stock del producto, se llama al modelo para traer la cantidad de stock del producto a editar
 		public function delProductController(){
 			$datosController=$_GET["idProductDel"];
 			$respuesta = Datos::editarProductsModel($datosController,"products");

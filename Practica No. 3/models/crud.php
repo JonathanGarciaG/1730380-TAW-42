@@ -51,7 +51,7 @@
 			$stmt->close();
 		}
 
-		//modelo para actualizar usuario
+		//modelo para actualizar usuario, realiza la sentencia update a la tabla users
 		public function actualizarUserModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET firstname = :nusuario, lastname = :ausuario, user_name = :usuario, user_password = :contra, user_email = :email,type_user = :tipo WHERE user_id = :id");
 			
@@ -71,7 +71,7 @@
 			$stmt->close();
 		}
 
-		//modelo para actualizar usuario
+		//modelo para actualizar usuario, realiza la sentencia delete a la tabla users
 		public function eliminarUserModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE user_id = :id");
 			$stmt->bindParam(":id",$datosModel,PDO::PARAM_INT);
@@ -92,7 +92,7 @@
             $stmt->close();
         }
 
-		//modelo para mostrar la informacion de cada categoria
+		//modelo para mostrar la informacion de cada categoria, select de los registros de la tabla categories
         public function vistaCategoriesModel($tabla){
         	$stmt = Conexion::conectar()->prepare("SELECT id_category AS 'idc',name_category AS 'ncategoria',description_category AS 'dcategoria', date_added AS 'fcategoria' FROM $tabla");
 			
@@ -101,7 +101,7 @@
 			$stmt->close();
         }
 
-        //modelo para insertar nueva categoria en la base de datos
+        //modelo para insertar nueva categoria en la base de datos, insert en la tabla categories
         public function insertarCategoryModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (name_category,description_category) VALUES (:ncategoria,:dcategoria)");
 			
@@ -126,7 +126,7 @@
 			$stmt->close();
 		}
 
-		//modelo para actualizar los datos de categoria
+		//modelo para actualizar los datos de categoria, realiza update en la tabla categories
 		public function actualizarCategoryModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET name_category = :nombre_categoria, description_category = :descripcion_categoria WHERE id_category = :id");
 			
@@ -142,7 +142,7 @@
 			$stmt->close();
 		}
 
-		//modelo para eliminar categoria
+		//modelo para eliminar categoria, delete a la tabla categories
 		public function eliminarCategoryModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_category = :id");
 			$stmt->bindParam(":id",$datosModel,PDO::PARAM_INT);
@@ -154,7 +154,7 @@
 			$stmt->close();
 		}
 
-		//obtener las categorias para el formulario de producto
+		//modelo para obtener las categorias para el formulario de producto
 		public function obtenerCategoryModel($tabla){
         	$stmt = Conexion::conectar()->prepare("SELECT id_category AS 'id', name_category AS 'categoria' FROM $tabla");
 			
@@ -163,7 +163,7 @@
         }
 
 
-        //modelo para mostrar la informacion de cada producto
+        //modelo para mostrar la informacion de cada producto, select a los registros de la tabla products
         public function vistaProductsModel($tabla){
             $stmt = Conexion::conectar()->prepare("SELECT p.id_product AS 'id', p.code_product AS 'codigo', p.name_product AS 'producto', p.date_added AS 'fecha', p.price_product AS 'precio', p.stock AS 'stock', c.name_category AS 'categoria' FROM $tabla p INNER JOIN categories c ON p.id_category = c.id_category");
 			
@@ -172,7 +172,7 @@
 			$stmt->close();
         }
 
-		 //modelo para insertar nuevo producto en la base de datos
+		 //modelo para insertar nuevo producto en la base de datos, insert a la tabla products
         public function insertarProductsModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (code_product,name_product,price_product,stock,id_category) VALUES (:codigo,:nombre,:precio,:stock,:categoria)");
 			
@@ -256,7 +256,7 @@
 			$stmt->close();
 		}
 
-		//modelo para trart el ultimo producto
+		//modelo para traet el ultimo producto
         public function ultimoProductsModel($tabla){
 			$stmt = Conexion::conectar()->prepare("SELECT id_product AS 'id' FROM $tabla ORDER BY id_product DESC LIMIT 1");
 			$stmt->execute();
