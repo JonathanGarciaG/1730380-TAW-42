@@ -22,6 +22,15 @@
 			$stmt->close();
 		}
 
+		//trae los registros de los clientes para mostrarlos
+		public function vistaClientesModel($tabla){
+			$stmt = Conexion::conectar()->prepare("SELECT nombre,apellido FROM $tabla");
+			
+			$stmt->execute();
+			return $stmt->fetchAll();
+			$stmt->close();
+		}
+
 		//modelo para insertar un nuevo usuario (registro de usuario)
 		public function insertarUserModel($datosModel,$tabla){
 			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (firstname,lastname,user_name,user_password,user_email,type_user) VALUES (:nusuario,:ausuario,:usuario,:contra,:email,:tipo)");
@@ -32,6 +41,22 @@
 			$stmt->bindParam(":contra",$datosModel["contra"],PDO::PARAM_STR);
 			$stmt->bindParam(":email",$datosModel["email"],PDO::PARAM_STR);
 			$stmt->bindParam(":tipo",$datosModel["tipo"],PDO::PARAM_STR);
+
+			if ($stmt->execute()) {
+				return "success";
+			}else{
+				return "error";
+			}
+			$stmt->close();
+		}
+
+		//modelo para insertar un nuevo cliente (registro de cliente)
+		public function insertarClienteModel($datosModel,$tabla){
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (nombre,apellido,telefono) VALUES (:nombre,:apellido,:telefono)");
+			
+			$stmt->bindParam(":nombre",$datosModel["nombre"],PDO::PARAM_STR);
+			$stmt->bindParam(":apellido",$datosModel["apellido"],PDO::PARAM_STR);
+			$stmt->bindParam(":telefono",$datosModel["telefono"],PDO::PARAM_STR);
 
 			if ($stmt->execute()) {
 				return "success";

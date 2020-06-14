@@ -8,6 +8,7 @@
 
     //Lamando a los controladores
     $ventas = new MvcController();
+    $clientes = new MvcController();
 
 ?>
 
@@ -15,6 +16,12 @@
 
 <?php
     //Verificando si se activo una función del controlador.
+    if(isset($_GET["registrarcliente"])){
+            $clientes->registrarClienteController();
+        }
+    if(isset($_GET["nuevocliente"])){
+            $clientes->insertarClienteController();
+        }
     if(isset($_GET["registrar"])){
             $ventas->registrarVentaController();
         }

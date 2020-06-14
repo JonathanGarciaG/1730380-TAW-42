@@ -957,10 +957,77 @@ include_once "models/crud.php";
             }
         }
 
-        //controlador para mostrar vista del registro de ventas
-        public function registrarVentaController(){
-            ?>
+        //controlador para mostrar vista de registro de nuevo cliente.
+		public function registrarClienteController(){
+			?>
+			<div class="col-md-6 mt-3">
+				<div class="card card-primary">
+					<div class="card-header">
+						<h4><b>Registro</b> de Cliente</h4>
+					</div>
+					<div class="card-body">
+						<form method="post" action="index.php?action=ventas&registrar&nuevocliente">
+							<div class="form-group">
+								<label>Nombre: </label>
+								<input type="text" class="form-control" name="nclientetxt" placeholder="Nombre" required>
+							</div>
+							<div class="form-group">
+								<label>Apellido: </label>
+								<input type="text" class="form-control" name="aclientetxt" placeholder="Apellido" required>
+							</div>
+							<div class="form-group">
+								<label>Telefono: </label>
+								<input type="number" class="form-control" name="telefonotxt" placeholder="Nombre de usuario" required>
+							</div>
+							<button class="btn btn-primary" type="submit">Agregar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<?php
+		}
 
+		//controlador para realizar el insert de un nuevo cliente
+		 public function insertarClienteController(){
+			if (isset($_POST["nclientetxt"]) && isset($_POST["aclientetxt"])) {
+				$datosController = array("nombre"=>$_POST["nclientetxt"],"apellido"=>$_POST["aclientetxt"],"telefono"=>$_POST["telefonotxt"]);
+				$respuesta = Datos::insertarClienteModel($datosController,"clientes");
+
+				if ($respuesta == "success") {
+					echo '
+						<div class="col-md-6 mt-3">
+							<button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+							<div class="alert alert-success alert-dismissible">
+								<h5>
+									<i class="icon" fas fa-check>
+									¡Éxito!
+								</h5>
+								Cliente agregado con éxito
+							</div>
+						</div>
+						';
+				}else{
+					echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Error!
+                                </h5>
+                                Se ha producido un error al agregar el Cliente, trate de nuevo.
+                            </div>
+                        </div>
+                    ';
+				}
+			}
+		}
+
+
+        //controlador para mostrar vista del registro de ventas
+        public function registrarVentaController(){    	
+        	
+            ?>
         <div class="row">
             <div class="col-12 col-sm-7">
             <div class="card">
@@ -973,13 +1040,19 @@ include_once "models/crud.php";
                   <thbody>
                   <tr>
                   		<select class="form-control">
-                  			<option>Publico en general</option>
-                  			<option>Cliente 1</option>
-                  			<option>Cliente 2</option>
+                  			<option value="Público en general">Público en general</option>
+                  			<?php
+                  			
+                  			$respuesta = Datos::vistaClientesModel("clientes");
+                  			foreach ($respuesta as $row => $item){
+                  				echo '<option value="'.$item["nombre"].' '.$item["apellido"].'">'.$item["nombre"].' '.$item["apellido"].'</option>';
+                  			}
+                  			
+                  			?>
                   		</select>
                   	<div class="btn-group">
-		                <button type="button" class="btn btn-default">Add Cliente</button>
-		                <button type="button" class="btn btn-default">Producto</button>
+		                <a href="index.php?action=ventas&registrar&registrarcliente"><button type="button" class="btn btn-default">Add Cliente</button></a>
+		                <a href="index.php?action=inventario"><button type="button" class="btn btn-default">Producto</button></a>
 		            </div>
                   </tr>
                   </tbody>
@@ -1049,7 +1122,7 @@ include_once "models/crud.php";
                 <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                   
 
-                  <li class="nav-item">
+                  <!--<li class="nav-item">
                     <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Categoría 1</a>
                   </li>
                   <li class="nav-item">
@@ -1057,12 +1130,23 @@ include_once "models/crud.php";
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill" href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages" aria-selected="false">Categoría 3</a>
+                  </li>-->
+
+                  <?php
+                  	$respuesta = Datos::vistaCategoriesModel("categories");
+                  	foreach ($respuesta as $row => $item){
+                  ?>
+                  <li class="nav-item">
+                    <a class="nav-link" id="<?php echo $item['ncategoria'];?>" data-toggle="pill" href="<?php echo $item['ncategoria'];?>" role="tab" aria-controls="<?php echo $item['ncategoria'];?>" aria-selected="false"><?php echo $item['ncategoria']; ?></a>
                   </li>
+                  <?php
+              		}
+                  ?>
                 </ul>
               </div>
               <div class="card-body" style="height: 500px; overflow: scroll;">
                 <div class="tab-content" id="custom-tabs-two-tabContent">
-                  <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                  <!--<div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
                     
                     <div class="row mt-2">
                         <div class="col-sm-4" style="text-align: center;">
@@ -1082,18 +1166,37 @@ include_once "models/crud.php";
                                 </a>
                             </div>
                         </div>
-                    </div><!-- /.row mt-2 -->
-                  </div>
+                    </div> 
 
-                  <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
-                 
+                  </div>-->
+                  <?php
+                  	$respuesta = Datos::vistaCategoriesModel("categories");
+                  	foreach ($respuesta as $row => $item){
+                  ?>
+                  <div class="tab-pane fade" id="<?php echo $item['ncategoria']; ?>" role="tabpanel" aria-labelledby="<?php echo $item['ncategoria']; ?>">
+                 	<div class="row mt-2">
+                        <div class="col-sm-4" style="text-align: center;">
+                            <span class="mailbox-attachment-icon has-img"><img src="views/assets/dist/img/photo2.png" alt="Attachment"></span>
+                            <div class="mailbox-attachment-info">
+                                <a href="#" class="mailbox-attachment-name">
+                                    <small>Producto 1 <?php echo $item['ncategoria']?><br/> 2,300.00 (5)</small>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4" style="text-align: center;">
+                            <span class="mailbox-attachment-icon has-img"><img src="views/assets/dist/img/photo2.png" alt="Attachment"></span>
+                            <div class="mailbox-attachment-info">
+                                <a href="#" class="mailbox-attachment-name">
+                                    <small>Producto 2 <?php echo $item['ncategoria']?><br/> 6,300.00 (2)</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div> 
                   </div>
-                  <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
-                    
-                  </div>
-                  <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
-                    
-                  </div>
+                  <?php
+                  	}
+                  ?>
                 </div>
               </div>
               <!-- /.card -->
