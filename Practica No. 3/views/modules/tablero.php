@@ -6,6 +6,6 @@ if (!isset($_SESSION['validar'])) {
 }
 
 $tablero = new MvcController();
-$tablero->contarFilas();
+$tablero->contarFilas($_SESSION['tipo']);
 
 ?>

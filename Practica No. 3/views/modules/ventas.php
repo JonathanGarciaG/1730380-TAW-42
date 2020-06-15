@@ -23,7 +23,7 @@
             $clientes->insertarClienteController();
         }
     if(isset($_GET["registrar"])){
-            $ventas->registrarVentaController();
+            $ventas->registrarVentaController($_SESSION["tipo"]);
         }
 ?>
 

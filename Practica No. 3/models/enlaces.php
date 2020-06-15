@@ -17,10 +17,10 @@
 				$pagina = 'views/modules/registro.php';
 			}else if ($enlaces == 'editarUsuario') {
 				$pagina = 'views/modules/login.php';
-			}else if ($enlaces == 'ventas') {
-				$pagina = 'views/modules/ventas.php';
 			}else if ($enlaces == 'salir') {
 				$pagina = 'views/modules/salir.php';
+			}else if ($enlaces == 'ventas') {
+				$pagina = 'views/modules/ventas.php';
 			}else{
 				$pagina = 'views/modules/tablero.php';
 			}

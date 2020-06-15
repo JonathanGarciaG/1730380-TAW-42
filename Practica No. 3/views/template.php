@@ -43,7 +43,7 @@
 
         <div class="row mr-3 mt-2 mb-2">
           <?php
-            if ($_GET['action']=='tablero') {
+          if ($_GET['action']=='tablero') {
           ?>
           <div class="col-sm-12">
             <h1><b>Tablero</b></h1>

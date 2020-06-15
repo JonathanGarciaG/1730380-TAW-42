@@ -5,7 +5,7 @@
 
 		//trae los datos de un usuario
 		public function ingresoUsuarioModel($datosModel,$tabla){
-			$stmt = Conexion::conectar()->prepare("SELECT CONCAT(firstname,' ',lastname) AS 'nombre_usuario', user_name AS 'usuario', user_password AS 'contrasena', user_id AS 'id' FROM $tabla WHERE user_name = :usuario");
+			$stmt = Conexion::conectar()->prepare("SELECT CONCAT(firstname,' ',lastname) AS 'nombre_usuario', user_name AS 'usuario', user_password AS 'contrasena', user_id AS 'id',type_user FROM $tabla WHERE user_name = :usuario");
 			
 			$stmt->bindParam(":usuario",$datosModel["user"],PDO::PARAM_STR);
 			$stmt->execute();
@@ -121,6 +121,17 @@
         public function vistaCategoriesModel($tabla){
         	$stmt = Conexion::conectar()->prepare("SELECT id_category AS 'idc',name_category AS 'ncategoria',description_category AS 'dcategoria', date_added AS 'fcategoria' FROM $tabla");
 			
+			$stmt->execute();
+			return $stmt->fetchAll();
+			$stmt->close();
+        }
+
+        //modelo para mostrar los productos de una categoria
+        public function vistaCategories2Model($datosModel,$tabla){
+        	$stmt = Conexion::conectar()->prepare("SELECT name_product, stock, price_product FROM $tabla WHERE id_category = :idcategoria");
+			
+        	$stmt->bindParam(":idcategoria",$datosModel,PDO::PARAM_STR);
+
 			$stmt->execute();
 			return $stmt->fetchAll();
 			$stmt->close();

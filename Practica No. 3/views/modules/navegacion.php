@@ -32,6 +32,9 @@
 
 		<div class="mt-2">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+			<?php
+			if ($_SESSION["tipo"]!='Cajero') {
+			?>
 				<li class="nav-item">
 					<a href="index.php?action=tablero" class="nav-link">
 						<i class="nav-icon fas fa-columns">
@@ -66,6 +69,9 @@
 						<p>Categorias</p>
 					</a>
 				</li>
+				<?php
+				}
+				?>
 
 				<li class="nav-item">
 					<a href="index.php?action=ventas" class="nav-link">

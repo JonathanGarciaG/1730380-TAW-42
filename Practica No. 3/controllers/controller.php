@@ -884,7 +884,6 @@ include_once "models/crud.php";
         	}
         }
 
-
 		//INGRESO USUARIOS
 		public function ingresoUserController(){
 			if (isset($_POST["txtuser"]) && isset($_POST["txtpassword"])){
@@ -898,6 +897,7 @@ include_once "models/crud.php";
 					$_SESSION["validar"] = true;
 					$_SESSION["nombre_usuario"] = $respuesta["nombre_usuario"];
 					$_SESSION["id"]=$respuesta["id"];
+					$_SESSION["tipo"]=$respuesta["type_user"];
 					header("location:index.php?action=tablero");
 				}else{
 					header("location: index.php?action=fallo&res=fallo");
@@ -1025,7 +1025,7 @@ include_once "models/crud.php";
 
 
         //controlador para mostrar vista del registro de ventas
-        public function registrarVentaController(){    	
+        public function registrarVentaController($tipo){    	
         	
             ?>
         <div class="row">
@@ -1051,8 +1051,17 @@ include_once "models/crud.php";
                   			?>
                   		</select>
                   	<div class="btn-group">
-		                <a href="index.php?action=ventas&registrar&registrarcliente"><button type="button" class="btn btn-default">Add Cliente</button></a>
-		                <a href="index.php?action=inventario"><button type="button" class="btn btn-default">Producto</button></a>
+
+		                <a href="index.php?action=ventas&registrar&registrarcliente"><button type="button" class="btn btn-default">Add Cliente  <i class="nav-icon fas fa-user">					
+						</i></button></a>
+						<?php
+						if ($tipo=='Administrador') {
+						?>
+		                <a href="index.php?action=inventario"><button type="button" class="btn btn-default">Producto  <i class="nav-icon fas fa-box">					
+						</i></button></a>
+						<?php
+						}
+						?>
 		            </div>
                   </tr>
                   </tbody>
@@ -1120,24 +1129,12 @@ include_once "models/crud.php";
             <div class="card card-secondary card-tabs">
               <div class="card-header p-0 pt-1">
                 <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                  
-
-                  <!--<li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Categoría 1</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#custom-tabs-two-profile" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Categoría 2</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill" href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages" aria-selected="false">Categoría 3</a>
-                  </li>-->
-
                   <?php
                   	$respuesta = Datos::vistaCategoriesModel("categories");
                   	foreach ($respuesta as $row => $item){
                   ?>
                   <li class="nav-item">
-                    <a class="nav-link" id="<?php echo $item['ncategoria'];?>" data-toggle="pill" href="<?php echo $item['ncategoria'];?>" role="tab" aria-controls="<?php echo $item['ncategoria'];?>" aria-selected="false"><?php echo $item['ncategoria']; ?></a>
+                    <a class="nav-link" id="<?php echo $item['ncategoria'];?>tab" data-toggle="pill" href="#<?php echo $item['ncategoria'];?>" role="tab" aria-controls="<?php echo $item['ncategoria'];?>tab" aria-selected="false"><?php echo $item['ncategoria']; ?></a>
                   </li>
                   <?php
               		}
@@ -1175,23 +1172,23 @@ include_once "models/crud.php";
                   ?>
                   <div class="tab-pane fade" id="<?php echo $item['ncategoria']; ?>" role="tabpanel" aria-labelledby="<?php echo $item['ncategoria']; ?>">
                  	<div class="row mt-2">
-                        <div class="col-sm-4" style="text-align: center;">
-                            <span class="mailbox-attachment-icon has-img"><img src="views/assets/dist/img/photo2.png" alt="Attachment"></span>
-                            <div class="mailbox-attachment-info">
-                                <a href="#" class="mailbox-attachment-name">
-                                    <small>Producto 1 <?php echo $item['ncategoria']?><br/> 2,300.00 (5)</small>
-                                </a>
-                            </div>
-                        </div>
 
+                 	<?php
+                 	$respuesta2 = Datos::vistaCategories2Model($item["idc"],"products");
+                  	foreach ($respuesta2 as $row2 => $item2){
+                 	?>
                         <div class="col-sm-4" style="text-align: center;">
                             <span class="mailbox-attachment-icon has-img"><img src="views/assets/dist/img/photo2.png" alt="Attachment"></span>
                             <div class="mailbox-attachment-info">
                                 <a href="#" class="mailbox-attachment-name">
-                                    <small>Producto 2 <?php echo $item['ncategoria']?><br/> 6,300.00 (2)</small>
+                                    <small><?php echo $item2['name_product']; ?><br/> <?php echo "$".$item2['price_product']; ?> (<?php echo $item2['stock']; ?>)</small>
                                 </a>
                             </div>
                         </div>
+                    <?php
+                	}
+                    ?>
+
                     </div> 
                   </div>
                   <?php
@@ -1209,13 +1206,14 @@ include_once "models/crud.php";
         }
 
         //controlador para mostrar los boxes de las filas de las tablas, vista del tablero
-        public function contarFilas(){
+        public function contarFilas($tipo){
         	$respuesta_users = Datos::contarFilasModel("users");
         	$respuesta_products = Datos::contarFilasModel("products");
         	$respuesta_historial = Datos::contarFilasModel("historial");
         	$respuesta_categories = Datos::contarFilasModel("categories");
         	$respuesta_ventas = Datos::contarFilasModel("ventas");
 
+        	if($tipo!='Cajero'){
         	echo '
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-info">
@@ -1277,6 +1275,21 @@ include_once "models/crud.php";
                         <a class="small-box-footer" href="index.php?action=ventas">Más <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>';
+            }else{
+            	echo '
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>'.$respuesta_ventas["filas"].'</h3>
+                            <p>Total de Ventas</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <a class="small-box-footer" href="index.php?action=ventas">Más <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>';
+            }
         }
 	}
         
