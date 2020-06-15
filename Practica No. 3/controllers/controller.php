@@ -977,7 +977,7 @@ include_once "models/crud.php";
 							</div>
 							<div class="form-group">
 								<label>Telefono: </label>
-								<input type="number" class="form-control" name="telefonotxt" placeholder="Nombre de usuario" required>
+								<input type="number" class="form-control" name="telefonotxt" placeholder="Telefono" required>
 							</div>
 							<button class="btn btn-primary" type="submit">Agregar</button>
 						</form>
