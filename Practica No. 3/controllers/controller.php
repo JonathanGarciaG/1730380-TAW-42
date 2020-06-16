@@ -1037,9 +1037,10 @@ include_once "models/crud.php";
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
               	<table class="table table-hover text-nowrap">
+              	<form method="post" action="index.php?actionventas?insertarVenta">
                   <thbody>
                   <tr>
-                  		<select class="form-control">
+                  		<select class="form-control" name="clientetxt">
                   			<option value="Público en general">Público en general</option>
                   			<?php
                   			
@@ -1076,8 +1077,8 @@ include_once "models/crud.php";
                       <th>Total</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
+                  <tbody id="cuerpotabla">
+                    <!--<tr>
                       <td>Producto 1</td>
                       <td>$ 2300.00</td>
                       <td>1</td>
@@ -1088,27 +1089,27 @@ include_once "models/crud.php";
                         <td>$ 5120.00</td>
                         <td>1</td>
                         <td>$ 5120.00</td>
-                      </tr>
+                      </tr>-->
                   </tbody>
                   <tfooter>
                     <tr style="text-align: right;">
-                        <th colspan="1">Recuento de productos (2)</th>
+                        <th colspan="1" id="recuento">Recuento de productos (0)</th>
                         <th colspan="2">Impuesto neto excluido</th>
-                        <td colspan="1">$ 11,720.00</td>
+                        <td colspan="1" id="total">$0</td>
                     </tr>
                     <tr style="text-align: right;">
                         <th colspan="3">Descuento en carro</th>
-                        <td colspan="1">$ 0.00</td>
+                        <td colspan="1" id="descuento">$0</td>
                     </tr>
                     <tr style="text-align: right;">
                         <th colspan="3">Envío</th>
-                        <td colspan="1">$ 0.00</td>
+                        <td colspan="1" id="envio">$0</td>
                     </tr>
                     <tr style="text-align: right;">
                         <th colspan="1">Total impuestos</th>
-                        <td colspan="1">$ 0.00</td>
+                        <td colspan="1" id="impuestos">$0</td>
                         <th colspan="1">Pago Neto</th>
-                        <td colspan="1">$ 11,720.00</td>
+                        <td colspan="1" id="pago">$0</td>
                     </tr>
                     
                   </tfooter>
@@ -1118,8 +1119,8 @@ include_once "models/crud.php";
 
 
             <div class="btn-group">
-                <button type="button" class="btn btn-success">Pagar</button>
-                <button type="button" class="btn btn-warning">Descuento</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-pago">Pagar</button>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-descuento">Descuento</button>
                 <button type="button" class="btn btn-danger">Cancelar</button>
               </div>
 
@@ -1180,7 +1181,7 @@ include_once "models/crud.php";
                         <div class="col-sm-4" style="text-align: center;">
                             <span class="mailbox-attachment-icon has-img"><img src="views/assets/dist/img/photo2.png" alt="Attachment"></span>
                             <div class="mailbox-attachment-info">
-                                <a href="#" class="mailbox-attachment-name">
+                                <a href="#" class="mailbox-attachment-name" onclick="agregarProducto('<?php echo $item2['name_product']; ?>',<?php echo $item2['price_product']; ?>)">
                                     <small><?php echo $item2['name_product']; ?><br/> <?php echo "$".$item2['price_product']; ?> (<?php echo $item2['stock']; ?>)</small>
                                 </a>
                             </div>
