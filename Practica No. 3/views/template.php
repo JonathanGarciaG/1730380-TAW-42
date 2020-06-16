@@ -102,6 +102,7 @@
      <!-- DataTables -->
      <script src="views/assets/plugins/datatables/jquery.dataTables.js"></script>
     <script src="views/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+    <script type="text/javascript" src="views/modules/codigo.js"></script>
     <!-- page script -->
     <script>
     $(function () {

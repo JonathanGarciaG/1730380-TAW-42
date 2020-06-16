@@ -69,3 +69,38 @@
         </div>
     </div>
 </div><!--/.container-fluid-->
+
+
+<!-- Modal para aplicar un descuento -->
+    <div class="modal fade" id="modal-descuento">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aplicar <b>Descuento</b></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div><!-- /.modal-header -->
+                <form>
+                    <div class="modal-body">
+
+                            <p>Ingresa el descuento que desea aplicar.</p>
+
+                            <div class="form-group">
+                                <label for="desctxt">Descuento:</label>
+                                <input type="decimal" step="any" class="form-control form-control-sm" placeholder="0" name="desctxt" id="desctxt" required>
+                            </div>
+                        
+                    </div><!-- /.modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="descontar()">Aceptar</button>
+                    </div><!-- /.modal-footer -->
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
