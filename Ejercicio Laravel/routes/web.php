@@ -36,5 +36,8 @@ Route::get('/saludo/{nombre}/{apodo}', function ($nombre,$apodo=null) {
     }
 });
 
+//Vista para el controlador de empleados
+Route::resource('empleados','EmpleadosController');
+
 //Metodos para obtencion, guardado y eliminacion de datos:
 //get, post *guardar*, put, delete
