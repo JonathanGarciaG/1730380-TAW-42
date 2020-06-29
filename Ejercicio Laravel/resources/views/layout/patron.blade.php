@@ -58,7 +58,7 @@
 			<div class="col-md-3 left_col menu_fixed">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="{{ url('/') }}" class="site_title"><span style="font-size: 19px;">Sistema control de empleados</span></a>
+						<a href="{{ url('/empleados') }}" class="site_title"><span style="font-size: 19px;">Sistema control de empleados</span></a>
 					</div>
 					<div class="clearfix"></div>
 					<br>
@@ -68,7 +68,7 @@
 						<div class="menu_section">
 							<h3>Menu</h3>
 								<ul class="nav side-menu">
-									<li><a href="{{url('dashboard')}}">Inicio</a></li>
+									<li><a href="{{url('empleados')}}">Inicio</a></li>
 								</ul>
 
 								<ul class="nav side-menu">
@@ -116,7 +116,6 @@
 			</footer>
 		</div>
 	</div>
-	@include('sweetalert::alert')
 </body>
 </html>
 
@@ -193,7 +192,6 @@
 <!-- Select Picker -->
 <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
 <!-- Sweet Alert -->
-<script src="{{ asset('js/sweetalert2.all.js') }}"></script>
 <!-- Datatables -->
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>

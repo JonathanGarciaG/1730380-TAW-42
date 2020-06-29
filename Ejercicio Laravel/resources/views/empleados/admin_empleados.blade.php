@@ -24,7 +24,7 @@
 								<table id="datatable-keytable" class="table table-striped table-bordered" style="width_100%">
 									<thead>
 										<tr>
-											<th></th>
+											<th>ID</th>
 											<th>Nombres</th>
 											<th>Apellidos</th>
 											<th>Cedula</th>
@@ -33,12 +33,14 @@
 											<th>Sexo</th>
 											<th>Estado Civil</th>
 											<th>Telefono</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody>
 										@foreach($empleados as $empleado)
 											<tr>
-												_create_empleados_table
+												
+												<td>{{$empleado->id}}</td>
 												<td>{{$empleado->nombres}}</td>
 												<td>{{$empleado->apellidos}}</td>
 												<td>{{$empleado->cedula}}</td>
@@ -54,7 +56,7 @@
 														<a href="{{ url('empleados/'.$empleado->id.'/edit') }}" class="btn btn-secondary" method="POST"><i class='fas fa-edit'></i></a>
 														<form action="{{url('empleados/'.$empleado->id)}}" method="POST">
 															{{ csrf_field() }}
-															{{ method_dield('DELETE') }}
+															{{ method_field('DELETE') }}
 															<button class="btn btn-danger"> <i class="fas fa-trash"></i> </button>
 														</form>
 													</div>
