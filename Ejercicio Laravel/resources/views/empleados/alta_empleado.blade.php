@@ -39,6 +39,18 @@
                             <input type="text" id="cedula" name="cedula" required="required" class="form-control">
                         </div>
                     </div>
+                    <!-- se traen los nombres y los id de los departamentos y se imprimen en un select -->
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="cedula"> Departamento <spam class="required">*</spam>
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <select class="form-control" name="departamento" required>
+                            @foreach($departamentos as $departamento)
+                                <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="item form-group">
                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="email"> Correo electrónico <spam class="required">*</spam>
                         </label>

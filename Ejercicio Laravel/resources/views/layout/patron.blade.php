@@ -34,10 +34,19 @@
 								</ul>
 
 								<ul class="nav side-menu">
-									<li><a href=""><i class="fas fa-user-shield"></i>&nbsp;Empleados <span style="float: right" class="fa fa-chevron-down"></span> </a>
+									<li><a><i class="fas fa-user-shield"></i>&nbsp;Empleados <span style="float: right" class="fa fa-chevron-down"></span> </a>
 										<ul class="nav child_menu">
 											<li><a href="{{url('empleados/create')}}">Agregar empleados</a></li>
 											<li><a href="{{url('empleados')}}">Consultar empleados</a></li>
+										</ul>
+									</li>
+								</ul>
+
+								<ul class="nav side-menu">
+									<li><a><i class="fas fa-user-shield"></i>&nbsp;Departamentos <span style="float: right" class="fa fa-chevron-down"></span> </a>
+										<ul class="nav child_menu">
+											<li><a href="{{url('departamentos/create')}}">Agregar departamentos</a></li>
+											<li><a href="{{url('departamentos')}}">Consultar departamentos</a></li>
 										</ul>
 									</li>
 								</ul>

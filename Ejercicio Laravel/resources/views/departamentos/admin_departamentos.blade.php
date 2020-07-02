@@ -1,12 +1,12 @@
 @extends ('layout.patron');
-@section ('titulo','Administración de Empleados');
+@section ('titulo','Administración de Departamentos');
 @section ('contenido');
-<!-- Codigo HTML para mostrar el listado de empleados -->
+<!-- Codigo HTML para mostrar el listado de departamentos -->
 <div class="right_col" role="main">
 	<div class="">
 		<div class="page-title">
 			<div class="title-left">
-				<h3>Administración de empleados</h3>
+				<h3>Administración de Departamentos</h3>
 			</div>
 		</div>
 	</div>
@@ -14,7 +14,7 @@
 		<div class="col-md-12 col-sm-12">
 			<div class="x_panel">
 				<div class="x_title">
-					<h2>Listado de empleados</h2>
+					<h2>Listado de Departamentos</h2>
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
@@ -26,37 +26,25 @@
 										<tr>
 											<th>ID</th>
 											<th>Nombres</th>
-											<th>Apellidos</th>
-											<th>Cedula</th>
-											<th>Departamento</th>
-											<th>Email</th>
-											<th>Lugar de nacimiento</th>
-											<th>Sexo</th>
-											<th>Estado Civil</th>
-											<th>Telefono</th>
+											<th>Fecha de creación</th>
+											<th>Fecha de modificación</th>
 											<th></th>
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($empleados as $empleado)
+										@foreach($departamentos as $departamento)
 											<tr>
 												
-												<td>{{$empleado->id}}</td>
-												<td>{{$empleado->nombres}}</td>
-												<td>{{$empleado->apellidos}}</td>
-												<td>{{$empleado->cedula}}</td>
-												<td>{{$empleado->nombre}}</td>
-												<td>{{$empleado->email}}</td>
-												<td>{{$empleado->lugar_nacimiento}}</td>
-												<td>{{$empleado->sexo}}</td>
-												<td>{{$empleado->estado_civil}}</td>
-												<td>{{$empleado->telefono}}</td>
+												<td>{{$departamento->id}}</td>
+												<td>{{$departamento->nombre}}</td>
+												<td>{{$departamento->created_at}}</td>
+												<td>{{$departamento->updated_at}}</td>
 
 												<!-- Agregar columna para editar y eliminar registro -->
 												<td>
 													<div style="display: flex;">
-														<a href="{{ url('empleados/'.$empleado->id.'/edit') }}" class="btn btn-secondary" method="POST"><i class='fas fa-edit'></i></a>
-														<form action="{{url('empleados/'.$empleado->id)}}" method="POST">
+														<a href="{{ url('departamentos/'.$departamento->id.'/edit') }}" class="btn btn-secondary" method="POST"><i class='fas fa-edit'></i></a>
+														<form action="{{url('departamentos/'.$departamento->id)}}" method="POST">
 															{{ csrf_field() }}
 															{{ method_field('DELETE') }}
 															<button class="btn btn-danger"> <i class="fas fa-trash"></i> </button>
