@@ -18,9 +18,9 @@ mix.styles([
 ],'public/css/all.css')
 
 .scripts([
+	'resources/assets/js/jquery.min.js',
     'resources/assets/js/bootstrap.min.js',
     'resources/assets/js/Chart.min.js',
-    'resources/assets/js/jquery.min.js',
     'resources/assets/js/pace.min.js',
     'resources/assets/js/popper.min.js',
     'resources/assets/js/template.js'

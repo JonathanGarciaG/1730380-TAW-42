@@ -20,7 +20,9 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 //Se crea un componente llamado 'example-component' ubicado en el directorio components
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('lista-component', require('./components/ExampleComponent.vue').default);
+Vue.component('producto-component', require('./components/ProductoComponent.vue').default);
+Vue.component('lista-productos-component', require('./components/ListaProductosComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

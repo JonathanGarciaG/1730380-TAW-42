@@ -18,3 +18,7 @@ Route::get('/dashboard', function () {
 Route::get('/', function () {
     return view('contenido.contenido');
 });
+
+Route::get('/productos', 'ProductosController@index');
+
+Route::post('/productos', 'ProductosController@store');
