@@ -225,7 +225,6 @@
                     });
                 //Ocultar el modal
                 $('#modalNuevo').modal('hide');
-                $('#modalNuevo').modal('hide');
                 $('.modal-backdrop').remove();
             }
         }

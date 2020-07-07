@@ -2368,7 +2368,6 @@ __webpack_require__.r(__webpack_exports__);
       }); //Ocultar el modal
 
       $('#modalNuevo').modal('hide');
-      $('#modalNuevo').modal('hide');
       $('.modal-backdrop').remove();
     }
   }
