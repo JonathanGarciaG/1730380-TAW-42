@@ -12,7 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('contenido.contenidodashboard');
+});
+
+Route::get('/index', function () {
+    return view('contenido.contenidodashboard');
+});
+
+Route::get('/usuarios', function () {
+    return view('contenido.usuarioscontenido');
+});
+
+Route::get('/empresas', function () {
+    return view('contenido.empresascontenido');
 });
 
 Auth::routes();
