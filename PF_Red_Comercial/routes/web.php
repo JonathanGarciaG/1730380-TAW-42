@@ -27,6 +27,8 @@ Route::get('/empresas', function () {
     return view('contenido.empresascontenido');
 });
 
+Route::get('/getusers','UsuariosController@getUsuarios');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

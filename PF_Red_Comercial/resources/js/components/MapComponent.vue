@@ -9,6 +9,8 @@
                             </i>
                         </div>
                         <div>Mapa
+                            <div class="page-title-subheading">Buscar una empresa.
+                            </div>
                         </div>
                     </div>
                 </div>
