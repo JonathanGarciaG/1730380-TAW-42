@@ -107,7 +107,7 @@
             console.log('Component mounted.')
             //cuando el componente es montado se realiza la siguiente accion para actualizar el array productos con los registros de la base de datos
             let me = this;
-            let url = '/getusers' //el url de productos que devuelve los registros de la base de datos
+            let url = './getusers' //el url de productos que devuelve los registros de la base de datos
             axios.get(url).then(function (response) {
                 //se almacenan al array los datos de la respuesta obtenida del url
                 me.users = response.data;
