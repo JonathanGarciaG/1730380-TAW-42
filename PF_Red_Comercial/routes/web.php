@@ -12,11 +12,28 @@
 */
 
 Route::get('/', function () {
-    return view('contenido.contenidodashboard');
+	if (Auth::check()) {
+		return view('contenido.contenidodashboard');
+	}else{
+		return redirect('login');
+	}
+    
 });
 
 Route::get('/index', function () {
-    return view('contenido.contenidodashboard');
+    if (Auth::check()) {
+		return view('contenido.contenidodashboard');
+	}else{
+		return redirect('login');
+	}
+});
+
+Route::get('/login', function(){
+	if (Auth::check()) {
+		return view('contenido.contenidodashboard');
+	}else{
+		return redirect('login');
+	}
 });
 
 Route::get('/usuarios', function () {
@@ -28,6 +45,8 @@ Route::get('/empresas', function () {
 });
 
 Route::get('/getusers','UsuariosController@getUsuarios');
+
+Route::post('/getusers', 'UsuariosController@store');
 
 Auth::routes();
 

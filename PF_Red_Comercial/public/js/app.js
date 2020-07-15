@@ -2204,6 +2204,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.'); //cuando el componente es montado se realiza la siguiente accion para actualizar el array productos con los registros de la base de datos
@@ -2221,14 +2255,51 @@ __webpack_require__.r(__webpack_exports__);
   //datos de los campos
   data: function data() {
     return {
-      nombre: "",
-      apellidos: "",
-      usuario: "",
-      contrasena: "",
+      name: "",
+      lastname: "",
+      email: "",
+      password: "",
       tipo: "",
-      correo: "",
       users: []
     };
+  },
+  //metodos utilizados
+  methods: {
+    //Metodo para agregar un nuevo producto
+    newUser: function newUser() {
+      var _this = this;
+
+      //$('#modalNewUser').modal('show');
+      //se toman los parametros de los campos
+      var params = {
+        name: this.name,
+        lastname: this.lastname,
+        email: this.email,
+        password: this.password,
+        tipo: this.tipo
+      }; //Se limpian los campos del modal
+
+      this.name = '';
+      this.lastname = '';
+      this.email = '';
+      this.password = '';
+      this.tipo = ''; //se hace un request post con el url /getusers para que con su respuesta se realice la insercion
+
+      axios.post('./getusers', params).then(function (response) {
+        var user = response.data; //una vez hecha se realiza nuevamente una actualizacion del array productos para actualizar el componente que los muestra
+
+        var me = _this;
+        var url = './getusers'; //url que retorna los registros de la tabla productos
+
+        axios.get(url).then(function (response) {
+          me.users = response.data;
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }); //Ocultar el modal
+      //$('#modalNewUser').modal('hide');
+      //$('#modalNewUser').modal('hide');
+    }
   }
 });
 
@@ -38193,9 +38264,9 @@ var render = function() {
                                       { staticClass: "widget-heading" },
                                       [
                                         _vm._v(
-                                          _vm._s(user.nombre) +
+                                          _vm._s(user.name) +
                                             " " +
-                                            _vm._s(user.apellidos)
+                                            _vm._s(user.lastname)
                                         )
                                       ]
                                     ),
@@ -38206,7 +38277,7 @@ var render = function() {
                                         staticClass:
                                           "widget-subheading opacity-7"
                                       },
-                                      [_vm._v(_vm._s(user.usuario))]
+                                      [_vm._v(_vm._s(user.email))]
                                     )
                                   ]
                                 )
@@ -38238,93 +38309,282 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "modal fade",
-          staticStyle: { display: "none" },
+          staticClass: "modal fade modalNewUser",
+          staticStyle: { top: "100px" },
           attrs: {
-            id: "modalNuevo",
-            tabindex: "-1",
+            id: "modalNewUser",
+            tabindex: "2",
             role: "dialog",
-            "aria-labelledby": "myModalLabel",
-            "aria-hidden": "true"
+            "aria-labelledby": "myLargeModalLabel",
+            "aria-hidden": "true",
+            "data-backdrop": "false"
           }
         },
         [
-          _c(
-            "div",
-            {
-              staticClass: "modal-dialog modal-primary modal-lg",
-              attrs: { role: "document" }
-            },
-            [
-              _c("div", { staticClass: "modal-content" }, [
-                _c(
-                  "form",
-                  {
-                    staticClass: "form-horizontal",
-                    attrs: { action: "", enctype: "multipart/form-data" },
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.newUser()
-                      }
+          _c("div", { staticClass: "modal-dialog modal-lg" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "form-horizontal",
+                  attrs: { action: "", enctype: "multipart/form-data" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.newUser()
                     }
-                  },
-                  [
-                    _vm._m(4),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-body" }, [
-                      _c("div", { staticClass: "form-group row" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "col-md-3 form-control-label",
-                            attrs: { for: "text-input" }
-                          },
-                          [_vm._v("Nombre:")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-9" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.nombre,
-                                expression: "nombre"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              id: "codigo",
-                              name: "codigo",
-                              placeholder: "Nombre",
-                              required: ""
-                            },
-                            domProps: { value: _vm.nombre },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.nombre = $event.target.value
-                              }
+                  }
+                },
+                [
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Nombre:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.name,
+                              expression: "name"
                             }
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "help-block" }, [
-                            _vm._v("(*) Ingrese el Nombre del usuario")
-                          ])
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "name",
+                            name: "name",
+                            placeholder: "Nombre",
+                            required: ""
+                          },
+                          domProps: { value: _vm.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.name = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "help-block" }, [
+                          _vm._v("(*) Ingrese el Nombre del usuario")
                         ])
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(5)
-                  ]
-                )
-              ])
-            ]
-          )
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Apellido:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.lastname,
+                              expression: "lastname"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "lastname",
+                            name: "lastname",
+                            placeholder: "Apellido",
+                            required: ""
+                          },
+                          domProps: { value: _vm.lastname },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.lastname = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "help-block" }, [
+                          _vm._v("(*) Ingrese el Apellido del usuario")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Correo Electrónico:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.email,
+                              expression: "email"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "email",
+                            id: "email",
+                            name: "email",
+                            placeholder: "Correo Electrónico",
+                            required: ""
+                          },
+                          domProps: { value: _vm.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.email = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "help-block" }, [
+                          _vm._v("(*) Ingrese el Correo electrónico")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Contraseña:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.password,
+                              expression: "password"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "password",
+                            id: "password",
+                            name: "password",
+                            placeholder: "Contraseña",
+                            required: ""
+                          },
+                          domProps: { value: _vm.password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.password = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "help-block" }, [
+                          _vm._v("(*) Ingrese una contraseña")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Tipo de Usuario:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.tipo,
+                                expression: "tipo"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              id: "tipo",
+                              name: "tipo",
+                              placeholder: "Tipo de usuario",
+                              required: ""
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.tipo = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "Normal" } }, [
+                              _vm._v("Normal")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              { attrs: { value: "Administrador" } },
+                              [_vm._v("Administrador")]
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(5)
+                ]
+              )
+            ])
+          ])
         ]
       )
     ])
@@ -38396,7 +38656,7 @@ var staticRenderFns = [
         "button",
         {
           staticClass: "btn-wide btn btn-success",
-          attrs: { "data-toggle": "modal", "data-target": "#modalNuevo" }
+          attrs: { "data-toggle": "modal", "data-target": ".modalNewUser" }
         },
         [_vm._v("Nuevo")]
       )
@@ -38407,7 +38667,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Agregar Usuario")]),
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLongTitle" } },
+        [_vm._v("Agregar Nuevo Usuario")]
+      ),
       _vm._v(" "),
       _c(
         "button",
@@ -38440,7 +38704,7 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Guardar")]
+        [_vm._v("Registrar Usuario")]
       )
     ])
   }
@@ -50641,7 +50905,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('map-component', __webpack_require__(/*! ./components/MapComponent.vue */ "./resources/js/components/MapComponent.vue")["default"]);
 Vue.component('usuarios-component', __webpack_require__(/*! ./components/UsuariosComponent.vue */ "./resources/js/components/UsuariosComponent.vue")["default"]);
-Vue.component('empresas-component', __webpack_require__(/*! ./components/EmpresasComponent.vue */ "./resources/js/components/EmpresasComponent.vue")["default"]);
+Vue.component('empresas-component', __webpack_require__(/*! ./components/EmpresasComponent.vue */ "./resources/js/components/EmpresasComponent.vue")["default"]); //Vue.component('login-component', require('./components/LoginComponent.vue').default);
+//Vue.component('register-component', require('./components/RegisterComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
