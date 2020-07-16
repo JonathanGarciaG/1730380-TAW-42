@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('map-component', require('./components/MapComponent.vue').default);
 Vue.component('usuarios-component', require('./components/UsuariosComponent.vue').default);
 Vue.component('empresas-component', require('./components/EmpresasComponent.vue').default);
+Vue.component('productos-component', require('./components/ProductosComponent.vue').default);
 //Vue.component('login-component', require('./components/LoginComponent.vue').default);
 //Vue.component('register-component', require('./components/RegisterComponent.vue').default);
 

@@ -149,21 +149,43 @@
                                           Inicio
                                     </a>
                                 </li>
+                                @if(Auth::user()->tipo=="Super User")
+                                
                                 <li class="app-sidebar__heading">USUARIOS</li>
                                 <li>
-                                    <a href="usuarios">
+                                    <a href="users">
                                         <i class="fas fa-users"></i>
                                           Ver Usuarios
                                     </a>
                                 </li>
                                 <li class="app-sidebar__heading">EMPRESAS</li>
                                 <li>
-                                    <a href="empresas">
+                                    <a href="empresasv">
                                         <i class="fas fa-briefcase"></i>
                                           Ver Empresas
                                     </a>
                                 </li>
                                 
+                                @else
+
+                                <li class="app-sidebar__heading">PRODUCTOS</li>
+                                <li>
+                                    <a href="productosv">
+                                        <i class="fas fa-boxes"></i>
+                                          Ver Productos y Servicios
+                                    </a>
+                                </li>
+
+                                <li class="app-sidebar__heading">MICROSITIO</li>
+                                <li>
+                                    <a href="micrositiov">
+                                        <i class="fas fa-boxes"></i>
+                                          Ver Microsistio
+                                    </a>
+                                </li>
+
+                                
+                                @endif
                             </ul>
                         </div>
                     </div>

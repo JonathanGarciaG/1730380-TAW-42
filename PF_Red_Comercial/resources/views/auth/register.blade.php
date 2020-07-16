@@ -81,7 +81,7 @@
                             <div class="col-md-6">
                                 <!--<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>-->
                                 <select id="tipo" type="text" class="form-control @error('tipo') is-invalid @enderror" name="tipo" value="{{ old('tipo') }}" required autocomplete="tipo" autofocus>
-                                    <option value="Normal">Normal</option>
+                                    <option value="Normal">Cliente</option>
                                     <option value="Administrador">Administrador</option>
                                 </select>
 

@@ -22,7 +22,7 @@ class CreateEmpresasTable extends Migration
             $table->unsignedBigInteger('id_ubicacion');
             $table->unsignedBigInteger('id_categoria');
             $table->timestamps();
-            $table->foreign('id_usuario')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_ubicacion')->references('id')->on('ubicacion')->onDelete('cascade');
             $table->foreign('id_categoria')->references('id')->on('categoria_empresa')->onDelete('cascade');
         });

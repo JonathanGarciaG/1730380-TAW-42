@@ -21,7 +21,7 @@ class CreateHistorialPagosTable extends Migration
             $table->string('referencia');
             $table->unsignedBigInteger('id_usuario');
             $table->timestamps();
-            $table->foreign('id_usuario')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
