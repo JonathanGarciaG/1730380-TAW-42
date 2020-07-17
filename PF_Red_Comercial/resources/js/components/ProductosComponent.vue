@@ -66,8 +66,8 @@
                                         <div>{{ prod.nombre_empresa }}</div>
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" id="PopoverCustomT-1" class="btn btn-warning btn-sm" v-on:click="camposUpdate(emp)">Editar</button>
-                                        <button type="button" id="Popover" class="btn btn-danger btn-sm" v-on:click="onClickDelete(emp)">Eliminar</button>
+                                        <button type="button" id="PopoverCustomT-1" class="btn btn-warning btn-sm" v-on:click="camposUpdate(prod)">Editar</button>
+                                        <button type="button" id="Popover" class="btn btn-danger btn-sm" v-on:click="onClickDelete(prod)">Eliminar</button>
                                     </td>
                                 </tr>
                                 
@@ -82,7 +82,7 @@
             </div>
 
             <!--Inicio del modal agregar-->
-            <div class="modal fade" id="modalNewEmpresa"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 100px;">
+            <div class="modal fade" id="modalNewProducto"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 60px;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                     <!-- al completar el form utiliza el metodo newProducto() para agregar los datos de empresa -->
@@ -110,7 +110,7 @@
                                 <div class="col-md-9">
                                     <select type="number" id="tipo" name="tipo" v-model="tipo" class="form-control" placeholder="Tipo" required>
                                         <option value="Producto">Producto</option>
-                                        <option value="Producto">Servicio</option>
+                                        <option value="Servicio">Servicio</option>
                                     </select>
                                 </div>
                             </div>
@@ -180,10 +180,10 @@
 
 
             <!--Inicio del modal editar-->
-            <div class="modal fade" id="modalUpdateEmpresa"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 100px;">
+            <div class="modal fade" id="modalUpdateProducto"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 60px;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                    <!-- al completar el form utiliza el metodo newEmpresa() para agregar los datos de empresa -->
+                    <!-- al completar el form utiliza el metodo updateProducto() para agregar los datos de empresa -->
                     <form action="" v-on:submit.prevent="updateProducto()" enctype="multipart/form-data" class="form-horizontal">
 
 
@@ -208,7 +208,7 @@
                                 <div class="col-md-9">
                                     <select type="number" id="tipo" name="tipo" v-model="tipo" class="form-control" placeholder="Tipo" required>
                                         <option value="Producto">Producto</option>
-                                        <option value="Producto">Servicio</option>
+                                        <option value="Servicio">Servicio</option>
                                     </select>
                                 </div>
                             </div>
@@ -336,12 +336,15 @@
             mostrarModalCreate() {
                 //Se limpian los campos del modal
                 this.nombre = '';
-                this.telefono = '';
-                this.descripcion = '';
-                this.id_usuario = '';
-                this.id_ubicacion = '';
+                this.tipo = '';
+                this.codigo = '';
+                this.precio = '';
+                this.stock = '';
+                this.longitud = '';
+                this.anchura = '';
+                this.altura = '';
                 this.id_categoria = '';
-                $('#modalNewEmpresa').modal('show');
+                $('#modalNewProducto').modal('show');
             },
             //mostrar modal eliminar
             mostrarModalDelete(data) {
@@ -360,44 +363,49 @@
                     longitud: this.longitud,
                     anchura: this.anchura,
                     altura: this.altura,
-                    id_empresa: this.precio,
+                    id_empresa: this.emps[0].id,
                     id_categoria: categoria[0]
                 };
                 //Se limpian los campos del modal
                 this.nombre = '';
-                this.telefono = '';
-                this.descripcion = '';
-                this.id_usuario = '';
-                this.id_ubicacion = '';
+                this.tipo = '';
+                this.codigo = '';
+                this.precio = '';
+                this.stock = '';
+                this.longitud = '';
+                this.anchura = '';
+                this.altura = '';
                 this.id_categoria = '';
 
                 //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
-                axios.post('./empresas', params)
+                axios.post('./productos', params)
                     .then((response) => {
-                        const emp = response.data;
+                        const prod = response.data;
                         //una vez hecha se realiza nuevamente una actualizacion del array emps para actualizar el componente que los muestra
                         this.reloadData();
                     });
                 //Ocultar el modal
-                $('#modalNewEmpresa').modal('hide');
+                $('#modalNewProducto').modal('hide');
             },
             //Metodo para actualizar los datos de un usuario.
-            updateEmpresa(){
+            updateProducto(){
                 let me = this;
-                let usuarioa = this.id_usuario.split("|");
-                let ubicacion = this.id_ubicacion.split("|");
                 let categoria = this.id_categoria.split("|");
-                axios.put('./empresas',{
+                axios.put('./productos',{
                     'id' : this.update,
                     'nombre' : this.nombre,
-                    'telefono' : this.telefono,
-                    'descripcion' : this.descripcion,
-                    'id_usuario' : usuarioa[0],
-                    'id_ubicacion' : ubicacion[0],
+                    'tipo' : this.tipo,
+                    'codigo' : this.codigo,
+                    'precio' : this.precio,
+                    'stock' : this.stock,
+                    'longitud' : this.longitud,
+                    'anchura' : this.anchura,
+                    'altura' : this.altura,
+                    'id_empresa' : this.emps[0].id,
                     'id_categoria' : categoria[0],
                 }).then(function (response){
                     //Cerrando el modal después de actualizar el usuario.
-                    $('#modalUpdateEmpresa').modal('hide');
+                    $('#modalUpdateProducto').modal('hide');
                 }).catch(function (error){
                     console.log(error);
                 });
@@ -405,24 +413,29 @@
             },
             //Metodo para rellenar los campos del formulario al momento de seleccionar un usuario.
             camposUpdate(data){
-                $('#modalUpdateEmpresa').modal('show');
+                //se abre el modal para actualizar producto
+                $('#modalUpdateProducto').modal('show');
                 this.update = data.id;
                 let me = this;
-                let url = './empresas/'+this.update;
+                let url = './productos/'+this.update;
                 axios.get(url).then(function (response){
                     me.nombre = response.data.nombre;
-                    me.telefono = response.data.telefono;
-                    me.descripcion = response.data.descripcion;
-                    me.id_usuario = "";
-                    me.id_ubicacion = "";
+                    me.tipo = response.data.tipo;
+                    me.codigo = response.data.codigo;
+                    me.precio = response.data.precio;
+                    me.stock = response.data.stock;
+                    me.longitud = response.data.longitud;
+                    me.anchura = response.data.anchura;
+                    me.altura = response.data.altura;
+                    me.id_empresa = "";
                     me.id_categoria = "";
                 }).catch(function (error){
                     console.log(error);
                 });
             },
             //metodo para eliminar
-            onClickDelete(dataemp) {
-                axios.delete('./empresas/'+dataemp.id).then(() => {
+            onClickDelete(dataprod) {
+                axios.delete('./productos/'+dataprod.id).then(() => {
                     this.reloadData();
                 });
             },

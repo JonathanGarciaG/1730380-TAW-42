@@ -9,6 +9,6 @@ class CategoriasProductosController extends Controller
 {
     //funcion que retorna los valores de los registros de la tabla categoria_empresa
     public function index(){
-    	return DB::table('categoria_productos')->get();
+    	return DB::table('categorias_productos')->get();
     }
 }

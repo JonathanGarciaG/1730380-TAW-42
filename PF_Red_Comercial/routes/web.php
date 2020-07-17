@@ -60,7 +60,7 @@ Route::get('/empresas/{id}', 'EmpresasController@getempresa');
 Route::put('/empresas', 'EmpresasController@update');
 
 //ruta para obtener la empresa asociada al usuario actual
-Route::put('/getempresaact', 'EmpresasController@empresaact');
+Route::get('/getempresaact', 'EmpresasController@empresaact');
 
 Route::get('/productosv', function () {
     return view('contenido.productoscontenido');

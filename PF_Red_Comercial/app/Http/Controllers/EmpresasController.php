@@ -7,6 +7,8 @@ use App\empresas;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class EmpresasController extends Controller
 {

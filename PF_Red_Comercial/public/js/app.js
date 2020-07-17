@@ -2750,12 +2750,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     mostrarModalCreate: function mostrarModalCreate() {
       //Se limpian los campos del modal
       this.nombre = '';
-      this.telefono = '';
-      this.descripcion = '';
-      this.id_usuario = '';
-      this.id_ubicacion = '';
+      this.tipo = '';
+      this.codigo = '';
+      this.precio = '';
+      this.stock = '';
+      this.longitud = '';
+      this.anchura = '';
+      this.altura = '';
       this.id_categoria = '';
-      $('#modalNewEmpresa').modal('show');
+      $('#modalNewProducto').modal('show');
     },
     //mostrar modal eliminar
     mostrarModalDelete: function mostrarModalDelete(data) {
@@ -2776,42 +2779,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         longitud: this.longitud,
         anchura: this.anchura,
         altura: this.altura,
-        id_empresa: this.precio,
+        id_empresa: this.emps[0].id,
         id_categoria: categoria[0]
       }; //Se limpian los campos del modal
 
       this.nombre = '';
-      this.telefono = '';
-      this.descripcion = '';
-      this.id_usuario = '';
-      this.id_ubicacion = '';
+      this.tipo = '';
+      this.codigo = '';
+      this.precio = '';
+      this.stock = '';
+      this.longitud = '';
+      this.anchura = '';
+      this.altura = '';
       this.id_categoria = ''; //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
 
-      axios.post('./empresas', params).then(function (response) {
-        var emp = response.data; //una vez hecha se realiza nuevamente una actualizacion del array emps para actualizar el componente que los muestra
+      axios.post('./productos', params).then(function (response) {
+        var prod = response.data; //una vez hecha se realiza nuevamente una actualizacion del array emps para actualizar el componente que los muestra
 
         _this.reloadData();
       }); //Ocultar el modal
 
-      $('#modalNewEmpresa').modal('hide');
+      $('#modalNewProducto').modal('hide');
     },
     //Metodo para actualizar los datos de un usuario.
-    updateEmpresa: function updateEmpresa() {
+    updateProducto: function updateProducto() {
       var me = this;
-      var usuarioa = this.id_usuario.split("|");
-      var ubicacion = this.id_ubicacion.split("|");
       var categoria = this.id_categoria.split("|");
-      axios.put('./empresas', {
+      axios.put('./productos', {
         'id': this.update,
         'nombre': this.nombre,
-        'telefono': this.telefono,
-        'descripcion': this.descripcion,
-        'id_usuario': usuarioa[0],
-        'id_ubicacion': ubicacion[0],
+        'tipo': this.tipo,
+        'codigo': this.codigo,
+        'precio': this.precio,
+        'stock': this.stock,
+        'longitud': this.longitud,
+        'anchura': this.anchura,
+        'altura': this.altura,
+        'id_empresa': this.emps[0].id,
         'id_categoria': categoria[0]
       }).then(function (response) {
         //Cerrando el modal después de actualizar el usuario.
-        $('#modalUpdateEmpresa').modal('hide');
+        $('#modalUpdateProducto').modal('hide');
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2819,26 +2827,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //Metodo para rellenar los campos del formulario al momento de seleccionar un usuario.
     camposUpdate: function camposUpdate(data) {
-      $('#modalUpdateEmpresa').modal('show');
+      //se abre el modal para actualizar producto
+      $('#modalUpdateProducto').modal('show');
       this.update = data.id;
       var me = this;
-      var url = './empresas/' + this.update;
+      var url = './productos/' + this.update;
       axios.get(url).then(function (response) {
         me.nombre = response.data.nombre;
-        me.telefono = response.data.telefono;
-        me.descripcion = response.data.descripcion;
-        me.id_usuario = "";
-        me.id_ubicacion = "";
+        me.tipo = response.data.tipo;
+        me.codigo = response.data.codigo;
+        me.precio = response.data.precio;
+        me.stock = response.data.stock;
+        me.longitud = response.data.longitud;
+        me.anchura = response.data.anchura;
+        me.altura = response.data.altura;
+        me.id_empresa = "";
         me.id_categoria = "";
       })["catch"](function (error) {
         console.log(error);
       });
     },
     //metodo para eliminar
-    onClickDelete: function onClickDelete(dataemp) {
+    onClickDelete: function onClickDelete(dataprod) {
       var _this2 = this;
 
-      axios["delete"]('./empresas/' + dataemp.id).then(function () {
+      axios["delete"]('./productos/' + dataprod.id).then(function () {
         _this2.reloadData();
       });
     },
@@ -40035,7 +40048,7 @@ var render = function() {
                               attrs: { type: "button", id: "PopoverCustomT-1" },
                               on: {
                                 click: function($event) {
-                                  return _vm.camposUpdate(_vm.emp)
+                                  return _vm.camposUpdate(prod)
                                 }
                               }
                             },
@@ -40049,7 +40062,7 @@ var render = function() {
                               attrs: { type: "button", id: "Popover" },
                               on: {
                                 click: function($event) {
-                                  return _vm.onClickDelete(_vm.emp)
+                                  return _vm.onClickDelete(prod)
                                 }
                               }
                             },
@@ -40086,9 +40099,9 @@ var render = function() {
         "div",
         {
           staticClass: "modal fade",
-          staticStyle: { top: "100px" },
+          staticStyle: { top: "60px" },
           attrs: {
-            id: "modalNewEmpresa",
+            id: "modalNewProducto",
             tabindex: "2",
             role: "dialog",
             "aria-labelledby": "myLargeModalLabel",
@@ -40211,7 +40224,7 @@ var render = function() {
                               _vm._v("Producto")
                             ]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "Producto" } }, [
+                            _c("option", { attrs: { value: "Servicio" } }, [
                               _vm._v("Servicio")
                             ])
                           ]
@@ -40541,9 +40554,9 @@ var render = function() {
         "div",
         {
           staticClass: "modal fade",
-          staticStyle: { top: "100px" },
+          staticStyle: { top: "60px" },
           attrs: {
-            id: "modalUpdateEmpresa",
+            id: "modalUpdateProducto",
             tabindex: "2",
             role: "dialog",
             "aria-labelledby": "myLargeModalLabel",
@@ -40666,7 +40679,7 @@ var render = function() {
                               _vm._v("Producto")
                             ]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "Producto" } }, [
+                            _c("option", { attrs: { value: "Servicio" } }, [
                               _vm._v("Servicio")
                             ])
                           ]
