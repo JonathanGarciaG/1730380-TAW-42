@@ -62,6 +62,11 @@ class ProductosController extends Controller
         return $producto;
     }
 
+    //Metodo para obtener los datos de todos los productos.
+    public function getallproductos(){
+        return DB::table('productos')->join('empresas', 'productos.id_empresa', '=', 'empresas.id')->join('categorias_productos', 'productos.id_categoria', '=', 'categorias_productos.id')->select('productos.*', 'empresas.nombre as nombre_empresa','empresas.id_usuario as id_de_usuario', 'categorias_productos.nombre_categoria')->get();
+    }
+
     //metodo para eliminar registro de la tabla productos
     public function destroy($id)
     {

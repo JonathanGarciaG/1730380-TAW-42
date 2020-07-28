@@ -164,6 +164,17 @@
                                         <i class="fas fa-briefcase"></i>
                                           Ver Empresas
                                     </a>
+                                    <a href="categoriasev">
+                                        <i class="fas fa-list"></i>
+                                          Ver Categorías de empresas
+                                    </a>
+                                </li>
+                                <li class="app-sidebar__heading">PRODUCTOS</li>
+                                <li>
+                                    <a href="sproductosv">
+                                        <i class="fas fa-boxes"></i>
+                                          Ver Productos
+                                    </a>
                                 </li>
                                 
                                 @else

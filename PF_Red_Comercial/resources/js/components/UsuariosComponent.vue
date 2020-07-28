@@ -49,7 +49,7 @@
                                     </td>
                                     <td class="text-center">
                                         <button type="button" id="PopoverCustomT-1" class="btn btn-warning btn-sm" v-on:click="camposUpdate(user)">Editar</button>
-                                        <button type="button" id="PopoverCustomT-1" class="btn btn-danger btn-sm" v-on:click="onClickDelete(user)">Eliminar</button>
+                                        <button type="button" id="PopoverCustomT-1" class="btn btn-danger btn-sm" v-on:click="mostrarModalDelete(user)">Eliminar</button>
                                     </td>
                                 </tr>
                                 
@@ -202,26 +202,34 @@
             <!--Fin del modal-->
 
             <!--Inicio del modal eliminar-->
-            <div class="modal fade" id="modalDeleteUser"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 100px;">
+            <div class="modal fade" id="modalDeleteProducto"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 60px;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                    <!-- al completar el form utiliza el metodo OnClickDelete() para eliminar los datos de usuario -->
-                    <form action="" v-on:submit.prevent="onClickDelete(user)" enctype="multipart/form-data" class="form-horizontal">
+                    <!-- al completar el form utiliza el metodo updateProducto() para agregar los datos de empresa -->
+                    <form action="" v-on:submit.prevent="onClickDelete()" enctype="multipart/form-data" class="form-horizontal">
+
 
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Usuario</h5>
+                            <h5 class="modal-title"  id="exampleModalLongTitle">Eliminar Usuario</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            
-                            ¿Desea borrar este registro de usuario?
+
+                            <h5>¿Está seguro que desea eliminar el usuario?</h5>
+
+                            <!-- Se utiliza un input oculto para tomar el id del producto que se va a borrar -->
+                            <div class="form-group row">
+                                <div class="col-md-9">
+                                    <input type="hidden" id="id_borrar" name="id_borrar" v-model="id_borrar" class="form-control" placeholder="idborrar" required>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-danger">Registrar Usuario</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Si</button>
                         </div>
                     </form> 
                     </div>
@@ -244,7 +252,8 @@
                 password:"",
                 tipo:"", 
                 update: 0,
-                users:[]
+                users:[],
+                id_borrar: 0
             }
         },
         mounted() {
@@ -274,8 +283,8 @@
             },
             //mostrar modal eliminar
             mostrarModalDelete(data) {
-                $('#modalDeleteUser').modal('show');
-                
+                this.id_borrar = data.id;
+                $('#modalDeleteProducto').modal('show');               
             },
             //Metodo para agregar un nuevo usuario
             newUser() {
@@ -353,9 +362,8 @@
                 });
             },
             //metodo para eliminar
-            onClickDelete(datauser) {
-                axios.delete('./usuarios/'+datauser.id).then(() => {
-                    
+            onClickDelete() {
+                axios.delete('./usuarios/'+this.id_borrar).then(() => {                    
                     let me = this;
                     let url = './usuarios' //url que retorna los registros de la tabla users
                     axios.get(url).then(function (response) {
@@ -365,6 +373,7 @@
                         console.log(error);
                     });
                 });
+                $('#modalDeleteProducto').modal('hide');
             }
             
         }

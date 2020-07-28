@@ -58,7 +58,7 @@
                                     </td>
                                     <td class="text-center">
                                         <button type="button" id="PopoverCustomT-1" class="btn btn-warning btn-sm" v-on:click="camposUpdate(emp)">Editar</button>
-                                        <button type="button" id="Popover" class="btn btn-danger btn-sm" v-on:click="onClickDelete(emp)">Eliminar</button>
+                                        <button type="button" id="Popover" class="btn btn-danger btn-sm" v-on:click="mostrarModalDelete(emp)">Eliminar</button>
                                     </td>
                                 </tr>
                                 
@@ -229,6 +229,42 @@
             </div>
             <!--Fin del modal-->
 
+            <!--Inicio del modal eliminar-->
+            <div class="modal fade" id="modalDeleteProducto"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 60px;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                    <!-- al completar el form utiliza el metodo updateProducto() para agregar los datos de empresa -->
+                    <form action="" v-on:submit.prevent="onClickDelete()" enctype="multipart/form-data" class="form-horizontal">
+
+
+                        <div class="modal-header">
+                            <h5 class="modal-title"  id="exampleModalLongTitle">Eliminar Empresa</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <h5>¿Está seguro que desea eliminar la empresa?</h5>
+
+                            <!-- Se utiliza un input oculto para tomar el id del producto que se va a borrar -->
+                            <div class="form-group row">
+                                <div class="col-md-9">
+                                    <input type="hidden" id="id_borrar" name="id_borrar" v-model="id_borrar" class="form-control" placeholder="idborrar" required>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Si</button>
+                        </div>
+                    </form> 
+                    </div>
+                </div>
+            </div>
+            <!--Fin del modal-->
+
         </div>
     </div>
 </template>
@@ -249,7 +285,8 @@
                 update: 0,
                 users:[],
                 ubics:[],
-                cats:[]
+                cats:[],
+                id_borrar: 0
             }
         },
         mounted() {
@@ -303,7 +340,8 @@
             },
             //mostrar modal eliminar
             mostrarModalDelete(data) {
-                $('#modalDeleteEmpresa').modal('show');               
+                this.id_borrar = data.id;
+                $('#modalDeleteProducto').modal('show');               
             },
             //Metodo para agregar un nuevo usuario
             newEmpresa() {
@@ -377,10 +415,11 @@
                 });
             },
             //metodo para eliminar
-            onClickDelete(dataemp) {
-                axios.delete('./empresas/'+dataemp.id).then(() => {
+            onClickDelete() {
+                axios.delete('./empresas/'+this.id_borrar).then(() => {
                     this.reloadData();
                 });
+                $('#modalDeleteProducto').modal('hide');
             },
             //actualizar registros
             reloadData(){

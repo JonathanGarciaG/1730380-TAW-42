@@ -45,12 +45,19 @@ Route::put('/usuarios', 'UsuariosController@update');
 //para obtener a los usuarios administradores
 Route::get('/usuariosadmin', 'UsuariosController@getadminusers');
 
+//ruta para vista de usuairos
 Route::get('/users', function () {
     return view('contenido.usuarioscontenido');
 });
 
+//ruta para vista de empresas
 Route::get('/empresasv', function () {
     return view('contenido.empresascontenido');
+});
+
+//ruta para vista de empresas
+Route::get('/categoriasev', function () {
+    return view('contenido.categoriasecontenido');
 });
 
 //para obtener datos de usuario
@@ -62,16 +69,28 @@ Route::put('/empresas', 'EmpresasController@update');
 //ruta para obtener la empresa asociada al usuario actual
 Route::get('/getempresaact', 'EmpresasController@empresaact');
 
+//ruta para obtener las empresas
+Route::get('/getempresas', 'EmpresasController@empresasall');
+
 Route::get('/productosv', function () {
     return view('contenido.productoscontenido');
 });
 
-//para obtener datos de usuario
+Route::get('/sproductosv', function () {
+    return view('contenido.productossupercontenido');
+});
+
+//para obtener datos de un producto
 Route::get('/productos/{id}', 'ProductosController@getproducto');
 
-//ruta para actualizar una empresa
+//ruta para actualizar un producto
 Route::put('/productos', 'ProductosController@update');
 
+//ruta para actualizar una categoria de empresa
+Route::put('/categoriase', 'CategoriasEmpresasController@update');
+
+//para obtener datos de todos los productos de todas las empresas
+Route::get('/productosall', 'ProductosController@getallproductos');
 
 //Route::get('/getusers','UsuariosController@getUsuarios');
 

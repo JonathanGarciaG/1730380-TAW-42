@@ -154,7 +154,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Altura:</label>
                                 <div class="col-md-9">
-                                    <input type="number" id="altura" name="altura" v-model="altura" class="form-control" placeholder="altura" required>                                  
+                                    <input type="number" id="altura" name="altura" v-model="altura" class="form-control" placeholder="Altura" required>                                  
                                 </div>
                             </div>
 
@@ -163,6 +163,15 @@
                                 <div class="col-md-9">
                                     <select id="id_categoria" name="id_categoria" v-model="id_categoria" class="form-control" placeholder="Categoria" required>
                                         <option v-for="cat in cats" :key="cat.id">{{ cat.id }}|{{ cat.nombre_categoria }}</option>
+                                    </select>                                    
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Empresa:</label>
+                                <div class="col-md-9">
+                                    <select id="id_empresa" name="id_empresa" v-model="id_empresa" class="form-control" placeholder="Empresa" required>
+                                        <option v-for="emp in emps" :key="emp.id">{{ emp.id }}|{{ emp.nombre }}</option>
                                     </select>                                    
                                 </div>
                             </div>
@@ -188,7 +197,7 @@
 
 
                         <div class="modal-header">
-                            <h5 class="modal-title"  id="exampleModalLongTitle">Agregar Nuevo Producto</h5>
+                            <h5 class="modal-title"  id="exampleModalLongTitle">Editar Producto</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -252,7 +261,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Altura:</label>
                                 <div class="col-md-9">
-                                    <input type="number" id="altura" name="altura" v-model="altura" class="form-control" placeholder="altura" required>                                  
+                                    <input type="number" id="altura" name="altura" v-model="altura" class="form-control" placeholder="Altura" required>                                  
                                 </div>
                             </div>
 
@@ -265,10 +274,19 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Empresa:</label>
+                                <div class="col-md-9">
+                                    <select id="id_empresa" name="id_empresa" v-model="id_empresa" class="form-control" placeholder="Empresa" required>
+                                        <option v-for="emp in emps" :key="emp.id">{{ emp.id }}|{{ emp.nombre }}</option>
+                                    </select>                                    
+                                </div>
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">ActualizarProducto</button>
+                            <button type="submit" class="btn btn-primary">Actualizar Producto</button>
                         </div>
                     </form> 
                     </div>
@@ -343,7 +361,7 @@
             console.log('Component mounted.')
             //cuando el componente es montado se realizar lo siguiente para cargar los datos
             let me = this;
-            let url = './productos' //url que retorna los registros de la tabla empresas
+            let url = './productosall' //url que retorna los registros de la tabla productos
             axios.get(url).then(function (response) {
                 me.prods = response.data;
             })
@@ -359,7 +377,7 @@
                 console.log(error);
             });
 
-            url = './getempresaact' //url que retorna los registros de la tabla usuarios
+            url = './getempresas' //url que retorna los registros de la tabla empresas
             axios.get(url).then(function (response) {
                 me.emps = response.data;
             })
@@ -388,10 +406,11 @@
                 this.id_borrar = data.id;
                 $('#modalDeleteProducto').modal('show');               
             },
-            //Metodo para agregar un nuevo usuario
+            //Metodo para agregar un nuevo producto
             newProducto() {
                 //se toman los parametros de los campos
                 let categoria = this.id_categoria.split("|");
+                let empresa = this.id_empresa.split("|");
                 const params = {
                     nombre: this.nombre,
                     tipo: this.tipo,
@@ -401,7 +420,7 @@
                     longitud: this.longitud,
                     anchura: this.anchura,
                     altura: this.altura,
-                    id_empresa: this.emps[0].id,
+                    id_empresa: empresa[0],
                     id_categoria: categoria[0]
                 };
                 //Se limpian los campos del modal
@@ -414,6 +433,7 @@
                 this.anchura = '';
                 this.altura = '';
                 this.id_categoria = '';
+                this.id_empresa = '';
 
                 //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
                 axios.post('./productos', params)
@@ -429,6 +449,7 @@
             updateProducto(){
                 let me = this;
                 let categoria = this.id_categoria.split("|");
+                let empresa = this.id_empresa.split("|");
                 axios.put('./productos',{
                     'id' : this.update,
                     'nombre' : this.nombre,
@@ -439,7 +460,7 @@
                     'longitud' : this.longitud,
                     'anchura' : this.anchura,
                     'altura' : this.altura,
-                    'id_empresa' : this.emps[0].id,
+                    'id_empresa' : empresa[0],
                     'id_categoria' : categoria[0],
                 }).then(function (response){
                     //Cerrando el modal después de actualizar el usuario.
@@ -481,7 +502,7 @@
             //actualizar registros
             reloadData(){
                 let me = this;
-                let url = './productos' //url que retorna los registros de la tabla empresas
+                let url = './productosall' //url que retorna los registros de la tabla empresas
                 axios.get(url).then(function (response) {
                     me.prods = response.data;
                 })
