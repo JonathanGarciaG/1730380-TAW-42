@@ -26,6 +26,8 @@ Vue.component('empresas-component', require('./components/EmpresasComponent.vue'
 Vue.component('productos-component', require('./components/ProductosComponent.vue').default);
 Vue.component('productos-super-component', require('./components/ProductosSuperComponent.vue').default);
 Vue.component('categorias-empresas-component', require('./components/CategoriasEmpresasComponent.vue').default);
+Vue.component('categorias-productos-component', require('./components/CategoriasProductosComponent.vue').default);
+Vue.component('ubicacion-component', require('./components/UbicacionComponent.vue').default);
 //Vue.component('login-component', require('./components/LoginComponent.vue').default);
 //Vue.component('register-component', require('./components/RegisterComponent.vue').default);
 

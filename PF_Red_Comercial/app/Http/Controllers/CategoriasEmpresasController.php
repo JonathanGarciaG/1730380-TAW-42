@@ -28,7 +28,7 @@ class CategoriasEmpresasController extends Controller
     //Metodo para actualizar categoria de empresa
     public function update(Request $request){
         $categoria = categoria_empresa::findOrFail($request->input('id'));
-        //Guardando los nuevos valores del empleado
+        //Guardando los nuevos valores de la categoria
         $categoria->nombre = $request->input('nombre');
     
         $categoria->save();

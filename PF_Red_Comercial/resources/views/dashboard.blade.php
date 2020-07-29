@@ -72,7 +72,7 @@
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                <i class="nav-link-icon fa fa-edit"></i>
+                                <i class="nav-link-icon fa fa-sign-out-alt"></i>
                                 {{ __('Logout') }}
                             </a>
                         </li>
@@ -168,12 +168,20 @@
                                         <i class="fas fa-list"></i>
                                           Ver Categorías de empresas
                                     </a>
+                                    <a href="ubicacionv">
+                                        <i class="fas fa-map-marker"></i>
+                                          Ubicacion
+                                    </a>
                                 </li>
                                 <li class="app-sidebar__heading">PRODUCTOS</li>
                                 <li>
                                     <a href="sproductosv">
                                         <i class="fas fa-boxes"></i>
                                           Ver Productos
+                                    </a>
+                                    <a href="categoriaspv">
+                                        <i class="fas fa-list"></i>
+                                          Ver Categorías de productos
                                     </a>
                                 </li>
                                 

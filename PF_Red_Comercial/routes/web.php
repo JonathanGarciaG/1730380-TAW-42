@@ -55,9 +55,19 @@ Route::get('/empresasv', function () {
     return view('contenido.empresascontenido');
 });
 
-//ruta para vista de empresas
+//ruta para vista de categorias de empresas
 Route::get('/categoriasev', function () {
     return view('contenido.categoriasecontenido');
+});
+
+//ruta para vista de categorias de productos
+Route::get('/categoriaspv', function () {
+    return view('contenido.categoriaspcontenido');
+});
+
+//ruta para vista de ubicaciones de empresas
+Route::get('/ubicacionv', function () {
+    return view('contenido.ubicacioncontenido');
 });
 
 //para obtener datos de usuario
@@ -88,6 +98,12 @@ Route::put('/productos', 'ProductosController@update');
 
 //ruta para actualizar una categoria de empresa
 Route::put('/categoriase', 'CategoriasEmpresasController@update');
+
+//ruta para actualizar una categoria de productos
+Route::put('/categoriasp', 'CategoriasProductosController@update');
+
+//ruta para actualizar una ubicacion
+Route::put('/ubicacion', 'UbicacionController@update');
 
 //para obtener datos de todos los productos de todas las empresas
 Route::get('/productosall', 'ProductosController@getallproductos');
