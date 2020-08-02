@@ -88,46 +88,10 @@
 
         <div class="app-main">
             <div class="app-main__inner">
-                <div class="col-md-12">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body">
-                            <h5 class="card-title center">Nombre de negocio</h5>
-                            <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img class="d-block w-100" src="https://via.placeholder.com/800x400" alt="First slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="https://via.placeholder.com/800x400" alt="Second slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="https://via.placeholder.com/800x400" alt="Third slide">
-                                    </div>
-                                </div>
-                                <a class="carousel-control-prev" href="#carouselExampleControls1" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next" href="#carouselExampleControls1" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 
-                <div class="row">
+                <micrositio-carousel-component></micrositio-carousel-component>
 
-                    <div class="col-md-4">
-                        <div class="main-card mb-3 card"><img width="100%" src="waifu2.jpg" alt="Card image cap" class="card-img-top">
-                            <div class="card-body"><h5 class="card-title">Card title</h5><h6 class="card-subtitle">Card subtitle</h6>Some quick example text to build on the card title and make up the bulk of the card's content.<tr>    
-                            </div>
-                            <div class="card-footer"><button class="btn btn-secondary">Button</button></div>
-                        </div>
-                    </div>
-
-                </div>
+                <micrositio-productos-component></micrositio-productos-component>
 
             </div>
                 

@@ -133,6 +133,8 @@ Route::apiResource('productos', 'ProductosController');
 
 Route::apiResource('imagenes_productos', 'ImagenesProductosController');
 
+Route::apiResource('imagenes_sitio', 'ImagenesSitioController');
+
 Route::apiResource('micrositios', 'MicrositiosController');
 
 Auth::routes();

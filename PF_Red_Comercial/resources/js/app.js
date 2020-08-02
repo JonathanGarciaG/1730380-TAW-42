@@ -28,6 +28,9 @@ Vue.component('productos-super-component', require('./components/ProductosSuperC
 Vue.component('categorias-empresas-component', require('./components/CategoriasEmpresasComponent.vue').default);
 Vue.component('categorias-productos-component', require('./components/CategoriasProductosComponent.vue').default);
 Vue.component('ubicacion-component', require('./components/UbicacionComponent.vue').default);
+Vue.component('micrositio-carousel-component', require('./components/MicrositioCarouselComponent.vue').default);
+Vue.component('micrositio-productos-component', require('./components/MicrositioProductosComponent.vue').default);
+Vue.component('imagenes-micrositio-component', require('./components/ImagenesSitioComponent.vue').default);
 //Vue.component('login-component', require('./components/LoginComponent.vue').default);
 //Vue.component('register-component', require('./components/RegisterComponent.vue').default);
 

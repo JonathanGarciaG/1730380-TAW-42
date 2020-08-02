@@ -188,7 +188,7 @@
                                     </a>
                                 </li>
                                 
-                                @else
+                                @elseif(Auth::user()->tipo=="Administrador")
 
                                 <li class="app-sidebar__heading">PRODUCTOS</li>
                                 <li>
@@ -214,8 +214,10 @@
                                     </a>
                                 </li>
 
-                                
+                                @else 
+
                                 @endif
+
                             </ul>
                         </div>
                     </div>
