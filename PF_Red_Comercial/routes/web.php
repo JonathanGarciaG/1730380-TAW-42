@@ -50,6 +50,11 @@ Route::get('/users', function () {
     return view('contenido.usuarioscontenido');
 });
 
+//ruta para vista de micrositio
+Route::get('/micrositiov', function () {
+    return view('contenido.micrositiocontenido');
+});
+
 //ruta para vista de empresas
 Route::get('/empresasv', function () {
     return view('contenido.empresascontenido');
@@ -125,6 +130,8 @@ Route::apiResource('categoriase', 'CategoriasEmpresasController');
 Route::apiResource('categoriasp', 'CategoriasProductosController');
 
 Route::apiResource('productos', 'ProductosController');
+
+Route::apiResource('imagenes_productos', 'ImagenesProductosController');
 
 Auth::routes();
 

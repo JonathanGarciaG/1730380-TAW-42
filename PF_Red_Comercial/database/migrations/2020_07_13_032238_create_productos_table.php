@@ -25,6 +25,7 @@ class CreateProductosTable extends Migration
             $table->float('altura');
             $table->unsignedBigInteger('id_empresa');
             $table->unsignedBigInteger('id_categoria');
+            $table->string('descripcion');
             $table->timestamps();
             $table->foreign('id_empresa')->references('id')->on('empresas')->onDelete('cascade');
             $table->foreign('id_categoria')->references('id')->on('categorias_productos')->onDelete('cascade');

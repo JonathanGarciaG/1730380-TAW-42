@@ -14,7 +14,7 @@ class ProductosController extends Controller
 {
     //funcion que retorna los valores de los registros de la tabla productos
     public function index(){
-    	return DB::table('productos')->join('empresas', 'productos.id_empresa', '=', 'empresas.id')->join('categorias_productos', 'productos.id_categoria', '=', 'categorias_productos.id')->select('productos.*', 'empresas.nombre as nombre_empresa','empresas.id_usuario as id_de_usuario', 'categorias_productos.nombre_categoria')->where('id_usuario', '=', Auth::user()->id )->get();
+    	return DB::table('productos')->join('empresas', 'productos.id_empresa', '=', 'empresas.id')->join('categorias_productos', 'productos.id_categoria', '=', 'categorias_productos.id')->join('imagenes_productos', 'productos.id', '=', 'imagenes_productos.id_producto')->select('productos.*', 'empresas.nombre as nombre_empresa','empresas.id_usuario as id_de_usuario', 'categorias_productos.nombre_categoria','imagenes_productos.imagen')->where('id_usuario', '=', Auth::user()->id )->get();
     }
 
     //metodo del controlador para agregar un producto mediante un request recibido
@@ -26,6 +26,7 @@ class ProductosController extends Controller
         $producto->tipo = $request->tipo;
         $producto->codigo = $request->codigo;
         $producto->precio = $request->precio;
+        $producto->descripcion = $request->descripcion;
         $producto->stock = $request->stock;
         $producto->longitud = $request->longitud;
         $producto->anchura = $request->anchura;
@@ -46,6 +47,7 @@ class ProductosController extends Controller
         $producto->tipo = $request->input('tipo');
         $producto->codigo = $request->input('codigo');
         $producto->precio = $request->input('precio');
+        $producto->descripcion = $request->input('descripcion');
         $producto->stock = $request->input('stock');
         $producto->longitud = $request->input('longitud');
         $producto->anchura = $request->input('anchura');
@@ -64,7 +66,7 @@ class ProductosController extends Controller
 
     //Metodo para obtener los datos de todos los productos.
     public function getallproductos(){
-        return DB::table('productos')->join('empresas', 'productos.id_empresa', '=', 'empresas.id')->join('categorias_productos', 'productos.id_categoria', '=', 'categorias_productos.id')->select('productos.*', 'empresas.nombre as nombre_empresa','empresas.id_usuario as id_de_usuario', 'categorias_productos.nombre_categoria')->get();
+        return DB::table('productos')->join('empresas', 'productos.id_empresa', '=', 'empresas.id')->join('categorias_productos', 'productos.id_categoria', '=', 'categorias_productos.id')->join('imagenes_productos', 'productos.id', '=', 'imagenes_productos.id_producto')->select('productos.*', 'empresas.nombre as nombre_empresa','empresas.id_usuario as id_de_usuario', 'categorias_productos.nombre_categoria','imagenes_productos.imagen')->get();
     }
 
     //metodo para eliminar registro de la tabla productos
