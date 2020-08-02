@@ -489,14 +489,14 @@
                             console.log(error);
                         });
                         //Actualizando la lista de productos.
-                            let me = this;
-                            let url = './productosall' //url que retorna los registros de la tabla empresas
-                            axios.get(url).then(function (response) {
-                                me.prods = response.data;
-                            })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
+                        let me = this;
+                        let url = './productosall' //url que retorna los registros de la tabla empresas
+                        axios.get(url).then(function (response) {
+                            me.prods = response.data;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
                     });
                 //Ocultar el modal
                 $('#modalNewProducto').modal('hide');

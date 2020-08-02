@@ -94,6 +94,7 @@
                                         </a>
                                     </div>
                                 </div>
+                                <!-- Se imprime llamando a la clase Auth los datos del usuario -->
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
                                         {{ Auth::user()->name }} {{ Auth::user()->lastname }}
@@ -150,6 +151,7 @@
                                           Inicio
                                     </a>
                                 </li>
+                                <!-- se personaliza las opciones del navbar en base al tipo de usuario -->
                                 @if(Auth::user()->tipo=="Super User")
                                 
                                 <li class="app-sidebar__heading">USUARIOS</li>
@@ -194,6 +196,10 @@
                                         <i class="fas fa-boxes"></i>
                                           Ver Productos y Servicios
                                     </a>
+                                    <a href="categoriaspv">
+                                        <i class="fas fa-list"></i>
+                                          Ver Categorías de productos
+                                    </a>
                                 </li>
 
                                 <li class="app-sidebar__heading">MICROSITIO</li>
@@ -201,6 +207,10 @@
                                     <a href="micrositiov">
                                         <i class="fas fa-boxes"></i>
                                           Ver Microsistio
+                                    </a>
+                                    <a href="micrositiovimagenes">
+                                        <i class="fas fa-boxes"></i>
+                                          Imagenes Carousel Micrositio
                                     </a>
                                 </li>
 

@@ -23,6 +23,7 @@
                                 <thead>
                                 <tr>
                                     <th class="text-center">#</th>
+                                    <th>Imagen</th>
                                     <th>Nombre de Producto</th>
                                     <th class="text-center">Tipo</th>
                                     <th class="text-center">Codigo</th>
@@ -37,6 +38,7 @@
                                 <tbody>
                                 <tr v-for="prod in prods" :key="prod.id">
                                     <td class="text-center text-muted">{{ prod.id }}</td>
+                                    <td><img width="100px" height="100px" :src="prod.imagen" alt=""></td>
                                     <td>
                                         <div class="widget-content p-0">
                                             <div class="widget-content-wrapper">
@@ -131,6 +133,13 @@
                             </div>
 
                             <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Descripción:</label>
+                                <div class="col-md-9">
+                                    <textarea type="text" id="descripcion" name="descripcion" v-model="descripcion" class="form-control" placeholder="Descripción" required></textarea>                                 
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Stock:</label>
                                 <div class="col-md-9">
                                     <input type="number" id="stock" name="stock" v-model="stock" class="form-control" placeholder="stock" required>                                  
@@ -163,6 +172,14 @@
                                 <div class="col-md-9">
                                     <select id="id_categoria" name="id_categoria" v-model="id_categoria" class="form-control" placeholder="Categoria" required>
                                         <option v-for="cat in cats" :key="cat.id">{{ cat.id }}|{{ cat.nombre_categoria }}</option>
+                                    </select>                                    
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Imagen:</label>
+                                <div class="col-md-9">
+                                    <input type="file" id="files" ref="files" @change="handleFilesUpload"/>
                                     </select>                                    
                                 </div>
                             </div>
@@ -225,6 +242,13 @@
                                 <label class="col-md-3 form-control-label" for="text-input">Precio:</label>
                                 <div class="col-md-9">
                                     <input type="number" id="precio" name="precio" v-model="precio" class="form-control" placeholder="Precio" required>                                  
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Descripción:</label>
+                                <div class="col-md-9">
+                                    <textarea type="text" id="descripcion" name="descripcion" v-model="descripcion" class="form-control" placeholder="Descripción" required></textarea>                                 
                                 </div>
                             </div>
 
@@ -336,6 +360,8 @@
                 prods:[],
                 emps:[],
                 cats:[],
+                imagen:"",
+                id_producto: 0,
                 id_borrar: 0
             }
         },
@@ -376,6 +402,7 @@
                 this.tipo = '';
                 this.codigo = '';
                 this.precio = '';
+                this.descripcion = '';
                 this.stock = '';
                 this.longitud = '';
                 this.anchura = '';
@@ -397,6 +424,7 @@
                     tipo: this.tipo,
                     codigo: this.codigo,
                     precio: this.precio,
+                    descripcion: this.descripcion,
                     stock: this.stock,
                     longitud: this.longitud,
                     anchura: this.anchura,
@@ -409,6 +437,7 @@
                 this.tipo = '';
                 this.codigo = '';
                 this.precio = '';
+                this.descripcion = '';
                 this.stock = '';
                 this.longitud = '';
                 this.anchura = '';
@@ -419,8 +448,34 @@
                 axios.post('./productos', params)
                     .then((response) => {
                         const prod = response.data;
-                        //una vez hecha se realiza nuevamente una actualizacion del array emps para actualizar el componente que los muestra
-                        this.reloadData();
+                        console.log(prod.id);
+                        this.id_producto = prod.id;
+                        console.log('id producto: '+this.id_producto);
+                        
+                        let formData = new FormData();
+                        formData.append('id_producto', this.id_producto);
+                        formData.append('imagen', this.imagen);
+                        
+                        //Petición post para registrar nueva imagen.
+                        axios.post('./imagenes_productos', formData,{
+                             headers: {
+                            'Content-Type': 'multipart/form-data'
+                            }
+                        }).then(function (response){
+                            console.log(response);
+                        })
+                        .catch(function (error){
+                            console.log(error);
+                        });
+                        //Actualizando la lista de productos.
+                        let me = this;
+                        let url = './productos' //url que retorna los registros de la tabla empresas
+                        axios.get(url).then(function (response) {
+                            me.prods = response.data;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
                     });
                 //Ocultar el modal
                 $('#modalNewProducto').modal('hide');
@@ -435,6 +490,7 @@
                     'tipo' : this.tipo,
                     'codigo' : this.codigo,
                     'precio' : this.precio,
+                    'descripcion' : this.descripcion,
                     'stock' : this.stock,
                     'longitud' : this.longitud,
                     'anchura' : this.anchura,
@@ -461,6 +517,7 @@
                     me.tipo = response.data.tipo;
                     me.codigo = response.data.codigo;
                     me.precio = response.data.precio;
+                    me.descripcion = response.data.descripcion;
                     me.stock = response.data.stock;
                     me.longitud = response.data.longitud;
                     me.anchura = response.data.anchura;
@@ -488,6 +545,12 @@
                 .catch(function (error) {
                     console.log(error);
                 });
+            },
+            handleFilesUpload(e){
+                let file = e.target.files[0];
+                console.log(file);
+                this.imagen = file;
+                console.log(this.imagen);
             }
 
             

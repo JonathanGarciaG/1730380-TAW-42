@@ -15,7 +15,7 @@ Route::get('/', function () {
 	if (Auth::check()) {
 		return view('contenido.contenidodashboard');
 	}else{
-		return redirect('login');
+		return redirect('login'); 
 	}
     
 });
@@ -132,6 +132,8 @@ Route::apiResource('categoriasp', 'CategoriasProductosController');
 Route::apiResource('productos', 'ProductosController');
 
 Route::apiResource('imagenes_productos', 'ImagenesProductosController');
+
+Route::apiResource('micrositios', 'MicrositiosController');
 
 Auth::routes();
 

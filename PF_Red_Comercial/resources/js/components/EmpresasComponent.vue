@@ -286,6 +286,7 @@
                 users:[],
                 ubics:[],
                 cats:[],
+                id_empresa: 0,
                 id_borrar: 0
             }
         },
@@ -368,7 +369,17 @@
                 //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
                 axios.post('./empresas', params)
                     .then((response) => {
-                        const emp = response.data;
+                        let emp = response.data;
+                        this.id_empresa = emp.id;
+                        const params = {//parametros para el nuevo micrositio
+                            nombre: emp.nombre,
+                            id_empresa: this.id_empresa
+                        };
+                        //se hace un request post con el url /micrositios para que con su respuesta se realice la insercion a la tabla micrositios y asi se cree un nuevo micrositio a la empresa registrada
+                        axios.post('./micrositios', params)
+                            .then((response) => {
+                                const emp = response.data;
+                        });
                         //una vez hecha se realiza nuevamente una actualizacion del array emps para actualizar el componente que los muestra
                         this.reloadData();
                     });

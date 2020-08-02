@@ -2767,6 +2767,7 @@ __webpack_require__.r(__webpack_exports__);
       users: [],
       ubics: [],
       cats: [],
+      id_empresa: 0,
       id_borrar: 0
     };
   },
@@ -2846,7 +2847,17 @@ __webpack_require__.r(__webpack_exports__);
       this.id_categoria = ''; //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
 
       axios.post('./empresas', params).then(function (response) {
-        var emp = response.data; //una vez hecha se realiza nuevamente una actualizacion del array emps para actualizar el componente que los muestra
+        var emp = response.data;
+        _this.id_empresa = emp.id;
+        var params = {
+          //parametros para el nuevo micrositio
+          nombre: emp.nombre,
+          id_empresa: _this.id_empresa
+        }; //se hace un request post con el url /micrositios para que con su respuesta se realice la insercion a la tabla micrositios y asi se cree un nuevo micrositio a la empresa registrada
+
+        axios.post('./micrositios', params).then(function (response) {
+          var emp = response.data;
+        }); //una vez hecha se realiza nuevamente una actualizacion del array emps para actualizar el componente que los muestra
 
         _this.reloadData();
       }); //Ocultar el modal
@@ -3347,6 +3358,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   //datos de los campos
   data: function data() {
@@ -3363,7 +3398,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       altura: "",
       id_empresa: "",
       id_categoria: ""
-    }, _defineProperty(_ref, "altura", ""), _defineProperty(_ref, "update", 0), _defineProperty(_ref, "prods", []), _defineProperty(_ref, "emps", []), _defineProperty(_ref, "cats", []), _defineProperty(_ref, "id_borrar", 0), _ref;
+    }, _defineProperty(_ref, "altura", ""), _defineProperty(_ref, "update", 0), _defineProperty(_ref, "prods", []), _defineProperty(_ref, "emps", []), _defineProperty(_ref, "cats", []), _defineProperty(_ref, "imagen", ""), _defineProperty(_ref, "id_producto", 0), _defineProperty(_ref, "id_borrar", 0), _ref;
   },
   mounted: function mounted() {
     console.log('Component mounted.'); //cuando el componente es montado se realizar lo siguiente para cargar los datos
@@ -3400,6 +3435,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.tipo = '';
       this.codigo = '';
       this.precio = '';
+      this.descripcion = '';
       this.stock = '';
       this.longitud = '';
       this.anchura = '';
@@ -3423,6 +3459,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         tipo: this.tipo,
         codigo: this.codigo,
         precio: this.precio,
+        descripcion: this.descripcion,
         stock: this.stock,
         longitud: this.longitud,
         anchura: this.anchura,
@@ -3435,6 +3472,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.tipo = '';
       this.codigo = '';
       this.precio = '';
+      this.descripcion = '';
       this.stock = '';
       this.longitud = '';
       this.anchura = '';
@@ -3442,9 +3480,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.id_categoria = ''; //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
 
       axios.post('./productos', params).then(function (response) {
-        var prod = response.data; //una vez hecha se realiza nuevamente una actualizacion del array emps para actualizar el componente que los muestra
+        var prod = response.data;
+        console.log(prod.id);
+        _this.id_producto = prod.id;
+        console.log('id producto: ' + _this.id_producto);
+        var formData = new FormData();
+        formData.append('id_producto', _this.id_producto);
+        formData.append('imagen', _this.imagen); //Petición post para registrar nueva imagen.
 
-        _this.reloadData();
+        axios.post('./imagenes_productos', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (response) {
+          console.log(response);
+        })["catch"](function (error) {
+          console.log(error);
+        }); //Actualizando la lista de productos.
+
+        var me = _this;
+        var url = './productos'; //url que retorna los registros de la tabla empresas
+
+        axios.get(url).then(function (response) {
+          me.prods = response.data;
+        })["catch"](function (error) {
+          console.log(error);
+        });
       }); //Ocultar el modal
 
       $('#modalNewProducto').modal('hide');
@@ -3459,6 +3520,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'tipo': this.tipo,
         'codigo': this.codigo,
         'precio': this.precio,
+        'descripcion': this.descripcion,
         'stock': this.stock,
         'longitud': this.longitud,
         'anchura': this.anchura,
@@ -3485,6 +3547,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         me.tipo = response.data.tipo;
         me.codigo = response.data.codigo;
         me.precio = response.data.precio;
+        me.descripcion = response.data.descripcion;
         me.stock = response.data.stock;
         me.longitud = response.data.longitud;
         me.anchura = response.data.anchura;
@@ -3514,6 +3577,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    handleFilesUpload: function handleFilesUpload(e) {
+      var file = e.target.files[0];
+      console.log(file);
+      this.imagen = file;
+      console.log(this.imagen);
     }
   }
 });
@@ -42797,6 +42866,17 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("td", [
+                          _c("img", {
+                            attrs: {
+                              width: "100px",
+                              height: "100px",
+                              src: prod.imagen,
+                              alt: ""
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
                           _c("div", { staticClass: "widget-content p-0" }, [
                             _c(
                               "div",
@@ -43127,6 +43207,47 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
+                        [_vm._v("Descripción:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.descripcion,
+                              expression: "descripcion"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "descripcion",
+                            name: "descripcion",
+                            placeholder: "Descripción",
+                            required: ""
+                          },
+                          domProps: { value: _vm.descripcion },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.descripcion = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
                         [_vm._v("Stock:")]
                       ),
                       _vm._v(" "),
@@ -43340,6 +43461,25 @@ var render = function() {
                           }),
                           0
                         )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Imagen:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          ref: "files",
+                          attrs: { type: "file", id: "files" },
+                          on: { change: _vm.handleFilesUpload }
+                        })
                       ])
                     ])
                   ]),
@@ -43569,6 +43709,47 @@ var render = function() {
                                 return
                               }
                               _vm.precio = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Descripción:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.descripcion,
+                              expression: "descripcion"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "descripcion",
+                            name: "descripcion",
+                            placeholder: "Descripción",
+                            required: ""
+                          },
+                          domProps: { value: _vm.descripcion },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.descripcion = $event.target.value
                             }
                           }
                         })
@@ -43913,6 +44094,8 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", { staticClass: "text-center" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Imagen")]),
         _vm._v(" "),
         _c("th", [_vm._v("Nombre de Producto")]),
         _vm._v(" "),
