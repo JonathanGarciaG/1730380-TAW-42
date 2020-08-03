@@ -91,6 +91,9 @@
                 
                 <micrositio-carousel-component></micrositio-carousel-component>
 
+                <center><h2>Productos</h2></center>
+                <hr>
+
                 <micrositio-productos-component></micrositio-productos-component>
 
             </div>

@@ -208,8 +208,8 @@
                                         <i class="fas fa-boxes"></i>
                                           Ver Microsistio
                                     </a>
-                                    <a href="micrositiovimagenes">
-                                        <i class="fas fa-boxes"></i>
+                                    <a href="imagenessitiov">
+                                        <i class="fas fa-images"></i>
                                           Imagenes Carousel Micrositio
                                     </a>
                                 </li>

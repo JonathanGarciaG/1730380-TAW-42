@@ -52,7 +52,7 @@
             </div>
 
             <!--Inicio del modal agregar-->
-            <div class="modal fade" id="modalNew"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 60px;">
+            <div class="modal fade" id="modalNew" tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 60px;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                     <!-- al completar el form utiliza el metodo new() para agregar los datos de empresa -->
@@ -185,7 +185,9 @@
                 descripcion:"",
                 imagen:"",
                 imgs:[],
-                id_borrar: 0
+                id_borrar: 0,
+                id_micrositio: 0,
+                update: 0
             }
         },
         mounted() {
@@ -200,173 +202,93 @@
                 console.log(error);
             });
 
-            url = './categoriasp' //url que retorna los registros de la tabla usuarios
+            url = './mysite';
             axios.get(url).then(function (response) {
-                me.cats = response.data;
+                me.id_micrositio = response.data[0].id;
+                console.log(me.id_micrositio);
             })
             .catch(function (error) {
                 console.log(error);
             });
-
-            url = './getempresas' //url que retorna los registros de la tabla empresas
-            axios.get(url).then(function (response) {
-                me.emps = response.data;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            
         },
         //metodos utilizados
         methods: {
             //mostrar modal
             mostrarModalCreate() {
                 //Se limpian los campos del modal
-                this.nombre = '';
-                this.tipo = '';
-                this.codigo = '';
-                this.precio = '';
                 this.descripcion = '';
-                this.stock = '';
-                this.longitud = '';
-                this.anchura = '';
-                this.altura = '';
-                this.id_categoria = '';
-                $('#modalNewProducto').modal('show');
+                this.imagen = '';
+                $('#modalNew').modal('show');
             },
             //mostrar modal eliminar
             mostrarModalDelete(data) {
                 this.id_borrar = data.id;
-                $('#modalDeleteProducto').modal('show');               
+                $('#modalDelete').modal('show');               
             },
             //Metodo para agregar un nuevo producto
-            newProducto() {
-                //se toman los parametros de los campos
-                let categoria = this.id_categoria.split("|");
-                let empresa = this.id_empresa.split("|");
-                const params = {
-                    nombre: this.nombre,
-                    tipo: this.tipo,
-                    codigo: this.codigo,
-                    precio: this.precio,
-                    descripcion: this.descripcion,
-                    stock: this.stock,
-                    longitud: this.longitud,
-                    anchura: this.anchura,
-                    altura: this.altura,
-                    id_empresa: empresa[0],
-                    id_categoria: categoria[0]
-                };
+            newImg() {
+                let formData = new FormData();
+                formData.append('descripcion', this.descripcion);
+                formData.append('imagen', this.imagen);
+                formData.append('id_micrositio', this.id_micrositio);
+                
                 //Se limpian los campos del modal
-                this.nombre = '';
-                this.tipo = '';
-                this.codigo = '';
-                this.precio = '';
                 this.descripcion = '';
-                this.stock = '';
-                this.longitud = '';
-                this.anchura = '';
-                this.altura = '';
-                this.id_categoria = '';
-                this.id_empresa = '';
+                this.imagen = '';
 
                 //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
-                axios.post('./productos', params)
-                    .then((response) => {
-                        let prod = response.data;
-                        console.log(prod.id);
-                        this.id_producto = prod.id;
-                        console.log('id producto: '+this.id_producto);
-                        
-                        let formData = new FormData();
-                        formData.append('id_producto', this.id_producto);
-                        formData.append('imagen', this.imagen);
-                        
-                        //Petición post para registrar nueva imagen.
-                        axios.post('./imagenes_productos', formData,{
+                axios.post('./imagenes_sitio', formData,{
                              headers: {
                             'Content-Type': 'multipart/form-data'
                             }
-                        }).then(function (response){
-                            console.log(response);
-                        })
-                        .catch(function (error){
-                            console.log(error);
-                        });
-                        //Actualizando la lista de productos.
-                        let me = this;
-                        let url = './productosall' //url que retorna los registros de la tabla empresas
-                        axios.get(url).then(function (response) {
-                            me.prods = response.data;
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
+                    }).then((response) => {
+                        //actualiza los datos
+                        this.reloadData();
                     });
                 //Ocultar el modal
-                $('#modalNewProducto').modal('hide');
+                $('#modalNew').modal('hide');
             },
-            //Metodo para actualizar los datos de un usuario.
+            //Metodo para actualizar los datos de una imagen.
             updateProducto(){
                 let me = this;
-                let categoria = this.id_categoria.split("|");
-                let empresa = this.id_empresa.split("|");
                 axios.put('./productos',{
-                    'id' : this.update,
-                    'nombre' : this.nombre,
-                    'tipo' : this.tipo,
-                    'codigo' : this.codigo,
-                    'precio' : this.precio,
-                    'descripcion' : this.descripcion,
-                    'stock' : this.stock,
-                    'longitud' : this.longitud,
-                    'anchura' : this.anchura,
-                    'altura' : this.altura,
-                    'id_empresa' : empresa[0],
-                    'id_categoria' : categoria[0],
+                    'descripcion' : this.descripcion
                 }).then(function (response){
                     //Cerrando el modal después de actualizar el usuario.
-                    $('#modalUpdateProducto').modal('hide');
+                    $('#modalUpdate').modal('hide');
                 }).catch(function (error){
                     console.log(error);
                 });
                 this.reloadData();
             },
-            //Metodo para rellenar los campos del formulario al momento de seleccionar un usuario.
+            //Metodo para rellenar los campos del formulario al momento de seleccionar una imagen.
             camposUpdate(data){
-                //se abre el modal para actualizar producto
-                $('#modalUpdateProducto').modal('show');
+                //se abre el modal para actualizar imagen
+                $('#modalUpdate').modal('show');
                 this.update = data.id;
                 let me = this;
-                let url = './productos/'+this.update;
+                let url = './imagenes_sitio/'+this.update;
                 axios.get(url).then(function (response){
-                    me.nombre = response.data.nombre;
-                    me.tipo = response.data.tipo;
-                    me.codigo = response.data.codigo;
-                    me.precio = response.data.precio;
                     me.descripcion = response.data.descripcion;
-                    me.stock = response.data.stock;
-                    me.longitud = response.data.longitud;
-                    me.anchura = response.data.anchura;
-                    me.altura = response.data.altura;
-                    me.id_empresa = "";
-                    me.id_categoria = "";
+                    me.imagen = response.data.imagen;
                 }).catch(function (error){
                     console.log(error);
                 });
             },
             //metodo para eliminar
             onClickDelete() {
-                axios.delete('./productos/'+this.id_borrar).then(() => {
+                axios.delete('./imagenes_sitio/'+this.id_borrar).then(() => {
                     this.reloadData();
                 });
-                $('#modalDeleteProducto').modal('hide');
+                $('#modalDelete').modal('hide');
             },
             //actualizar registros
             reloadData(){
                 let me = this;
-                let url = './productosall' //url que retorna los registros de la tabla empresas
+                let url = './imagenes_sitio' //url que retorna los registros de la tabla empresas
                 axios.get(url).then(function (response) {
-                    me.prods = response.data;
+                    me.imgs = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);

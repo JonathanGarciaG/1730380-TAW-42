@@ -3163,7 +3163,9 @@ __webpack_require__.r(__webpack_exports__);
       descripcion: "",
       imagen: "",
       imgs: [],
-      id_borrar: 0
+      id_borrar: 0,
+      id_micrositio: 0,
+      update: 0
     };
   },
   mounted: function mounted() {
@@ -3177,17 +3179,10 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](function (error) {
       console.log(error);
     });
-    url = './categoriasp'; //url que retorna los registros de la tabla usuarios
-
+    url = './mysite';
     axios.get(url).then(function (response) {
-      me.cats = response.data;
-    })["catch"](function (error) {
-      console.log(error);
-    });
-    url = './getempresas'; //url que retorna los registros de la tabla empresas
-
-    axios.get(url).then(function (response) {
-      me.emps = response.data;
+      me.id_micrositio = response.data[0].id;
+      console.log(me.id_micrositio);
     })["catch"](function (error) {
       console.log(error);
     });
@@ -3197,132 +3192,61 @@ __webpack_require__.r(__webpack_exports__);
     //mostrar modal
     mostrarModalCreate: function mostrarModalCreate() {
       //Se limpian los campos del modal
-      this.nombre = '';
-      this.tipo = '';
-      this.codigo = '';
-      this.precio = '';
       this.descripcion = '';
-      this.stock = '';
-      this.longitud = '';
-      this.anchura = '';
-      this.altura = '';
-      this.id_categoria = '';
-      $('#modalNewProducto').modal('show');
+      this.imagen = '';
+      $('#modalNew').modal('show');
     },
     //mostrar modal eliminar
     mostrarModalDelete: function mostrarModalDelete(data) {
       this.id_borrar = data.id;
-      $('#modalDeleteProducto').modal('show');
+      $('#modalDelete').modal('show');
     },
     //Metodo para agregar un nuevo producto
-    newProducto: function newProducto() {
+    newImg: function newImg() {
       var _this = this;
 
-      //se toman los parametros de los campos
-      var categoria = this.id_categoria.split("|");
-      var empresa = this.id_empresa.split("|");
-      var params = {
-        nombre: this.nombre,
-        tipo: this.tipo,
-        codigo: this.codigo,
-        precio: this.precio,
-        descripcion: this.descripcion,
-        stock: this.stock,
-        longitud: this.longitud,
-        anchura: this.anchura,
-        altura: this.altura,
-        id_empresa: empresa[0],
-        id_categoria: categoria[0]
-      }; //Se limpian los campos del modal
+      var formData = new FormData();
+      formData.append('descripcion', this.descripcion);
+      formData.append('imagen', this.imagen);
+      formData.append('id_micrositio', this.id_micrositio); //Se limpian los campos del modal
 
-      this.nombre = '';
-      this.tipo = '';
-      this.codigo = '';
-      this.precio = '';
       this.descripcion = '';
-      this.stock = '';
-      this.longitud = '';
-      this.anchura = '';
-      this.altura = '';
-      this.id_categoria = '';
-      this.id_empresa = ''; //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
+      this.imagen = ''; //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
 
-      axios.post('./productos', params).then(function (response) {
-        var prod = response.data;
-        console.log(prod.id);
-        _this.id_producto = prod.id;
-        console.log('id producto: ' + _this.id_producto);
-        var formData = new FormData();
-        formData.append('id_producto', _this.id_producto);
-        formData.append('imagen', _this.imagen); //Petición post para registrar nueva imagen.
-
-        axios.post('./imagenes_productos', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(function (response) {
-          console.log(response);
-        })["catch"](function (error) {
-          console.log(error);
-        }); //Actualizando la lista de productos.
-
-        var me = _this;
-        var url = './productosall'; //url que retorna los registros de la tabla empresas
-
-        axios.get(url).then(function (response) {
-          me.prods = response.data;
-        })["catch"](function (error) {
-          console.log(error);
-        });
+      axios.post('./imagenes_sitio', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        //actualiza los datos
+        _this.reloadData();
       }); //Ocultar el modal
 
-      $('#modalNewProducto').modal('hide');
+      $('#modalNew').modal('hide');
     },
-    //Metodo para actualizar los datos de un usuario.
+    //Metodo para actualizar los datos de una imagen.
     updateProducto: function updateProducto() {
       var me = this;
-      var categoria = this.id_categoria.split("|");
-      var empresa = this.id_empresa.split("|");
       axios.put('./productos', {
-        'id': this.update,
-        'nombre': this.nombre,
-        'tipo': this.tipo,
-        'codigo': this.codigo,
-        'precio': this.precio,
-        'descripcion': this.descripcion,
-        'stock': this.stock,
-        'longitud': this.longitud,
-        'anchura': this.anchura,
-        'altura': this.altura,
-        'id_empresa': empresa[0],
-        'id_categoria': categoria[0]
+        'descripcion': this.descripcion
       }).then(function (response) {
         //Cerrando el modal después de actualizar el usuario.
-        $('#modalUpdateProducto').modal('hide');
+        $('#modalUpdate').modal('hide');
       })["catch"](function (error) {
         console.log(error);
       });
       this.reloadData();
     },
-    //Metodo para rellenar los campos del formulario al momento de seleccionar un usuario.
+    //Metodo para rellenar los campos del formulario al momento de seleccionar una imagen.
     camposUpdate: function camposUpdate(data) {
-      //se abre el modal para actualizar producto
-      $('#modalUpdateProducto').modal('show');
+      //se abre el modal para actualizar imagen
+      $('#modalUpdate').modal('show');
       this.update = data.id;
       var me = this;
-      var url = './productos/' + this.update;
+      var url = './imagenes_sitio/' + this.update;
       axios.get(url).then(function (response) {
-        me.nombre = response.data.nombre;
-        me.tipo = response.data.tipo;
-        me.codigo = response.data.codigo;
-        me.precio = response.data.precio;
         me.descripcion = response.data.descripcion;
-        me.stock = response.data.stock;
-        me.longitud = response.data.longitud;
-        me.anchura = response.data.anchura;
-        me.altura = response.data.altura;
-        me.id_empresa = "";
-        me.id_categoria = "";
+        me.imagen = response.data.imagen;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3331,18 +3255,18 @@ __webpack_require__.r(__webpack_exports__);
     onClickDelete: function onClickDelete() {
       var _this2 = this;
 
-      axios["delete"]('./productos/' + this.id_borrar).then(function () {
+      axios["delete"]('./imagenes_sitio/' + this.id_borrar).then(function () {
         _this2.reloadData();
       });
-      $('#modalDeleteProducto').modal('hide');
+      $('#modalDelete').modal('hide');
     },
     //actualizar registros
     reloadData: function reloadData() {
       var me = this;
-      var url = './productosall'; //url que retorna los registros de la tabla empresas
+      var url = './imagenes_sitio'; //url que retorna los registros de la tabla empresas
 
       axios.get(url).then(function (response) {
-        me.prods = response.data;
+        me.imgs = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3454,138 +3378,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   //datos de los campos
   data: function data() {
     return {
       nombre: "",
-      images: [],
+      numero: 0,
+      imgs: [],
       prods: []
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted.'); //cuando el componente es montado se realiza la siguiente accion para actualizar el array productos con los registros de la base de datos
+    console.log('Component mounted.'); //cuando el componente es montado se realiza la siguiente accion para actualizar el array imagenes del carousel con los registros de la base de datos
 
-    var me = this;
+    var me = this; //aqui se hace una peticion para obtener el nombre de la empresa
+
     var url = './productos'; //el url de productos que devuelve los registros de la base de datos
 
     axios.get(url).then(function (response) {
       //se almacenan al array los datos de la respuesta obtenida del url
       me.prods = response.data;
-      me.nombre = prods[0].nombre;
+      me.nombre = me.prods[0].nombre_empresa;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    url = './imagenes_sitio'; //el url de productos que devuelve los registros de imagenes de la base de datos
+
+    axios.get(url).then(function (response) {
+      //se almacenan al array los datos de la respuesta obtenida del url
+      me.imgs = response.data;
+      me.numero = me.imgs.length;
+      console.log(me.numero);
     })["catch"](function (error) {
       console.log(error);
     });
   },
   //metodos utilizados
-  methods: {
-    //mostrar modal
-    mostrarModal: function mostrarModal() {
-      //Se limpian los campos del modal
-      this.name = '';
-      this.lastname = '';
-      this.email = '';
-      this.password = '';
-      this.tipo = '';
-      $('#modalNewUser').modal('show');
-    },
-    //mostrar modal eliminar
-    mostrarModalDelete: function mostrarModalDelete(data) {
-      this.id_borrar = data.id;
-      $('#modalDeleteProducto').modal('show');
-    },
-    //Metodo para agregar un nuevo usuario
-    newUser: function newUser() {
-      var _this = this;
-
-      //se toman los parametros de los campos
-      var params = {
-        name: this.name,
-        lastname: this.lastname,
-        email: this.email,
-        password: this.password,
-        tipo: this.tipo
-      }; //Se limpian los campos del modal
-
-      this.name = '';
-      this.lastname = '';
-      this.email = '';
-      this.password = '';
-      this.tipo = ''; //se hace un request post con el url /getusers para que con su respuesta se realice la insercion
-
-      axios.post('./usuarios', params).then(function (response) {
-        var user = response.data; //una vez hecha se realiza nuevamente una actualizacion del array users para actualizar el componente que los muestra
-
-        var me = _this;
-        var url = './usuarios'; //url que retorna los registros de la tabla users
-
-        axios.get(url).then(function (response) {
-          me.users = response.data;
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }); //Ocultar el modal
-
-      $('#modalNewUser').modal('hide');
-    },
-    //Metodo para actualizar los datos de un usuario.
-    updateUser: function updateUser() {
-      var me = this;
-      axios.put('./usuarios', {
-        'id': this.update,
-        'name': this.name,
-        'lastname': this.lastname,
-        'email': this.email,
-        'password': this.password,
-        'tipo': this.tipo
-      }).then(function (response) {
-        //Cerrando el modal después de actualizar el usuario.
-        $('#modalUpdateUser').modal('hide');
-      })["catch"](function (error) {
-        console.log(error);
-      });
-      me = this;
-      var url = './usuarios'; //url que retorna los registros de la tabla users
-
-      axios.get(url).then(function (response) {
-        me.users = response.data;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    //Metodo para rellenar los campos del formulario al momento de seleccionar un usuario.
-    camposUpdate: function camposUpdate(data) {
-      $('#modalUpdateUser').modal('show');
-      this.update = data.id;
-      var me = this;
-      var url = './usuarios/' + this.update;
-      axios.get(url).then(function (response) {
-        me.name = response.data.name;
-        me.lastname = response.data.lastname;
-        me.email = response.data.email;
-        me.password = response.data.password;
-        me.tipo = response.data.tipo;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    //metodo para eliminar
-    onClickDelete: function onClickDelete() {
-      var _this2 = this;
-
-      axios["delete"]('./usuarios/' + this.id_borrar).then(function () {
-        var me = _this2;
-        var url = './usuarios'; //url que retorna los registros de la tabla users
-
-        axios.get(url).then(function (response) {
-          me.users = response.data;
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      });
-      $('#modalDeleteProducto').modal('hide');
-    }
-  }
+  methods: {}
 });
 
 /***/ }),
@@ -44133,11 +43977,72 @@ var render = function() {
   return _c("div", { staticClass: "col-md-12" }, [
     _c("div", { staticClass: "main-card mb-3 card" }, [
       _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title center" }, [
-          _vm._v(_vm._s(this.nombre))
+        _c("h2", { staticClass: "card-title center" }, [
+          _vm._v(_vm._s(_vm.nombre))
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _c(
+          "div",
+          {
+            staticClass: "carousel slide",
+            attrs: { id: "carouselExampleControls1", "data-ride": "carousel" }
+          },
+          [
+            _vm.numero == 0
+              ? _c("div", { staticClass: "carousel-inner" }, [_vm._m(0)])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.numero > 0
+              ? _c(
+                  "div",
+                  { staticClass: "carousel-inner" },
+                  [
+                    _c("div", { staticClass: "carousel-item active" }, [
+                      _c("img", {
+                        staticClass: "d-block w-100",
+                        attrs: {
+                          width: "1600px",
+                          height: "675px",
+                          src: _vm.imgs[0].imagen,
+                          alt: "First slide"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.imgs[0].descripcion != ""
+                        ? _c("div", { staticClass: "carousel-caption" }, [
+                            _c("h3", [_vm._v(_vm._s(_vm.imgs[0].descripcion))])
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.imgs, function(img) {
+                      return _c("div", { staticClass: "carousel-item" }, [
+                        _c("img", {
+                          staticClass: "d-block w-100",
+                          attrs: {
+                            width: "1600px",
+                            height: "675px",
+                            src: img.imagen
+                          }
+                        }),
+                        _vm._v(" "),
+                        img.descripcion != ""
+                          ? _c("div", { staticClass: "carousel-caption" }, [
+                              _c("h3", [_vm._v(_vm._s(img.descripcion))])
+                            ])
+                          : _vm._e()
+                      ])
+                    })
+                  ],
+                  2
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2)
+          ]
+        )
       ])
     ])
   ])
@@ -44147,64 +44052,63 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "carousel-item active" }, [
+      _c("img", {
+        staticClass: "d-block w-100",
+        attrs: {
+          width: "1600px",
+          height: "675px",
+          src: "https://via.placeholder.com/800x400",
+          alt: "First slide"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
-      "div",
+      "a",
       {
-        staticClass: "carousel slide",
-        attrs: { id: "carouselExampleControls1", "data-ride": "carousel" }
+        staticClass: "carousel-control-prev",
+        attrs: {
+          href: "#carouselExampleControls1",
+          role: "button",
+          "data-slide": "prev"
+        }
       },
       [
-        _c("div", { staticClass: "carousel-inner" }, [
-          _c("div", { staticClass: "carousel-item active" }, [
-            _c("img", {
-              staticClass: "d-block w-100",
-              attrs: {
-                src: "https://via.placeholder.com/800x400",
-                alt: "First slide"
-              }
-            })
-          ])
-        ]),
+        _c("span", {
+          staticClass: "carousel-control-prev-icon",
+          attrs: { "aria-hidden": "true" }
+        }),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "carousel-control-prev",
-            attrs: {
-              href: "#carouselExampleControls1",
-              role: "button",
-              "data-slide": "prev"
-            }
-          },
-          [
-            _c("span", {
-              staticClass: "carousel-control-prev-icon",
-              attrs: { "aria-hidden": "true" }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
-          ]
-        ),
+        _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "carousel-control-next",
+        attrs: {
+          href: "#carouselExampleControls1",
+          role: "button",
+          "data-slide": "next"
+        }
+      },
+      [
+        _c("span", {
+          staticClass: "carousel-control-next-icon",
+          attrs: { "aria-hidden": "true" }
+        }),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "carousel-control-next",
-            attrs: {
-              href: "#carouselExampleControls1",
-              role: "button",
-              "data-slide": "next"
-            }
-          },
-          [
-            _c("span", {
-              staticClass: "carousel-control-next-icon",
-              attrs: { "aria-hidden": "true" }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
-          ]
-        )
+        _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
       ]
     )
   }

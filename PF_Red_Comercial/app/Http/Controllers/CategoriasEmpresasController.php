@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\categoria_empresa;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriasEmpresasController extends Controller
 {

@@ -75,6 +75,11 @@ Route::get('/ubicacionv', function () {
     return view('contenido.ubicacioncontenido');
 });
 
+//ruta para vista de imagenes de carusel
+Route::get('/imagenessitiov', function () {
+    return view('contenido.imagenessitioscontenido');
+});
+
 //para obtener datos de usuario
 Route::get('/empresas/{id}', 'EmpresasController@getempresa');
 
@@ -83,6 +88,9 @@ Route::put('/empresas', 'EmpresasController@update');
 
 //ruta para obtener la empresa asociada al usuario actual
 Route::get('/getempresaact', 'EmpresasController@empresaact');
+
+//ruta para obtener el id del micrositio del usuario actual
+Route::get('/mysite', 'ImagenesSitioController@mysite');
 
 //ruta para obtener las empresas
 Route::get('/getempresas', 'EmpresasController@empresasall');
