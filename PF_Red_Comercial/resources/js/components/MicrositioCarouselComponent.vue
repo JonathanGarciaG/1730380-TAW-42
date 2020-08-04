@@ -19,7 +19,7 @@
                             </div>
                         </div>
                         <div class="carousel-item" v-for="img in imgs">
-                            <img class="d-block w-100" width="1600px" height="675px" :src="img.imagen">
+                            <img class="d-block w-100" width="1600px" height="675px" v-bind:src="'.'+img.imagen">
                             <div class="carousel-caption" v-if="img.descripcion != ''">
                                 <h3>{{ img.descripcion }}</h3>
                             </div>

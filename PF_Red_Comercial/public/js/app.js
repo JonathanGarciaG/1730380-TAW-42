@@ -45104,7 +45104,7 @@ var render = function() {
                           attrs: {
                             width: "1600px",
                             height: "675px",
-                            src: img.imagen
+                            src: "." + img.imagen
                           }
                         }),
                         _vm._v(" "),
