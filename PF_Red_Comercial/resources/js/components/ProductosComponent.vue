@@ -38,7 +38,7 @@
                                 <tbody>
                                 <tr v-for="prod in prods" :key="prod.id">
                                     <td class="text-center text-muted">{{ prod.id }}</td>
-                                    <td><img width="100px" height="100px" :src="prod.imagen" alt=""></td>
+                                    <td><img width="100px" height="100px" v-bind:src="'.'+prod.imagen" alt=""></td>
                                     <td>
                                         <div class="widget-content p-0">
                                             <div class="widget-content-wrapper">

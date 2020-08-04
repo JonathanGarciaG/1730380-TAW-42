@@ -19,6 +19,16 @@ class ImagenesSitioController extends Controller
 		return DB::table('micrositios')->join('empresas','empresas.id','=','micrositios.id_empresa')->select('micrositios.id','empresas.id_usuario')->where('empresas.id_usuario','=', Auth::user()->id )->get();
 	}
 
+    //metodo que retorna las imagenes del micrositio que administra el usuario
+    public function mysiteimgs(){
+        return DB::table('imagenes_sitio')->select('imagenes_sitio.*')->join('micrositios','micrositios.id','=','imagenes_sitio.id_micrositio')->join('empresas','empresas.id','=','micrositios.id_empresa')->where('empresas.id_usuario','=', Auth::user()->id )->get();
+    }
+
+    //metodo que retorna las imagenes del micrositio que administra el usuario seleccionado
+    public function siteimgs($id){
+        return DB::table('imagenes_sitio')->select('imagenes_sitio.*')->join('micrositios','micrositios.id','=','imagenes_sitio.id_micrositio')->join('empresas','empresas.id','=','micrositios.id_empresa')->where('empresas.id','=', $id )->get();
+    }
+
     //Metodo para registrar nueva imagen.
     public function store(Request $request){
         //Creando objeto para registrar nueva imagen

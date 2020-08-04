@@ -21,11 +21,40 @@
                         <div class="card-body">
                             <div class="search-wrapper">
                                 <div class="input-holder">
-                                    <input type="text" class="search-input" placeholder="Type to search">
+                                    <input type="text" class="search-input" placeholder="Type to search" @input="reloadData" v-model="buscar">
                                     <button class="search-icon"><span></span></button>
                                 </div>
                                 <button class="close"></button>
                             </div>
+
+                            <table class="align-middle mb-0 table table-borderless table-striped table-hover">                     
+                                <tbody>
+                                <tr v-for="prod in prods" :key="prod.id">
+                                    <td class="text-center text-muted">{{ prod.id }}</td>
+                                    <td><img width="100px" height="100px" v-bind:src="'.'+prod.imagen" alt=""></td>
+                                    <td>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                
+                                                <div class="widget-content-left flex2">
+                                                    <div class="widget-heading">{{ prod.nombre }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div>${{ prod.precio }}</div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div>({{ prod.stock }})</div>
+                                    </td>
+                                    </td>
+                                        <a class="btn btn-primary center" v-bind:href="'micrositiov?id='+prod.id_empresa">Visitar sitio</a>
+                                    </td>
+                                </tr>
+                                
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -33,7 +62,16 @@
                     <div class="main-card mb-3 card">
                         <div class="card-body">
                             <div class="card-title">Google Maps</div>
-                            <div id="gmap-example"></div>
+                            <GmapMap ref="mapRef" :center="{lat: 24.40, lng: -101.767536}" :zoom="5" style="width: 100%; height: 500px">
+                            <GmapMarker
+                                :key="m.id"
+                                v-for="m in prods"
+                                :position="{lat: m.latitud , lng: m.longitud}"
+                                :clickable="true"
+                                :draggable="false"
+                                @click="center={lat: 24.40, lng: -101.767536}"
+                              />
+                            </GmapMap>
                         </div>
                     </div>
                 </div>
@@ -44,8 +82,42 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+        //datos de los campos
+        data(){
+              return{
+                  buscar: "",
+                  prods:[],
+                  markers:[]
+              }
+        },
+        mounted () {
+          // At this point, the child GmapMap has been mounted, but
+          // its map has not been initialized.
+          // Therefore we need to write mapRef.$mapPromise.then(() => ...)
+        
+          this.$refs.mapRef.$mapPromise.then((map) => {
+            map.panTo({lat: 24.40, lng: -101.767536})
+          })
+        },
+        methods: {
+            //actualizar registros
+            reloadData(){
+                console.log('input');
+                let me = this;
+                
+                if(me.buscar == ""){
+                    me.prods = [];
+                    console.log("busqueda vacia");
+                }else{
+                    let url = './buscarproductos/'+me.buscar //url que retorna los registros de la tabla empresas
+                    axios.get(url).then(function (response) {
+                        me.prods = response.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }
         }
     }
 </script>

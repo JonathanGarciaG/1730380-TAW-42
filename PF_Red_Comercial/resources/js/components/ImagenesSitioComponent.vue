@@ -31,7 +31,7 @@
                                 <tbody>
                                 <tr v-for="img in imgs" :key="img.id">
                                     <td class="text-center text-muted">{{ img.id }}</td>
-                                    <td><img width="100px" height="100px" :src="img.imagen" alt=""></td>
+                                    <td><img width="100px" height="100px" v-bind:src="'.'+img.imagen" alt=""></td>
                                     <td class="text-center">
                                         <div>{{ img.descripcion }}</div>
                                     </td>

@@ -13,7 +13,7 @@
                     </div>
                     <div class="carousel-inner" v-if="numero > 0">
                         <div class="carousel-item active">
-                            <img class="d-block w-100" width="1600px" height="675px" :src="imgs[0].imagen" alt="First slide">
+                            <img class="d-block w-100" width="1600px" height="675px" v-bind:src="'.'+imgs[0].imagen" alt="First slide">
                             <div class="carousel-caption" v-if="imgs[0].descripcion != ''">
                                 <h3>{{ imgs[0].descripcion }}</h3>
                             </div>
@@ -41,6 +41,9 @@
 
 <script>
     export default {
+        props: {
+            id_empresa: Number,
+        },
         //datos de los campos
         data(){
             return{
@@ -56,25 +59,51 @@
             let me = this;
             //aqui se hace una peticion para obtener el nombre de la empresa
             let url = './productos' //el url de productos que devuelve los registros de la base de datos
-            axios.get(url).then(function (response) {
-                //se almacenan al array los datos de la respuesta obtenida del url
-                me.prods = response.data;
-                me.nombre = me.prods[0].nombre_empresa;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            if(me.id_empresa == 0){
+                axios.get(url).then(function (response) {
+                    //se almacenan al array los datos de la respuesta obtenida del url
+                    me.prods = response.data;
+                    me.nombre = me.prods[0].nombre_empresa;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }else{
+                url = './getproductos/'+me.id_empresa;
+                axios.get(url).then(function (response) {
+                    //se almacenan al array los datos de la respuesta obtenida del url
+                    me.prods = response.data;
+                    me.nombre = me.prods[0].nombre_empresa;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+            console.log('ID de la empresa carouselcomp: '+me.id_empresa);
 
-            url = './imagenes_sitio' //el url de productos que devuelve los registros de imagenes de la base de datos
-            axios.get(url).then(function (response) {
-                //se almacenan al array los datos de la respuesta obtenida del url
-                me.imgs = response.data;
-                me.numero = me.imgs.length;
-                console.log(me.numero);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            url = './imagenes_sitioe' //el url de productos que devuelve los registros de imagenes de la base de datos
+            if(me.id_empresa == 0){
+                axios.get(url).then(function (response) {
+                    //se almacenan al array los datos de la respuesta obtenida del url
+                    me.imgs = response.data;
+                    me.numero = me.imgs.length;
+                    console.log(me.numero);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }else{
+                url = './imagenes_sitioes/'+me.id_empresa //el url de productos que devuelve los registros de imagenes de la base de datos
+                axios.get(url).then(function (response) {
+                    //se almacenan al array los datos de la respuesta obtenida del url
+                    me.imgs = response.data;
+                    me.numero = me.imgs.length;
+                    console.log(me.numero);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
         },
         //metodos utilizados
         methods: {

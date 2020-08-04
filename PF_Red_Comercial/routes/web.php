@@ -12,20 +12,11 @@
 */
 
 Route::get('/', function () {
-	if (Auth::check()) {
 		return view('contenido.contenidodashboard');
-	}else{
-		return redirect('login'); 
-	}
-    
 });
 
 Route::get('/index', function () {
-    if (Auth::check()) {
 		return view('contenido.contenidodashboard');
-	}else{
-		return redirect('login');
-	}
 });
 
 Route::get('/login', function(){
@@ -106,6 +97,12 @@ Route::get('/sproductosv', function () {
 //para obtener datos de un producto
 Route::get('/productos/{id}', 'ProductosController@getproducto');
 
+//para obtener datos de un producto
+Route::get('/getproductos/{id}', 'ProductosController@getproductos');
+
+//para obtener datos de un producto
+Route::get('/buscarproductos/{busqueda}', 'ProductosController@buscar');
+
 //ruta para actualizar un producto
 Route::put('/productos', 'ProductosController@update');
 
@@ -120,6 +117,12 @@ Route::put('/ubicacion', 'UbicacionController@update');
 
 //para obtener datos de todos los productos de todas las empresas
 Route::get('/productosall', 'ProductosController@getallproductos');
+
+//para obtener las imagenes de tu sitio
+Route::get('/imagenes_sitioe', 'ImagenesSitioController@mysiteimgs');
+
+//para obtener las imagenes de un sitio seleccionado
+Route::get('/imagenes_sitioes/{id}', 'ImagenesSitioController@siteimgs');
 
 //Route::get('/getusers','UsuariosController@getUsuarios');
 

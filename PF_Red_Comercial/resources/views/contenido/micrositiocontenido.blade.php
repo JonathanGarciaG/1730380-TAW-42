@@ -1,6 +1,14 @@
 <!doctype html>
 <html lang="en">
+<?php
 
+if (isset($_GET["id"])) {
+    $id_empresa=$_GET["id"];
+}else{
+    $id_empresa=0;
+}
+
+?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,6 +45,7 @@
                         </div>
                         <button class="close"></button>
                     </div>
+                    @if(Auth::check())
                     <ul class="header-menu nav">
                         <li class="btn-group nav-item">
                             <a class="dropdown-item" href="{{ route('logout') }}"
@@ -57,8 +66,20 @@
                             </a>
                         </li>
 
-                    </ul>        
+                    </ul> 
+                    @else
+                    <ul class="header-menu nav">
+                        <li class="btn-group nav-item">
+                            <a class="dropdown-item" href="{{ url('index') }}">
+                                <i class="nav-link-icon fa fa-home"></i>
+                                {{ __('Volver') }}
+                            </a>
+                        </li>
+                    </ul>
+                    @endif
+
                     </div>
+                    @if(Auth::check())
                 <div class="app-header-right">
                     <div class="header-btn-lg pr-0">
                         <div class="widget-content p-0">
@@ -83,27 +104,31 @@
                             </div>
                         </div>
                     </div>        </div>
+                    @endif
             </div>
         </div>                
 
         <div class="app-main">
             <div class="app-main__inner">
+
+
                 
-                <micrositio-carousel-component></micrositio-carousel-component>
+                <micrositio-carousel-component :id_empresa="{{ $id_empresa }}"></micrositio-carousel-component>
 
                 <center><h2>Productos</h2></center>
                 <hr>
 
-                <micrositio-productos-component></micrositio-productos-component>
+                <micrositio-productos-component :id_empresa="{{ $id_empresa }}"></micrositio-productos-component>
 
             </div>
                 
 
-                <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+                <!--<script src="http://maps.google.com/maps/api/js?sensor=true"></script>-->
                 <!-- Se llama al js all que contiene todos los scripts del template -->
                 <script src="{{ asset('js/all.js') }}"></script>
                 <!-- Se llama al js app que contiene todos los componentes -->
                 <script src="{{ asset('js/app.js') }}"></script>
+
         </div>
     </div>
 

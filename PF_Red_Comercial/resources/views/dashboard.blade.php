@@ -68,6 +68,7 @@
                         </div>
                         <button class="close"></button>
                     </div>
+                    @if(Auth::check())
                     <ul class="header-menu nav">
                         <li class="btn-group nav-item">
                             <a class="dropdown-item" href="{{ route('logout') }}"
@@ -80,8 +81,24 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                    </ul>        
+                    </ul> 
+                    @else
+                    <ul class="header-menu nav">
+                        <li class="btn-group nav-item">
+                            <a class="dropdown-item" href="login"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                <i class="nav-link-icon fa fa-sign-in-alt"></i>
+                                {{ __('Login') }}
+                            </a>
+                        </li>
+                        <form id="logout-form" action="{{ route('login') }}" style="display: none;">
+                            @csrf
+                        </form>
+                    </ul>
+                    @endif       
                     </div>
+                    @if(Auth::check())
                 <div class="app-header-right">
                     <div class="header-btn-lg pr-0">
                         <div class="widget-content p-0">
@@ -107,6 +124,7 @@
                             </div>
                         </div>
                     </div>        </div>
+                    @endif
             </div>
         </div>                
 
@@ -152,6 +170,7 @@
                                     </a>
                                 </li>
                                 <!-- se personaliza las opciones del navbar en base al tipo de usuario -->
+                                @if(Auth::check())
                                 @if(Auth::user()->tipo=="Super User")
                                 
                                 <li class="app-sidebar__heading">USUARIOS</li>
@@ -217,6 +236,7 @@
                                 @else 
 
                                 @endif
+                                @endif
 
                             </ul>
                         </div>
@@ -225,7 +245,7 @@
 
                 @yield('contenido')
 
-                <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+                <!--<script src="http://maps.google.com/maps/api/js?sensor=true"></script>-->
                 <!-- Se llama al js all que contiene todos los scripts del template -->
                 <script src="{{ asset('js/all.js') }}"></script>
                 <!-- Se llama al js app que contiene todos los componentes -->

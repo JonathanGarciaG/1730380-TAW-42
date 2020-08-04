@@ -58,15 +58,25 @@ class ProductosController extends Controller
         $producto->save();
     }
 
+    //funcion que retorna los valores de productos buscados
+    public function buscar($busqueda){
+        return DB::table('productos')->join('empresas', 'productos.id_empresa', '=', 'empresas.id')->join('categorias_productos', 'productos.id_categoria', '=', 'categorias_productos.id')->join('imagenes_productos', 'productos.id', '=', 'imagenes_productos.id_producto')->select('productos.*', 'empresas.nombre as nombre_empresa','empresas.id_usuario as id_de_usuario', 'empresas.latitud', 'empresas.longitud', 'categorias_productos.nombre_categoria','imagenes_productos.imagen')->where('productos.nombre', 'LIKE', '%'.$busqueda.'%' )->orWhere('nombre_categoria', 'LIKE', '%'.$busqueda.'%' )->get();
+    }
+
     //Metodo para obtener los datos de un producto.
     public function getproducto($id){
         $producto = productos::find($id);
         return $producto;
     }
 
+    //funcion que retorna los valores de los registros de la tabla productos de una empresa
+    public function getproductos($id){
+        return DB::table('productos')->join('empresas', 'productos.id_empresa', '=', 'empresas.id')->join('categorias_productos', 'productos.id_categoria', '=', 'categorias_productos.id')->join('imagenes_productos', 'productos.id', '=', 'imagenes_productos.id_producto')->select('productos.*', 'empresas.nombre as nombre_empresa','empresas.id_usuario as id_de_usuario', 'categorias_productos.nombre_categoria','imagenes_productos.imagen')->where('empresas.id', '=', $id )->get();
+    }
+
     //Metodo para obtener los datos de todos los productos.
     public function getallproductos(){
-        return DB::table('productos')->join('empresas', 'productos.id_empresa', '=', 'empresas.id')->join('categorias_productos', 'productos.id_categoria', '=', 'categorias_productos.id')->join('imagenes_productos', 'productos.id', '=', 'imagenes_productos.id_producto')->select('productos.*', 'empresas.nombre as nombre_empresa','empresas.id_usuario as id_de_usuario', 'categorias_productos.nombre_categoria','imagenes_productos.imagen')->get();
+        return DB::table('productos')->join('empresas', 'productos.id_empresa', '=', 'empresas.id')->join('categorias_productos', 'productos.id_categoria', '=', 'categorias_productos.id')->join('imagenes_productos', 'productos.id', '=', 'imagenes_productos.id_producto')->select('productos.*', 'empresas.nombre as nombre_empresa','empresas.id_usuario as id_de_usuario', 'empresas.latitud', 'empresas.longitud', 'categorias_productos.nombre_categoria','imagenes_productos.imagen')->get();
     }
 
     //metodo para eliminar registro de la tabla productos
