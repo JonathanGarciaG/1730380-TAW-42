@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- En caso de que se envie un id de la empresa se obtiene el valor para mostrar el micrositio de dicho empresa -->
 <html lang="en">
 <?php
 
@@ -63,6 +64,13 @@ if (isset($_GET["id"])) {
                             <a class="dropdown-item" href="{{ url('index') }}">
                                 <i class="nav-link-icon fa fa-cog"></i>
                                 {{ __('Admin') }}
+                            </a>
+                        </li>
+
+                        <li class="btn-group nav-item">
+                            <a class="dropdown-item" href="{{ url('pedidosv') }}">
+                                <i class="nav-link-icon fa fa-cart-plus"></i>
+                                {{ __('Pedidos') }}
                             </a>
                         </li>
 

@@ -68,6 +68,7 @@
                         </div>
                         <button class="close"></button>
                     </div>
+                    <!-- se define si poner el elemento para hacer un login o un logout dependiendo si hay una sesion iniciada -->
                     @if(Auth::check())
                     <ul class="header-menu nav">
                         <li class="btn-group nav-item">

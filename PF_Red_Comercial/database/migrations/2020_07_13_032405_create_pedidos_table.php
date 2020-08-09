@@ -20,7 +20,7 @@ class CreatePedidosTable extends Migration
             $table->unsignedBigInteger('id_usuario');
             $table->unsignedBigInteger('id_producto');
             $table->timestamps();
-            $table->foreign('id_usuario')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_producto')->references('id')->on('productos')->onDelete('cascade');
         });
     }

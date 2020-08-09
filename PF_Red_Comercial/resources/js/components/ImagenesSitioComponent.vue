@@ -194,7 +194,7 @@
             console.log('Component mounted.')
             //cuando el componente es montado se realizar lo siguiente para cargar los datos
             let me = this;
-            let url = './imagenes_sitio' //url que retorna los registros de la tabla imagenes_micrositio
+            let url = './imagenes_sitioe' //url que retorna los registros de la tabla imagenes_micrositio
             axios.get(url).then(function (response) {
                 me.imgs = response.data;
             })

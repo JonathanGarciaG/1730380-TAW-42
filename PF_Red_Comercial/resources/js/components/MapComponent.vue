@@ -21,7 +21,7 @@
                         <div class="card-body">
                             <div class="search-wrapper">
                                 <div class="input-holder">
-                                    <input type="text" class="search-input" placeholder="Type to search" @input="reloadData" v-model="buscar">
+                                    <input type="text" class="search-input" placeholder="Buscar empresa/producto. (Ejemplo: Papeleria)" @input="reloadData" v-model="buscar">
                                     <button class="search-icon"><span></span></button>
                                 </div>
                                 <button class="close"></button>
@@ -49,7 +49,16 @@
                                         <div>({{ prod.stock }})</div>
                                     </td>
                                     </td>
-                                        <a class="btn btn-primary center" v-bind:href="'micrositiov?id='+prod.id_empresa">Visitar sitio</a>
+                                        <a class="btn btn-primary center" v-bind:href="'micrositiov?id='+prod.id_empresa" width="100%" height="100%">Visitar sitio</a>
+                                    </td>
+                                    </td>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left flex2">
+                                                    <div class="widget-heading">Empresa<br>{{ prod.nombre_empresa }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 
@@ -62,14 +71,15 @@
                     <div class="main-card mb-3 card">
                         <div class="card-body">
                             <div class="card-title">Google Maps</div>
-                            <GmapMap ref="mapRef" :center="{lat: 24.40, lng: -101.767536}" :zoom="5" style="width: 100%; height: 500px">
+                            <GmapMap ref="mapRef" :center="{lat: 24.40, lng: -101.767536}" :zoom="6" style="width: 100%; height: 500px">
                             <GmapMarker
                                 :key="m.id"
                                 v-for="m in prods"
                                 :position="{lat: m.latitud , lng: m.longitud}"
                                 :clickable="true"
                                 :draggable="false"
-                                @click="center={lat: 24.40, lng: -101.767536}"
+                                @click="center={lat: m.latitud, lng: m.longitud}"
+                                v-bind:url="'micrositiov?id='+m.id_empresa"
                               />
                             </GmapMap>
                         </div>

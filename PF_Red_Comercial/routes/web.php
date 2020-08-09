@@ -71,6 +71,11 @@ Route::get('/imagenessitiov', function () {
     return view('contenido.imagenessitioscontenido');
 });
 
+//ruta para vista de pedidos y cotizacion
+Route::get('/pedidosv', function () {
+    return view('contenido.pedidoscontenido');
+});
+
 //para obtener datos de usuario
 Route::get('/empresas/{id}', 'EmpresasController@getempresa');
 
@@ -147,6 +152,8 @@ Route::apiResource('imagenes_productos', 'ImagenesProductosController');
 Route::apiResource('imagenes_sitio', 'ImagenesSitioController');
 
 Route::apiResource('micrositios', 'MicrositiosController');
+
+Route::apiResource('pedidos', 'PedidosController');
 
 Auth::routes();
 

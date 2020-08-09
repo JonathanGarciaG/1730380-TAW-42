@@ -1,7 +1,7 @@
 @extends('dashboard')
 @section('contenido')
 <!-- Contenido Principal -->
-<!-- Se despliega el componente llamado productos-component mediante su etiqueta, este componente tiene a su vez sus componentes hijos -->
+<!-- Se despliega el componente llamado productos-component mediante su etiqueta -->
 <productos-component></prodcutos-component>
 
 @endsection
