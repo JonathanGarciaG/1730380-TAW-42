@@ -59,6 +59,11 @@ class EmpresasController extends Controller
         return DB::table('empresas')->where('id_usuario','=', Auth::user()->id )->get();
     }
 
+    //funcion que retorna los valores de productos buscados
+    public function buscar($busqueda){
+        return DB::table('empresas')->where('empresas.nombre', 'LIKE', '%'.$busqueda.'%' )->get();
+    }
+
     //funcion que retorna los valores de los registros de la tabla empresas
     public function empresasall(){
         return DB::table('empresas')->get();

@@ -76,6 +76,11 @@ Route::get('/pedidosv', function () {
     return view('contenido.pedidoscontenido');
 });
 
+//ruta para vista de historial
+Route::get('/historialv', function () {
+    return view('contenido.historialcontenido');
+});
+
 //para obtener datos de usuario
 Route::get('/empresas/{id}', 'EmpresasController@getempresa');
 
@@ -105,8 +110,11 @@ Route::get('/productos/{id}', 'ProductosController@getproducto');
 //para obtener datos de un producto
 Route::get('/getproductos/{id}', 'ProductosController@getproductos');
 
-//para obtener datos de un producto
+//para obtener datos de un producto buscado
 Route::get('/buscarproductos/{busqueda}', 'ProductosController@buscar');
+
+//para obtener datos de una empresa buscada
+Route::get('/buscarempresa/{busqueda}', 'EmpresasController@buscar');
 
 //ruta para actualizar un producto
 Route::put('/productos', 'ProductosController@update');
@@ -122,6 +130,9 @@ Route::put('/ubicacion', 'UbicacionController@update');
 
 //para obtener datos de todos los productos de todas las empresas
 Route::get('/productosall', 'ProductosController@getallproductos');
+
+//para obtener la respuesta si se encuentra una sesion activa
+Route::get('/sesion', 'UsuariosController@sesion');
 
 //para obtener las imagenes de tu sitio
 Route::get('/imagenes_sitioe', 'ImagenesSitioController@mysiteimgs');
@@ -154,6 +165,8 @@ Route::apiResource('imagenes_sitio', 'ImagenesSitioController');
 Route::apiResource('micrositios', 'MicrositiosController');
 
 Route::apiResource('pedidos', 'PedidosController');
+
+Route::apiResource('historial', 'HistorialController');
 
 Auth::routes();
 

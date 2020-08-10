@@ -7,6 +7,8 @@ use App\empresas;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class UsuariosController extends Controller
 {
@@ -14,6 +16,14 @@ class UsuariosController extends Controller
     public function index(){
     	//return productos::where('user_id', auth()->id())->get();
     	return DB::table('users')->where('tipo', '!=', 'Super User')->get();
+    }
+
+    public function sesion(){
+        $sesion = "no";
+        if(Auth::check()){
+            $sesion = "si";
+        }
+        return $sesion;
     }
 
     //metodo del controlador para agregar un usuario mediante un request recibido

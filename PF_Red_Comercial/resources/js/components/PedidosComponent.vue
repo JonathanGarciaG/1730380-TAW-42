@@ -14,9 +14,9 @@
                 </div>
             </div> 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <div class="main-card mb-3 card">
-                        <div class="card-header">Pedidos de productos
+                        <div class="card-header">Tus Pedidos de productos
                         </div>
                         <div class="table-responsive">
                             <table class="align-middle mb-0 table table-borderless table-striped table-hover">
@@ -73,78 +73,90 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="d-block text-center card-footer">
-                            <button class="btn-wide btn btn-success" v-on:click="mostrarModalCreate()">Nuevo</button>
-                        </div>
+                        
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="main-card mb-3 card">
-                        <div class="card-header">Pedidos de productos
+                        <div class="card-header"> Totales
                         </div>
-                        <div class="table-responsive">
-                            <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Imagen</th>
-                                    <th>Producto</th>
-                                    <th class="text-center">Tipo</th>
-                                    <th class="text-center">Codigo</th>
-                                    <th class="text-center">Precio por unidad</th>
-                                    <th class="text-center">Cantidad</th>
-                                    <th class="text-center">Monto total</th>
-                                    <th class="text-center">Empresa / Tienda</th>
-                                    <th class="text-center">Eliminar</th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="prod in prods" :key="prod.id">
-                                    <td><img width="100px" height="100px" v-bind:src="'.'+prod.imagen" alt=""></td>
-                                    <td>
-                                        <div class="widget-content p-0">
-                                            <div class="widget-content-wrapper">
-                                                
-                                                <div class="widget-content-left flex2">
-                                                    <div class="widget-heading">{{ prod.nombre }}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div>{{ prod.tipo }}</div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div>{{ prod.codigo }}</div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div>${{ prod.precio }}</div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div>{{ prod.cantidad }}</div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div>${{ prod.monto }}</div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div>{{ prod.nombre_empresa }}</div>
-                                    </td>
-                                    <td class="text-center">
-                                        <button type="button" id="Popover" class="btn btn-danger btn-sm" v-on:click="mostrarModalDelete(prod)">Eliminar</button>
-                                    </td>
-                                </tr>
-                                
-                                </tbody>
-                            </table>
+                        <div class="table-responsive" style="margin-left: 15px; margin-top: 10px; margin-bottom: 10px;">
+                            <h3>Cantidad de productos: {{ this.cantidad_productos }}</h3>
+                            <hr>
+                            <h3>Total a pagar: ${{ this.total }}</h3>
+                            <hr>
+                            <input type="checkbox" id="mail" name="mail" value="mail">
+                            <label for="vehicle1">   Enviar a correo electrónico</label><br>
                         </div>
                         <div class="d-block text-center card-footer">
-                            <button class="btn-wide btn btn-success" v-on:click="mostrarModalCreate()">Nuevo</button>
+                            <button v-if="cantidad_productos == 0" class="btn-wide btn btn-success" v-on:click="mostrarModalVerificar()" disabled>Realizar Pedido</button>
+                            <button v-if="cantidad_productos > 0" class="btn-wide btn btn-success" v-on:click="mostrarModalVerificar()">Realizar Pedido</button>
                         </div>
                     </div>
-                </div>
-                
+                </div>    
             </div>
+
+            <!--Inicio del modal eliminar-->
+            <div class="modal fade" id="modalDeletePedido"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 60px;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                    <!-- al completar el form utiliza el metodo onClickDelete() para eliminar el pedido seleccionado -->
+                    <form action="" v-on:submit.prevent="onClickDelete()" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="modal-header">
+                            <h5 class="modal-title"  id="exampleModalLongTitle">Eliminar Pedido</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <h5>¿Está seguro que desea eliminar el pedido?</h5>
+
+                            <!-- Se utiliza un input oculto para tomar el id del producto que se va a borrar -->
+                            <div class="form-group row">
+                                <div class="col-md-9">
+                                    <input type="hidden" id="id_borrar" name="id_borrar" v-model="id_borrar" class="form-control" placeholder="idborrar" required>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Si</button>
+                        </div>
+                    </form> 
+                    </div>
+                </div>
+            </div>
+            <!--Fin del modal-->
+
+            <!--Inicio del modal Confirmar pedido-->
+            <div class="modal fade" id="modalConfirmar"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 60px;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                    <!-- al completar el form utiliza el metodo newPedido() para registrar el pedido del cliente -->
+                    <form action="" v-on:submit.prevent="newPedido()" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="modal-header">
+                            <h5 class="modal-title"  id="exampleModalLongTitle">Confirmar pedido</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <h5>¿Está seguro que desea realizar el pedido?</h5>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Si</button>
+                        </div>
+                    </form> 
+                    </div>
+                </div>
+            </div>
+            <!--Fin del modal-->
 
         </div>
     </div>
@@ -156,7 +168,7 @@
         data(){
             return{
                 nombre:"", 
-                tipo:"",  
+                tipo:"",
                 codigo:"",
                 precio:"",
                 stock:"", 
@@ -171,18 +183,27 @@
                 emps:[],
                 cats:[],
                 imagen:"",
+                cantidad_productos:0,
+                total:0,
                 id_producto: 0,
-                id_borrar: 0
+                id_borrar: 0,
+                cantidad_producto_eliminar:0
             }
         },
         mounted() {
             console.log('Component mounted.')
             //cuando el componente es montado se realizar lo siguiente para cargar los datos
             let me = this;
-            let url = './pedidos' //url que retorna los registros de la tabla empresas
+            let url = './pedidos' //url que retorna los registros de la tabla pedidos, aqui se obtienen los pedidos del usuario actual
             axios.get(url).then(function (response) {
                 me.prods = response.data;
-            })
+                //se sacan los totales
+                for(let i = 0; i < me.prods.length; i++){
+                    me.cantidad_productos = me.cantidad_productos + me.prods[i].cantidad;
+                    me.total = me.total + (me.prods[i].precio * me.prods[i].cantidad);
+                    console.log(me.cantidad_productos+" "+me.total);
+                }
+              })
             .catch(function (error) {
                 console.log(error);
             });
@@ -191,115 +212,61 @@
         //metodos utilizados
         methods: {
             //mostrar modal
-            mostrarModalCreate() {
-                //Se limpian los campos del modal
-                this.nombre = '';
-                this.tipo = '';
-                this.codigo = '';
-                this.precio = '';
-                this.descripcion = '';
-                this.stock = '';
-                this.longitud = '';
-                this.anchura = '';
-                this.altura = '';
-                this.id_categoria = '';
-                $('#modalNewProducto').modal('show');
+            mostrarModalVerificar() {
+                $('#modalConfirmar').modal('show');
             },
             //mostrar modal eliminar
             mostrarModalDelete(data) {
-                this.id_borrar = data.id;
-                $('#modalDeleteProducto').modal('show');               
+                this.id_borrar = data.id_pedido;
+                this.cantidad_producto_eliminar = data.cantidad;
+                $('#modalDeletePedido').modal('show');               
             },
             //Metodo para agregar un nuevo usuario
-            newProducto() {
+            newPedido() {
                 //se toman los parametros de los campos
-                let categoria = this.id_categoria.split("|");
                 const params = {
                     nombre: this.nombre,
-                    tipo: this.tipo,
-                    codigo: this.codigo,
-                    precio: this.precio,
-                    descripcion: this.descripcion,
-                    stock: this.stock,
-                    longitud: this.longitud,
-                    anchura: this.anchura,
-                    altura: this.altura,
-                    id_empresa: this.emps[0].id,
-                    id_categoria: categoria[0]
+                    monto: this.total,
+                    metodo_pago: "Tarjeta",
+                    motivo_pago: "Pedido",
                 };
-                //Se limpian los campos del modal
-                this.nombre = '';
-                this.tipo = '';
-                this.codigo = '';
-                this.precio = '';
-                this.descripcion = '';
-                this.stock = '';
-                this.longitud = '';
-                this.anchura = '';
-                this.altura = '';
-                this.id_categoria = '';
 
+                let me = this;
                 //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
-                axios.post('./productos', params)
+                axios.post('./historial', params)
                     .then((response) => {
                         const prod = response.data;
-                        console.log(prod.id);
-                        this.id_producto = prod.id;
-                        console.log('id producto: '+this.id_producto);
-                        
-                        let formData = new FormData();
-                        formData.append('id_producto', this.id_producto);
-                        formData.append('imagen', this.imagen);
-                        
-                        //Petición post para registrar nueva imagen.
-                        axios.post('./imagenes_productos', formData,{
-                             headers: {
-                            'Content-Type': 'multipart/form-data'
-                            }
-                        }).then(function (response){
-                            console.log(response);
-                        })
-                        .catch(function (error){
-                            console.log(error);
-                        });
-                        //Actualizando la lista de productos.
-                        let me = this;
-                        let url = './productos' //url que retorna los registros de la tabla empresas
-                        axios.get(url).then(function (response) {
-                            me.prods = response.data;
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
+                        me.reloadData();
                     });
                 //Ocultar el modal
-                $('#modalNewProducto').modal('hide');
+                $('#modalConfirmar').modal('hide');
             },
             //metodo para eliminar
             onClickDelete() {
-                axios.delete('./productos/'+this.id_borrar).then(() => {
+                axios.delete('./pedidos/'+this.id_borrar).then(() => {
                     this.reloadData();
                 });
-                $('#modalDeleteProducto').modal('hide');
+                $('#modalDeletePedido').modal('hide');
             },
-            //actualizar registros
+            //metodo para actualizar los datos de pedidos
             reloadData(){
                 let me = this;
-                let url = './productos' //url que retorna los registros de la tabla empresas
+                me.cantidad_productos = 0;
+                me.total = 0;
+                let url = './pedidos' //url que retorna los registros de la tabla pedidos, aqui se obtienen los pedidos del usuario actual
                 axios.get(url).then(function (response) {
                     me.prods = response.data;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-            handleFilesUpload(e){
-                let file = e.target.files[0];
-                console.log(file);
-                this.imagen = file;
-                console.log(this.imagen);
+                    //se sacan los totales
+                    for(let i = 0; i < me.prods.length; i++){
+                        me.cantidad_productos = me.cantidad_productos + me.prods[i].cantidad;
+                        me.total = me.total + (me.prods[i].precio * me.prods[i].cantidad);
+                        console.log(me.cantidad_productos+" "+me.total);
+                    }
+                  })
+            .catch(function (error) {
+                console.log(error);
+            });
             }
-
             
         }
     }

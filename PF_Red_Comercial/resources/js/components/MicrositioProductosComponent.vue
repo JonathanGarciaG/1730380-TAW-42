@@ -117,9 +117,13 @@
     
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <form action="" v-on:submit.prevent="newPedido()" enctype="multipart/form-data" class="form-horizontal">
-                    <button class="btn btn-primary" type="submit" >Añadir a Pedidos
+                    <button class="btn btn-primary" type="submit" v-if="sesion == 'si'">Añadir a Pedidos
                       <i class="fas fa-cart-plus ml-2" aria-hidden="true"></i>
                     </button>
+                    <button class="btn btn-primary" type="submit" v-if="sesion == 'no'" disabled>Añadir a Pedidos
+                      <i class="fas fa-cart-plus ml-2" aria-hidden="true"></i>
+                    </button>
+                    <label v-if="sesion == 'no'">Debe estar registrado para realizar un pedido</label>
                     </form>
                   </div>
                 </div>
@@ -154,7 +158,8 @@
                 cantidad:0,
                 id_producto:0,
                 images:[],
-                prods:[]
+                prods:[],
+                sesion:""
             }
         },
         mounted() {
@@ -182,6 +187,15 @@
                     console.log(error);
                 });
             } 
+
+            url = './sesion' //url para comprobar si hay una sesion
+            axios.get(url).then(function (response) {
+                    //se almacenan la respuesta obtenida del url
+                    me.sesion = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
 
             console.log('ID de la empresa prodcomp: '+me.id_empresa);
         },
@@ -213,16 +227,19 @@
                     precio: this.precio,
                     id_producto: this.id_producto
                 };
-                let me = this;
-                //se hace un request post con el url /pedidos para que con su respuesta se realice la insercion
-                axios.post('./pedidos', params)
-                    .then((response) => {
-                        const prod = response.data;
-                        console.log('Se ha añadido un nuevo pedido');
-                        me.reloadData();
-                        //Ocultar el modal
-                        $('#modalProductView').modal('hide');
-                    }); 
+                //se valida que no sea una cantidad nula
+                if(this.cantidad != 0){
+                  let me = this;
+                  //se hace un request post con el url /pedidos para que con su respuesta se realice la insercion
+                  axios.post('./pedidos', params)
+                      .then((response) => {
+                          const prod = response.data;
+                          console.log('Se ha añadido un nuevo pedido');
+                          me.reloadData();
+                          //Ocultar el modal
+                          $('#modalProductView').modal('hide');
+                      }); 
+                }
             },
             reloadData() {
                 let me = this;

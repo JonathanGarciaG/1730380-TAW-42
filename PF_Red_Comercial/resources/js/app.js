@@ -60,6 +60,7 @@ Vue.component('micrositio-carousel-component', require('./components/MicrositioC
 Vue.component('micrositio-productos-component', require('./components/MicrositioProductosComponent.vue').default);
 Vue.component('imagenes-micrositio-component', require('./components/ImagenesSitioComponent.vue').default);
 Vue.component('pedidos-component', require('./components/PedidosComponent.vue').default);
+Vue.component('historial-component', require('./components/HistorialComponent.vue').default);
 //Vue.component('login-component', require('./components/LoginComponent.vue').default);
 //Vue.component('register-component', require('./components/RegisterComponent.vue').default);
 

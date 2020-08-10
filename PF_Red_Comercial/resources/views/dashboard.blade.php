@@ -232,10 +232,29 @@
                                         <i class="fas fa-images"></i>
                                           Imagenes Carousel Micrositio
                                     </a>
+                                    <a href="pedidosv">
+                                        <i class="fas fa-cart-plus"></i>
+                                          Pedidos
+                                    </a>
+                                    <a href="historialv">
+                                        <i class="fas fa-list"></i>
+                                          Historial
+                                    </a>
                                 </li>
 
                                 @else 
 
+                                <li class="app-sidebar__heading">PEDIDOS</li>
+                                <li>
+                                    <a href="pedidosv">
+                                        <i class="fas fa-cart-plus"></i>
+                                          Pedidos
+                                    </a>
+                                    <a href="historialv">
+                                        <i class="fas fa-list"></i>
+                                          Historial
+                                    </a>
+                                </li>
                                 @endif
                                 @endif
 
