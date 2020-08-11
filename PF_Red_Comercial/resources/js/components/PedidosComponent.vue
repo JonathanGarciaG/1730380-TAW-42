@@ -88,7 +88,7 @@
                             <hr>
                             <h3>Total a pagar: ${{ this.total }}</h3>
                             <hr>
-                            <input type="checkbox" id="mail" name="mail" value="mail">
+                            <input type="checkbox" id="mail" name="mail" v-model="mail" value="mail">
                             <label for="vehicle1">   Enviar a correo electrónico</label><br>
                         </div>
                         <div class="d-block text-center card-footer">
@@ -184,7 +184,9 @@
                 prods:[],
                 emps:[],
                 cats:[],
+                mail:false,
                 imagen:"",
+                mensaje:"",
                 cantidad_productos:0,
                 total:0,
                 id_producto: 0,
@@ -225,15 +227,28 @@
             },
             //Metodo para agregar un nuevo usuario
             newPedido() {
+                let me = this;
                 //se toman los parametros de los campos
+                let mensaje = "";
+                /*if(this.mail){
+                    console.log("enviar mensaje");
+                    var i;
+                    for (i = 0; i < me.prods.length; i++) {
+                      me.mensaje = me.mensaje + me.prods[i].nombre + " (" + me.prods[i].cantidad + ") = " + me.prods[i].monto + "\n";
+                    }
+                    me.mensaje = me.mensaje + "Total = " + me.total;
+                    console.log(me.mensaje);
+                }*/
+
                 const params = {
                     nombre: this.nombre,
                     monto: this.total,
                     metodo_pago: "Tarjeta",
                     motivo_pago: "Pedido",
+                    //mensaje : this.mensaje
                 };
 
-                let me = this;
+                
                 //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
                 axios.post('./historial', params)
                     .then((response) => {

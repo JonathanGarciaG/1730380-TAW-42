@@ -28,6 +28,8 @@ class EmpresasController extends Controller
         $empresa->id_usuario = $request->id_usuario;
         $empresa->id_ubicacion = $request->id_ubicacion;
         $empresa->id_categoria = $request->id_categoria;
+        $empresa->longitud = $request->longitud;
+        $empresa->latitud = $request->latitud;
         //se guardan los valores
         $empresa->save();
         //se retorna el empresa guardado

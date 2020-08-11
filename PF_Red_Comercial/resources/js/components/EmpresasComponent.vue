@@ -132,6 +132,20 @@
                             </div>
 
                             <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Longitud:</label>
+                                <div class="col-md-9">
+                                    <input type="number" step="0.01" id="longitud" name="longitud" v-model="longitud" class="form-control" placeholder="Longitud" required>                                 
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Latitud:</label>
+                                <div class="col-md-9">
+                                    <input type="number" step="0.01" id="latitud" name="latitud" v-model="latitud" class="form-control" placeholder="Latitud" required>                                   
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Categoría de la empresa:</label>
                                 <div class="col-md-9">
                                     <select id="id_categoria" name="id_categoria" v-model="id_categoria" class="form-control" placeholder="Categoría" required>
@@ -281,6 +295,8 @@
                 id_usuario:"",
                 id_ubicacion:"", 
                 id_categoria:"",
+                longitud:0.0,
+                latitud:0.0,
                 emps:[],
                 usuario:"",
                 update: 0,
@@ -357,7 +373,9 @@
                     descripcion: this.descripcion,
                     id_usuario: usuarioa[0],
                     id_ubicacion: ubicacion[0],
-                    id_categoria: categoria[0]
+                    id_categoria: categoria[0],
+                    longitud: this.longitud,
+                    latitud: this.latitud
                 };
                 //Se limpian los campos del modal
                 this.nombre = '';

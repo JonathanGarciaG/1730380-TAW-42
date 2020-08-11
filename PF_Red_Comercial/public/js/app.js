@@ -2764,6 +2764,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   //datos de los campos
   data: function data() {
@@ -2774,6 +2788,8 @@ __webpack_require__.r(__webpack_exports__);
       id_usuario: "",
       id_ubicacion: "",
       id_categoria: "",
+      longitud: 0.0,
+      latitud: 0.0,
       emps: [],
       usuario: "",
       update: 0,
@@ -2849,7 +2865,9 @@ __webpack_require__.r(__webpack_exports__);
         descripcion: this.descripcion,
         id_usuario: usuarioa[0],
         id_ubicacion: ubicacion[0],
-        id_categoria: categoria[0]
+        id_categoria: categoria[0],
+        longitud: this.longitud,
+        latitud: this.latitud
       }; //Se limpian los campos del modal
 
       this.nombre = '';
@@ -4271,7 +4289,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       altura: "",
       id_empresa: "",
       id_categoria: ""
-    }, _defineProperty(_ref, "altura", ""), _defineProperty(_ref, "update", 0), _defineProperty(_ref, "prods", []), _defineProperty(_ref, "emps", []), _defineProperty(_ref, "cats", []), _defineProperty(_ref, "imagen", ""), _defineProperty(_ref, "cantidad_productos", 0), _defineProperty(_ref, "total", 0), _defineProperty(_ref, "id_producto", 0), _defineProperty(_ref, "id_borrar", 0), _defineProperty(_ref, "cantidad_producto_eliminar", 0), _ref;
+    }, _defineProperty(_ref, "altura", ""), _defineProperty(_ref, "update", 0), _defineProperty(_ref, "prods", []), _defineProperty(_ref, "emps", []), _defineProperty(_ref, "cats", []), _defineProperty(_ref, "mail", false), _defineProperty(_ref, "imagen", ""), _defineProperty(_ref, "mensaje", ""), _defineProperty(_ref, "cantidad_productos", 0), _defineProperty(_ref, "total", 0), _defineProperty(_ref, "id_producto", 0), _defineProperty(_ref, "id_borrar", 0), _defineProperty(_ref, "cantidad_producto_eliminar", 0), _ref;
   },
   mounted: function mounted() {
     console.log('Component mounted.'); //cuando el componente es montado se realizar lo siguiente para cargar los datos
@@ -4305,14 +4323,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //Metodo para agregar un nuevo usuario
     newPedido: function newPedido() {
-      //se toman los parametros de los campos
+      var me = this; //se toman los parametros de los campos
+
+      var mensaje = "";
+      /*if(this.mail){
+          console.log("enviar mensaje");
+          var i;
+          for (i = 0; i < me.prods.length; i++) {
+            me.mensaje = me.mensaje + me.prods[i].nombre + " (" + me.prods[i].cantidad + ") = " + me.prods[i].monto + "\n";
+          }
+          me.mensaje = me.mensaje + "Total = " + me.total;
+          console.log(me.mensaje);
+      }*/
+
       var params = {
         nombre: this.nombre,
         monto: this.total,
         metodo_pago: "Tarjeta",
-        motivo_pago: "Pedido"
-      };
-      var me = this; //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
+        motivo_pago: "Pedido" //mensaje : this.mensaje
+
+      }; //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
 
       axios.post('./historial', params).then(function (response) {
         var prod = response.data;
@@ -44323,6 +44353,90 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
+                        [_vm._v("Longitud:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.longitud,
+                              expression: "longitud"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "number",
+                            step: "0.01",
+                            id: "longitud",
+                            name: "longitud",
+                            placeholder: "Longitud",
+                            required: ""
+                          },
+                          domProps: { value: _vm.longitud },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.longitud = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Latitud:")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.latitud,
+                              expression: "latitud"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "number",
+                            step: "0.01",
+                            id: "latitud",
+                            name: "latitud",
+                            placeholder: "Latitud",
+                            required: ""
+                          },
+                          domProps: { value: _vm.latitud },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.latitud = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
                         [_vm._v("Categoría de la empresa:")]
                       ),
                       _vm._v(" "),
@@ -46867,11 +46981,45 @@ var render = function() {
                 _c("hr"),
                 _vm._v(" "),
                 _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.mail,
+                      expression: "mail"
+                    }
+                  ],
                   attrs: {
                     type: "checkbox",
                     id: "mail",
                     name: "mail",
                     value: "mail"
+                  },
+                  domProps: {
+                    checked: Array.isArray(_vm.mail)
+                      ? _vm._i(_vm.mail, "mail") > -1
+                      : _vm.mail
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.mail,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = "mail",
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.mail = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.mail = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.mail = $$c
+                      }
+                    }
                   }
                 }),
                 _vm._v(" "),

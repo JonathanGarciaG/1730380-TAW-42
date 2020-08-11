@@ -8,6 +8,8 @@ use DB;
 use App\pedidos;
 use App\productos;
 use App\historial;
+use App\Mail\MessageReceived;
+use Illuminate\Support\Facades\Mail;
 
 class HistorialController extends Controller
 {
@@ -28,6 +30,8 @@ class HistorialController extends Controller
         $historial->id_usuario = Auth::user()->id;
         //se guardan los valores
         $historial->save();
+
+        //Mail::to(Auth::user()->email)->send(new MessageReceived($request->mensaje));
 
         DB::table('pedidos')->where('id_usuario','=', Auth::user()->id )->delete();
 
