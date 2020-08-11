@@ -207,7 +207,7 @@
 
 
                         <div class="modal-header">
-                            <h5 class="modal-title"  id="exampleModalLongTitle">Agregar Nuevo Producto</h5>
+                            <h5 class="modal-title"  id="exampleModalLongTitle">Modificar Producto</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -294,7 +294,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">ActualizarProducto</button>
+                            <button type="submit" class="btn btn-primary">Actualizar Producto</button>
                         </div>
                     </form> 
                     </div>
@@ -469,6 +469,7 @@
                             console.log(response);
                             //Actualizando la lista de productos.
                             me.reloadData();
+                            swal("Exito!", "Se ha agregado un nuevo producto!", "success");
                         })
                         .catch(function (error){
                             console.log(error);
@@ -499,6 +500,7 @@
                 }).then(function (response){
                     //Cerrando el modal después de actualizar el usuario.
                     $('#modalUpdateProducto').modal('hide');
+                    swal("Modificación exitosa!", "Se ha agregado modificado el producto!", "info");
                 }).catch(function (error){
                     console.log(error);
                 });
@@ -512,7 +514,7 @@
                 let me = this;
                 let url = './productos/'+this.update;
                 axios.get(url).then(function (response){
-                    me.nombre = response.data.nombre;
+                    this.nombre = response.data.nombre;
                     me.tipo = response.data.tipo;
                     me.codigo = response.data.codigo;
                     me.precio = response.data.precio;
@@ -531,6 +533,7 @@
             onClickDelete() {
                 axios.delete('./productos/'+this.id_borrar).then(() => {
                     this.reloadData();
+                    swal("Producto eliminado", "Se ha eliminado el producto exitosamente", "info");
                 });
                 $('#modalDeleteProducto').modal('hide');
             },

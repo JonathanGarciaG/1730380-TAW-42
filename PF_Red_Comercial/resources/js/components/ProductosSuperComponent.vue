@@ -496,7 +496,7 @@
                             .catch(function (error) {
                                 console.log(error);
                             });
-                            
+                            swal("Exito!", "Se ha agregado un nuevo producto!", "success");
                         })
                         .catch(function (error){
                             console.log(error);
@@ -527,6 +527,7 @@
                 }).then(function (response){
                     //Cerrando el modal después de actualizar el usuario.
                     $('#modalUpdateProducto').modal('hide');
+                    swal("Modificación exitosa!", "Se ha agregado modificado el producto!", "info");
                 }).catch(function (error){
                     console.log(error);
                 });
@@ -560,6 +561,7 @@
             onClickDelete() {
                 axios.delete('./productos/'+this.id_borrar).then(() => {
                     this.reloadData();
+                    swal("Producto eliminado", "Se ha eliminado el producto exitosamente", "info");
                 });
                 $('#modalDeleteProducto').modal('hide');
             },

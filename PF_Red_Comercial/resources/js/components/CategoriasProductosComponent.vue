@@ -221,6 +221,7 @@
                         const prod = response.data;
                         //una vez hecha se realiza nuevamente una actualizacion del array emps para actualizar el componente que los muestra
                         this.reloadData();
+                        swal("Exito!", "Se ha registrado una nueva categoría", "success");
                     });
                 //Ocultar el modal
                 $('#modalNewCategoria').modal('hide');
@@ -234,6 +235,7 @@
                 }).then(function (response){
                     //Cerrando el modal después de actualizar la categoria.
                     $('#modalUpdateCategoria').modal('hide');
+                    swal("Categoría modificada", "Se ha modificado la categoría", "info");
                 }).catch(function (error){
                     console.log(error);
                 });
@@ -256,6 +258,7 @@
             onClickDelete() {
                 axios.delete('./categoriasp/'+this.id_borrar).then(() => {
                     this.reloadData();
+                    swal("Categoría eliminada", "Se ha eliminado la categoría y sus productos", "info");
                 });
                 $('#modalDeleteCategoria').modal('hide');
             },

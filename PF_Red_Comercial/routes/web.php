@@ -128,6 +128,9 @@ Route::put('/categoriasp', 'CategoriasProductosController@update');
 //ruta para actualizar una ubicacion
 Route::put('/ubicacion', 'UbicacionController@update');
 
+//para actualizar datos de imagen de sitio
+Route::put('/imagenes_sitio', 'ImagenesSitioController@update');
+
 //para obtener datos de todos los productos de todas las empresas
 Route::get('/productosall', 'ProductosController@getallproductos');
 

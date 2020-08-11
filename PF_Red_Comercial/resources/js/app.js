@@ -10,6 +10,7 @@ window.Vue = require('vue');
 
 import Vue from 'vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import swal from 'sweetalert';
  
 Vue.use(VueGoogleMaps, {
   load: {

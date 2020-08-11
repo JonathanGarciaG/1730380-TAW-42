@@ -238,6 +238,7 @@
                           me.reloadData();
                           //Ocultar el modal
                           $('#modalProductView').modal('hide');
+                          swal("Producto añadido", "Se ha añadido el producto a su Pedido", "info");
                       }); 
                 }
             },

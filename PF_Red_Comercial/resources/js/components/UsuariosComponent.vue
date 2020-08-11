@@ -313,6 +313,8 @@
                         let url = './usuarios' //url que retorna los registros de la tabla users
                         axios.get(url).then(function (response) {
                             me.users = response.data;
+                            swal("Exito!", "Se ha registrado un nuevo usuario!", "success");
+
                         })
                         .catch(function (error) {
                             console.log(error);
@@ -334,6 +336,7 @@
                 }).then(function (response){
                     //Cerrando el modal después de actualizar el usuario.
                     $('#modalUpdateUser').modal('hide');
+                    swal("Usuario modificado", "Se ha modificado la información del usuario", "info");
                 }).catch(function (error){
                     console.log(error);
                 });
@@ -369,6 +372,7 @@
                     let url = './usuarios' //url que retorna los registros de la tabla users
                     axios.get(url).then(function (response) {
                         me.users = response.data;
+                        swal("Usuario eliminado", "Se ha eliminado el usuario exitosamente", "info");
                     })
                     .catch(function (error) {
                         console.log(error);

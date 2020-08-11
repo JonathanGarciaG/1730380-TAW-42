@@ -268,6 +268,7 @@
                     });
                 //Ocultar el modal
                 $('#modalNewUbicacion').modal('hide');
+                swal("Exito!", "Se ha agregado una nueva Ubicación!", "success");
             },
             //Metodo para actualizar los datos de una ubicacion.
             updateUbicacion(){
@@ -280,6 +281,7 @@
                 }).then(function (response){
                     //Cerrando el modal después de actualizar la ubicacion.
                     $('#modalUpdateUbicacion').modal('hide');
+                    swal("Exito!", "Se ha modificado la Ubicación!", "info");
                 }).catch(function (error){
                     console.log(error);
                 });
@@ -304,6 +306,7 @@
             onClickDelete() {
                 axios.delete('./ubicacion/'+this.id_borrar).then(() => {
                     this.reloadData();
+                    swal("Ubicación eliminada", "Se ha eliminado la Ubicación exitosamente!", "info");
                 });
                 $('#modalDeleteUbicacion').modal('hide');
             },

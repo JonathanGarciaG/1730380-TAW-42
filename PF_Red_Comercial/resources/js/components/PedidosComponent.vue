@@ -239,6 +239,7 @@
                     .then((response) => {
                         const prod = response.data;
                         me.reloadData();
+                        swal("Exito!", "Se ha realizado el pedido exitosamente", "success");
                     });
                 //Ocultar el modal
                 $('#modalConfirmar').modal('hide');
@@ -247,6 +248,7 @@
             onClickDelete() {
                 axios.delete('./pedidos/'+this.id_borrar).then(() => {
                     this.reloadData();
+                    swal("Producto eliminado", "Se ha eliminado el producto de su pedido", "info");
                 });
                 $('#modalDeletePedido').modal('hide');
             },

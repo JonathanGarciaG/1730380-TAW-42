@@ -99,8 +99,8 @@
             <div class="modal fade" id="modalUpdate"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 60px;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                    <!-- al completar el form utiliza el metodo update() para agregar los datos de imagen -->
-                    <form action="" v-on:submit.prevent="update()" enctype="multipart/form-data" class="form-horizontal">
+                    <!-- al completar el form utiliza el metodo updateImagen() para agregar los datos de imagen -->
+                    <form action="" v-on:submit.prevent="updateImagen()" enctype="multipart/form-data" class="form-horizontal">
 
 
                         <div class="modal-header">
@@ -112,14 +112,6 @@
                         <div class="modal-body">
                             <!-- En el formulario en la etiquetas input se utiliza la propiedad v-model que sirve para dar nombre al campo que tiene el valor que se tomara en los metodos de update -->
                             <!-- En el formulario en la etiquetas input se utiliza la propiedad v-model que sirve para dar nombre al campo que tiene el valor que se tomara en los metodos de new -->
-
-                            <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Imagen:</label>
-                                <div class="col-md-9">
-                                    <input type="file" id="files" ref="files" @change="handleFilesUpload"/>
-                                    </select>                                    
-                                </div>
-                            </div>
 
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Descripción:</label>
@@ -247,6 +239,7 @@
                     }).then((response) => {
                         //actualiza los datos
                         this.reloadData();
+                        swal("Exito!", "Se ha agregado una nueva imagen al micrositio", "success");
                     });
                 //Ocultar el modal
                 $('#modalNew').modal('hide');
@@ -255,10 +248,12 @@
             updateImagen(){
                 let me = this;
                 axios.put('./imagenes_sitio',{
-                    'descripcion' : this.descripcion
+                    'descripcion' : me.descripcion,
+                    'id' : me.update
                 }).then(function (response){
                     //Cerrando el modal después de actualizar el usuario.
                     $('#modalUpdate').modal('hide');
+                    swal("Imagen modificada", "Se ha modificado la imagen del micrositio", "info");
                 }).catch(function (error){
                     console.log(error);
                 });
@@ -282,6 +277,7 @@
             onClickDelete() {
                 axios.delete('./imagenes_sitio/'+this.id_borrar).then(() => {
                     this.reloadData();
+                    swal("Imagen eliminada", "Se ha eliminado la imagen del micrositio", "info");
                 });
                 $('#modalDelete').modal('hide');
             },

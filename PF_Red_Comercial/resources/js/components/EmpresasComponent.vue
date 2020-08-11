@@ -383,6 +383,7 @@
                         });
                         //una vez hecha se realiza nuevamente una actualizacion del array emps para actualizar el componente que los muestra
                         this.reloadData();
+                        swal("Exito!", "Se ha agregado una nueva empresa y su micrositio", "success");
                     });
                 //Ocultar el modal
                 $('#modalNewEmpresa').modal('hide');
@@ -404,6 +405,7 @@
                 }).then(function (response){
                     //Cerrando el modal después de actualizar el usuario.
                     $('#modalUpdateEmpresa').modal('hide');
+                    swal("Empresa modificada", "Se ha modificado la empresa", "info");
                 }).catch(function (error){
                     console.log(error);
                 });
@@ -430,6 +432,7 @@
             onClickDelete() {
                 axios.delete('./empresas/'+this.id_borrar).then(() => {
                     this.reloadData();
+                    swal("Empresa eliminada", "Se ha eliminado la empresa y sus productos exitosamente", "info");
                 });
                 $('#modalDeleteProducto').modal('hide');
             },
