@@ -284,7 +284,7 @@
             //actualizar registros
             reloadData(){
                 let me = this;
-                let url = './imagenes_sitio' //url que retorna los registros de la tabla empresas
+                let url = './imagenes_sitioe' //url que retorna los registros de la tabla empresas
                 axios.get(url).then(function (response) {
                     me.imgs = response.data;
                 })

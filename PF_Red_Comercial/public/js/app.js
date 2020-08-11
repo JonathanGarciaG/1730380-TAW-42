@@ -3399,7 +3399,7 @@ __webpack_require__.r(__webpack_exports__);
     //actualizar registros
     reloadData: function reloadData() {
       var me = this;
-      var url = './imagenes_sitio'; //url que retorna los registros de la tabla empresas
+      var url = './imagenes_sitioe'; //url que retorna los registros de la tabla empresas
 
       axios.get(url).then(function (response) {
         me.imgs = response.data;
