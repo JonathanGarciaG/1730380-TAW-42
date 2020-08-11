@@ -4870,15 +4870,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var me = this;
       var url = './productos/' + this.update;
       axios.get(url).then(function (response) {
-        this.nombre = response.data.nombre;
-        me.tipo = response.data.tipo;
-        me.codigo = response.data.codigo;
-        me.precio = response.data.precio;
-        me.descripcion = response.data.descripcion;
-        me.stock = response.data.stock;
-        me.longitud = response.data.longitud;
-        me.anchura = response.data.anchura;
-        me.altura = response.data.altura;
+        me.nombre = response.data[0].nombre;
+        me.tipo = response.data[0].tipo;
+        me.codigo = response.data[0].codigo;
+        me.precio = response.data[0].precio;
+        me.descripcion = response.data[0].descripcion;
+        me.stock = response.data[0].stock;
+        me.longitud = response.data[0].longitud;
+        me.anchura = response.data[0].anchura;
+        me.altura = response.data[0].altura;
         me.id_empresa = "";
         me.id_categoria = "";
       })["catch"](function (error) {
@@ -5460,15 +5460,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var me = this;
       var url = './productos/' + this.update;
       axios.get(url).then(function (response) {
-        me.nombre = response.data.nombre;
-        me.tipo = response.data.tipo;
-        me.codigo = response.data.codigo;
-        me.precio = response.data.precio;
-        me.descripcion = response.data.descripcion;
-        me.stock = response.data.stock;
-        me.longitud = response.data.longitud;
-        me.anchura = response.data.anchura;
-        me.altura = response.data.altura;
+        me.nombre = response.data[0].nombre;
+        me.tipo = response.data[0].tipo;
+        me.codigo = response.data[0].codigo;
+        me.precio = response.data[0].precio;
+        me.descripcion = response.data[0].descripcion;
+        me.stock = response.data[0].stock;
+        me.longitud = response.data[0].longitud;
+        me.anchura = response.data[0].anchura;
+        me.altura = response.data[0].altura;
         me.id_empresa = "";
         me.id_categoria = "";
       })["catch"](function (error) {
@@ -50764,7 +50764,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Municipio / Ciudad")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Estado")])
+        _c("th", [_vm._v("Dirección")])
       ])
     ])
   },

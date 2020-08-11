@@ -26,7 +26,7 @@
                                     <th class="text-center">#</th>
                                     <th>Estado</th>
                                     <th>Municipio / Ciudad</th>
-                                    <th>Estado</th>
+                                    <th>Dirección</th>
                                 </tr>
                                 </thead>
                                 <tbody>
