@@ -1,4 +1,5 @@
 <template>
+<!-- Componente historial simplemente muestra los movimientos realizados por el usuario en el sistema. -->
     <div class="app-main__outer">
         <div class="app-main__inner">
             <div class="app-page-title">
@@ -19,6 +20,7 @@
                         <div class="card-header">Tus Pedidos
                         </div>
                         <div class="table-responsive">
+                        <!-- Tabla de contenido del historial -->
                             <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                                 <thead>
                                 <tr>

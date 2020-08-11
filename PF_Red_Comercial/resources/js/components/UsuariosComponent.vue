@@ -1,4 +1,5 @@
 <template>
+<!-- Componente para el manejo de usuarios -->
     <div class="app-main__outer">
         <div class="app-main__inner">
             <div class="app-page-title">

@@ -1,4 +1,5 @@
 <template>
+    <!-- Componente que sirve como crud de el catalogo de productos para el usuario super user donde se pueden manejar los productos de todas las empresas registradas en el sistema -->
     <div class="app-main__outer">
         <div class="app-main__inner">
             <div class="app-page-title">
@@ -19,6 +20,7 @@
                         <div class="card-header">Productos y Servicios Disponibles
                         </div>
                         <div class="table-responsive">
+                        <!-- Tabla de contenido de los productos de todas las empresas -->
                             <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                                 <thead>
                                 <tr>
@@ -322,7 +324,7 @@
             <div class="modal fade" id="modalDeleteProducto"tabindex="2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="false" style="top: 60px;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                    <!-- al completar el form utiliza el metodo updateProducto() para agregar los datos de empresa -->
+                    <!-- al completar el form utiliza el metodo onClickDelete() para eliminar los datos de los productos -->
                     <form action="" v-on:submit.prevent="onClickDelete()" enctype="multipart/form-data" class="form-horizontal">
 
 
@@ -465,6 +467,8 @@
                 this.id_categoria = '';
                 this.id_empresa = '';
 
+                let me = this;
+
                 //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
                 axios.post('./productos', params)
                     .then((response) => {
@@ -484,19 +488,20 @@
                             }
                         }).then(function (response){
                             console.log(response);
+                            //Actualizando la lista de productos.
+                            let url = './productosall' //url que retorna los registros de la tabla empresas
+                            axios.get(url).then(function (response) {
+                                me.prods = response.data;
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                            
                         })
                         .catch(function (error){
                             console.log(error);
                         });
-                        //Actualizando la lista de productos.
-                        let me = this;
-                        let url = './productosall' //url que retorna los registros de la tabla empresas
-                        axios.get(url).then(function (response) {
-                            me.prods = response.data;
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
+                        
                     });
                 //Ocultar el modal
                 $('#modalNewProducto').modal('hide');
@@ -531,6 +536,7 @@
             camposUpdate(data){
                 //se abre el modal para actualizar producto
                 $('#modalUpdateProducto').modal('show');
+                //se toman los valores para usarlos como parametros
                 this.update = data.id;
                 let me = this;
                 let url = './productos/'+this.update;
@@ -568,6 +574,7 @@
                     console.log(error);
                 });
             },
+            //metodo para tomar la imagen
             handleFilesUpload(e){
                 let file = e.target.files[0];
                 console.log(file);

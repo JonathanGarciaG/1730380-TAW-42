@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-
+<!-- Layout de Dashboard principal del Proyecto aqui se muestran los navbars y opciones de los diferentes tipos de usuarios Super User, Administradores y Clientes -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -171,6 +171,7 @@
                                     </a>
                                 </li>
                                 <!-- se personaliza las opciones del navbar en base al tipo de usuario -->
+                                <!-- Primero se verifica si existe una sesion -->
                                 @if(Auth::check())
                                 @if(Auth::user()->tipo=="Super User")
                                 

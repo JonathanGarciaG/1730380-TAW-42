@@ -1,4 +1,5 @@
 <template>
+    <!-- Componente que muestra el panel de pedidos para confirmar o rechazar un pedido -->
     <div class="app-main__outer">
         <div class="app-main__inner">
             <div class="app-page-title">
@@ -20,6 +21,7 @@
                         </div>
                         <div class="table-responsive">
                             <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                <!-- Aqui se inserta una tabla de contenido con los productos añadidos al pedido -->
                                 <thead>
                                 <tr>
                                     <th>Imagen</th>

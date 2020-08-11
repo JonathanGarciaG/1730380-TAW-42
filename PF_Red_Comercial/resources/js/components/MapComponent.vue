@@ -1,4 +1,5 @@
 <template>
+<!-- Componente del mapa de incio del sistema, para usar el mapa se usa la API de google maps para utilizar la etiqueta gmaps -->
     <div class="app-main__outer">
         <div class="app-main__inner">
             <div class="app-page-title">
@@ -34,7 +35,6 @@
                                 </thead>                    
                                 <tbody>
                                 <tr v-for="prod in prods" :key="prod.id">
-                                    <td class="text-center text-muted">{{ prod.id }}</td>
                                     <td><img width="100px" height="100px" v-bind:src="'.'+prod.imagen" alt=""></td>
                                     <td>
                                         <div class="widget-content p-0">
@@ -53,7 +53,7 @@
                                         <div>({{ prod.stock }})</div>
                                     </td>
                                     </td>
-                                        <a class="btn btn-primary center" v-bind:href="'micrositiov?id='+prod.id_empresa" width="100%" height="100%">Visitar sitio</a>
+                                        <a class="btn btn-primary center mt-2 mb-2" v-bind:href="'micrositiov?id='+prod.id_empresa" width="100%" height="100%">Visitar sitio</a>
                                     </td>
                                     </td>
                                         <div class="widget-content p-0">
@@ -65,7 +65,7 @@
                                         </div>
                                     </td>
                                     </td>
-                                        <a class="btn btn-primary center" @click="toggleInfoWindow(prod)" style="color: white;" width="100%" height="100%">Centrar marcador</a>
+                                        <a class="btn btn-primary center mt2 mb-2" @click="toggleInfoWindow(prod)" style="color: white;" width="100%" height="100%">Centrar marcador</a>
                                     </td>
                                 </tr>
                                 
@@ -94,7 +94,7 @@
                                         <a class="btn btn-primary center" v-bind:href="'micrositiov?id='+emp.id" width="100%" height="100%">Visitar sitio</a>
                                     </td>
                                     </td>
-                                        <a class="btn btn-primary center" @click="toggleInfoWindow2(emp)" style="color: white;" height="100%">Centrar marcador</a>
+                                        <a class="btn btn-primary center ml-3" @click="toggleInfoWindow2(emp)" style="color: white;" height="100%">Centrar marcador</a>
                                     </td>
                                 </tr>
                                 
@@ -169,28 +169,28 @@
               }
         },
         mounted () {
-          // At this point, the child GmapMap has been mounted, but
-          // its map has not been initialized.
-          // Therefore we need to write mapRef.$mapPromise.then(() => ...)
+          //al montarse el componente se define una posicion central del mapa predeterminada
         
           this.$refs.mapRef.$mapPromise.then((map) => {
             map.panTo({lat: 24.40, lng: -101.767536})
           })
         },
         methods: {
-            //actualizar registros
+            //actualizar registros al realizar una busqueda
             reloadData(){
                 console.log('input');
                 let me = this;
 
                 me.prods = [];
                 
+                //se verifica el valor de la variable buscar que contiene la cadena que se desea buscar
                 if(me.buscar == ""){
                     me.prods = [];
                     me.cantidad_productos = 0;
                     me.cantidad_empresas = 0;
                     console.log("busqueda vacia");
                 }else{
+                    //busqueda de productos
                     let url = './buscarproductos/'+me.buscar //url que retorna los registros de la tabla productos con los caracteres de busqueda, aqui se busca tanto los productos de categoria, nombre y empresa
                     axios.get(url).then(function (response) {
                         me.prods = response.data;
@@ -199,7 +199,7 @@
                     .catch(function (error) {
                         console.log(error);
                     });
-
+                    //busqueda de empresas
                     url = './buscarempresa/'+me.buscar //url que retorna los registros de la tabla empresa con los caracteres de busqueda
                     axios.get(url).then(function (response) {
                         me.emps = response.data;

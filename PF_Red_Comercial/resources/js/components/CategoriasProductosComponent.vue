@@ -1,4 +1,5 @@
 <template>
+<!-- Componente para  el manejo de las categorias de productos -->
     <div class="app-main__outer">
         <div class="app-main__inner">
             <div class="app-page-title">
@@ -224,7 +225,7 @@
                 //Ocultar el modal
                 $('#modalNewCategoria').modal('hide');
             },
-            //Metodo para actualizar los datos de un usuario.
+            //Metodo para actualizar los datos de una categoria
             updateCategoria(){
                 let me = this;
                 axios.put('./categoriasp',{

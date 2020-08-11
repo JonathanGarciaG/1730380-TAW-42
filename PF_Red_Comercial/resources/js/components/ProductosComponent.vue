@@ -1,4 +1,5 @@
 <template>
+    <!-- Este componente sirve como el crud de los productos de un usuario administrador en este componente solo es posible agregar, modificar y eliminar productos de la empresa que maneja el administrador -->   
     <div class="app-main__outer">
         <div class="app-main__inner">
             <div class="app-page-title">
@@ -19,6 +20,7 @@
                         <div class="card-header">Productos y Servicios Disponibles
                         </div>
                         <div class="table-responsive">
+                        <!-- Tabla de contenido de los productos aqui se imprimen los productos de la empresa que maneja el administrador -->
                             <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                                 <thead>
                                 <tr>
@@ -377,7 +379,7 @@
                 console.log(error);
             });
 
-            url = './categoriasp' //url que retorna los registros de la tabla usuarios
+            url = './categoriasp' //url que retorna los registros de la tabla categorias de productos
             axios.get(url).then(function (response) {
                 me.cats = response.data;
             })
@@ -385,7 +387,7 @@
                 console.log(error);
             });
 
-            url = './getempresaact' //url que retorna los registros de la tabla usuarios
+            url = './getempresaact' //url que retorna el registro de la empresa actual
             axios.get(url).then(function (response) {
                 me.emps = response.data;
             })
@@ -415,7 +417,7 @@
                 this.id_borrar = data.id;
                 $('#modalDeleteProducto').modal('show');               
             },
-            //Metodo para agregar un nuevo usuario
+            //Metodo para agregar un nuevo producto
             newProducto() {
                 //se toman los parametros de los campos
                 let categoria = this.id_categoria.split("|");
@@ -444,7 +446,9 @@
                 this.altura = '';
                 this.id_categoria = '';
 
-                //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
+                let me = this;
+
+                //se hace un request post con el url /productos para que con su respuesta se realice la insercion
                 axios.post('./productos', params)
                     .then((response) => {
                         const prod = response.data;
@@ -463,26 +467,21 @@
                             }
                         }).then(function (response){
                             console.log(response);
+                            //Actualizando la lista de productos.
+                            me.reloadData();
                         })
                         .catch(function (error){
                             console.log(error);
                         });
-                        //Actualizando la lista de productos.
-                        let me = this;
-                        let url = './productos' //url que retorna los registros de la tabla empresas
-                        axios.get(url).then(function (response) {
-                            me.prods = response.data;
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
+                        
                     });
                 //Ocultar el modal
                 $('#modalNewProducto').modal('hide');
             },
-            //Metodo para actualizar los datos de un usuario.
+            //Metodo para actualizar los datos de un producto.
             updateProducto(){
                 let me = this;
+                //se obtienen los datos necesarios y se realiza el update mediante el metodo put
                 let categoria = this.id_categoria.split("|");
                 axios.put('./productos',{
                     'id' : this.update,
@@ -505,7 +504,7 @@
                 });
                 this.reloadData();
             },
-            //Metodo para rellenar los campos del formulario al momento de seleccionar un usuario.
+            //Metodo para rellenar los campos del formulario al momento de seleccionar un producto.
             camposUpdate(data){
                 //se abre el modal para actualizar producto
                 $('#modalUpdateProducto').modal('show');
@@ -535,7 +534,7 @@
                 });
                 $('#modalDeleteProducto').modal('hide');
             },
-            //actualizar registros
+            //metodo para actualizar registros
             reloadData(){
                 let me = this;
                 let url = './productos' //url que retorna los registros de la tabla empresas
@@ -546,6 +545,7 @@
                     console.log(error);
                 });
             },
+            //metodo para tomar imagen
             handleFilesUpload(e){
                 let file = e.target.files[0];
                 console.log(file);

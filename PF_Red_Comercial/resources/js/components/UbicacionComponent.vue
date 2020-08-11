@@ -1,4 +1,5 @@
 <template>
+<!-- Compoente para agregar, editar y eliminar las ubicaciones de las empresas -->
     <div class="app-main__outer">
         <div class="app-main__inner">
             <div class="app-page-title">

@@ -14,6 +14,7 @@ class UsuariosController extends Controller
 {
     //funcion que retorna los valores de los registros de la tabla usuarios
     public function index(){
+        //se retornan los valores de los usuarios exceptuando el del super user
     	//return productos::where('user_id', auth()->id())->get();
     	return DB::table('users')->where('tipo', '!=', 'Super User')->get();
     }
@@ -34,6 +35,7 @@ class UsuariosController extends Controller
         $user->name = $request->name;
         $user->lastname = $request->lastname;
         $user->email = $request->email;
+        //se utiliza la clase hash para el encriptado
         $user->password = Hash::make($request->password);
         $user->tipo = $request->tipo;
         //se guardan los valores
@@ -49,6 +51,7 @@ class UsuariosController extends Controller
         $user->name = $request->input('name');
         $user->lastname = $request->input('lastname');
         $user->email = $request->input('email');
+        //se utiliza la clase hash para el encriptado
         $user->password = Hash::make($request->input('password'));
         $user->tipo = $request->input('tipo');
     
@@ -65,8 +68,6 @@ class UsuariosController extends Controller
     public function getadminusers(){
         //return DB::table('users')->where('tipo', '=', 'Administrador')->get();
         return DB::table('users')->whereNotIn('id', DB::table('empresas')->select('id_usuario'))->where('tipo','=','Administrador')->get();
-        /*$jobs = RepairJob::with('repairJobPhoto', 'city', 'vehicle')
-    ->where('active', 'Y')->doesntHave('dismissedRequests')->get();*/
     }
 
     //metodo para eliminar registro de la tabla users

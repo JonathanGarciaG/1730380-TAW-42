@@ -1,4 +1,5 @@
 <template>
+    <!-- Componente para administrar las imagenes del micrositio de las empresas -->
     <div class="app-main__outer">
         <div class="app-main__inner">
             <div class="app-page-title">
@@ -19,6 +20,7 @@
                         <div class="card-header">Imagenes de Carousel Micrositio
                         </div>
                         <div class="table-responsive">
+                        <!-- Tabla de contenido donde se muestran las imagenes que se han insertado en el micrositio -->
                             <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                                 <thead>
                                 <tr>
@@ -250,9 +252,9 @@
                 $('#modalNew').modal('hide');
             },
             //Metodo para actualizar los datos de una imagen.
-            updateProducto(){
+            updateImagen(){
                 let me = this;
-                axios.put('./productos',{
+                axios.put('./imagenes_sitio',{
                     'descripcion' : this.descripcion
                 }).then(function (response){
                     //Cerrando el modal después de actualizar el usuario.
@@ -294,6 +296,7 @@
                     console.log(error);
                 });
             },
+            //metodo para tomar la imagen
             handleFilesUpload(e){
                 let file = e.target.files[0];
                 console.log(file);

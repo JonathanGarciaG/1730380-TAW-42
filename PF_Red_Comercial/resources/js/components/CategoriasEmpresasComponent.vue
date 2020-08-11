@@ -1,4 +1,5 @@
 <template>
+<!-- Componente para el manejo de las categorias de empresas -->
     <div class="app-main__outer">
         <div class="app-main__inner">
             <div class="app-page-title">
@@ -182,7 +183,7 @@
             console.log('Component mounted.')
             //cuando el componente es montado se realizar lo siguiente para cargar los datos
             let me = this;
-            let url = './categoriase' //url que retorna los registros de la tabla empresas
+            let url = './categoriase' //url que retorna los registros de la tabla categorias de empresas
             axios.get(url).then(function (response) {
                 me.cats = response.data;
             })
@@ -224,7 +225,7 @@
                 //Ocultar el modal
                 $('#modalNewCategoria').modal('hide');
             },
-            //Metodo para actualizar los datos de un usuario.
+            //Metodo para actualizar los datos de una categoria
             updateCategoria(){
                 let me = this;
                 axios.put('./categoriase',{

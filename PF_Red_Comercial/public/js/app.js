@@ -2077,6 +2077,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   //datos de los campos
   data: function data() {
@@ -2091,7 +2092,7 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted.'); //cuando el componente es montado se realizar lo siguiente para cargar los datos
 
     var me = this;
-    var url = './categoriase'; //url que retorna los registros de la tabla empresas
+    var url = './categoriase'; //url que retorna los registros de la tabla categorias de empresas
 
     axios.get(url).then(function (response) {
       me.cats = response.data;
@@ -2133,7 +2134,7 @@ __webpack_require__.r(__webpack_exports__);
 
       $('#modalNewCategoria').modal('hide');
     },
-    //Metodo para actualizar los datos de un usuario.
+    //Metodo para actualizar los datos de una categoria
     updateCategoria: function updateCategoria() {
       var me = this;
       axios.put('./categoriase', {
@@ -2363,6 +2364,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   //datos de los campos
   data: function data() {
@@ -2419,7 +2421,7 @@ __webpack_require__.r(__webpack_exports__);
 
       $('#modalNewCategoria').modal('hide');
     },
-    //Metodo para actualizar los datos de un usuario.
+    //Metodo para actualizar los datos de una categoria
     updateCategoria: function updateCategoria() {
       var me = this;
       axios.put('./categoriasp', {
@@ -2480,6 +2482,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -3041,6 +3044,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   //datos de los campos
   data: function data() {
@@ -3075,6 +3080,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -3323,9 +3330,9 @@ __webpack_require__.r(__webpack_exports__);
       $('#modalNew').modal('hide');
     },
     //Metodo para actualizar los datos de una imagen.
-    updateProducto: function updateProducto() {
+    updateImagen: function updateImagen() {
       var me = this;
-      axios.put('./productos', {
+      axios.put('./imagenes_sitio', {
         'descripcion': this.descripcion
       }).then(function (response) {
         //Cerrando el modal después de actualizar el usuario.
@@ -3369,6 +3376,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    //metodo para tomar la imagen
     handleFilesUpload: function handleFilesUpload(e) {
       var file = e.target.files[0];
       console.log(file);
@@ -3559,9 +3567,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    // At this point, the child GmapMap has been mounted, but
-    // its map has not been initialized.
-    // Therefore we need to write mapRef.$mapPromise.then(() => ...)
+    //al montarse el componente se define una posicion central del mapa predeterminada
     this.$refs.mapRef.$mapPromise.then(function (map) {
       map.panTo({
         lat: 24.40,
@@ -3570,11 +3576,11 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    //actualizar registros
+    //actualizar registros al realizar una busqueda
     reloadData: function reloadData() {
       console.log('input');
       var me = this;
-      me.prods = [];
+      me.prods = []; //se verifica el valor de la variable buscar que contiene la cadena que se desea buscar
 
       if (me.buscar == "") {
         me.prods = [];
@@ -3582,6 +3588,7 @@ __webpack_require__.r(__webpack_exports__);
         me.cantidad_empresas = 0;
         console.log("busqueda vacia");
       } else {
+        //busqueda de productos
         var url = './buscarproductos/' + me.buscar; //url que retorna los registros de la tabla productos con los caracteres de busqueda, aqui se busca tanto los productos de categoria, nombre y empresa
 
         axios.get(url).then(function (response) {
@@ -3589,7 +3596,8 @@ __webpack_require__.r(__webpack_exports__);
           me.cantidad_productos = me.prods.length;
         })["catch"](function (error) {
           console.log(error);
-        });
+        }); //busqueda de empresas
+
         url = './buscarempresa/' + me.buscar; //url que retorna los registros de la tabla empresa con los caracteres de busqueda
 
         axios.get(url).then(function (response) {
@@ -4231,6 +4239,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   //datos de los campos
   data: function data() {
@@ -4683,6 +4693,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   //datos de los campos
   data: function data() {
@@ -4712,14 +4724,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     })["catch"](function (error) {
       console.log(error);
     });
-    url = './categoriasp'; //url que retorna los registros de la tabla usuarios
+    url = './categoriasp'; //url que retorna los registros de la tabla categorias de productos
 
     axios.get(url).then(function (response) {
       me.cats = response.data;
     })["catch"](function (error) {
       console.log(error);
     });
-    url = './getempresaact'; //url que retorna los registros de la tabla usuarios
+    url = './getempresaact'; //url que retorna el registro de la empresa actual
 
     axios.get(url).then(function (response) {
       me.emps = response.data;
@@ -4749,7 +4761,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.id_borrar = data.id;
       $('#modalDeleteProducto').modal('show');
     },
-    //Metodo para agregar un nuevo usuario
+    //Metodo para agregar un nuevo producto
     newProducto: function newProducto() {
       var _this = this;
 
@@ -4778,7 +4790,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.longitud = '';
       this.anchura = '';
       this.altura = '';
-      this.id_categoria = ''; //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
+      this.id_categoria = '';
+      var me = this; //se hace un request post con el url /productos para que con su respuesta se realice la insercion
 
       axios.post('./productos', params).then(function (response) {
         var prod = response.data;
@@ -4794,16 +4807,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'Content-Type': 'multipart/form-data'
           }
         }).then(function (response) {
-          console.log(response);
-        })["catch"](function (error) {
-          console.log(error);
-        }); //Actualizando la lista de productos.
+          console.log(response); //Actualizando la lista de productos.
 
-        var me = _this;
-        var url = './productos'; //url que retorna los registros de la tabla empresas
-
-        axios.get(url).then(function (response) {
-          me.prods = response.data;
+          me.reloadData();
         })["catch"](function (error) {
           console.log(error);
         });
@@ -4811,9 +4817,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       $('#modalNewProducto').modal('hide');
     },
-    //Metodo para actualizar los datos de un usuario.
+    //Metodo para actualizar los datos de un producto.
     updateProducto: function updateProducto() {
-      var me = this;
+      var me = this; //se obtienen los datos necesarios y se realiza el update mediante el metodo put
+
       var categoria = this.id_categoria.split("|");
       axios.put('./productos', {
         'id': this.update,
@@ -4836,7 +4843,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       this.reloadData();
     },
-    //Metodo para rellenar los campos del formulario al momento de seleccionar un usuario.
+    //Metodo para rellenar los campos del formulario al momento de seleccionar un producto.
     camposUpdate: function camposUpdate(data) {
       //se abre el modal para actualizar producto
       $('#modalUpdateProducto').modal('show');
@@ -4868,7 +4875,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       $('#modalDeleteProducto').modal('hide');
     },
-    //actualizar registros
+    //metodo para actualizar registros
     reloadData: function reloadData() {
       var me = this;
       var url = './productos'; //url que retorna los registros de la tabla empresas
@@ -4879,6 +4886,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log(error);
       });
     },
+    //metodo para tomar imagen
     handleFilesUpload: function handleFilesUpload(e) {
       var file = e.target.files[0];
       console.log(file);
@@ -4901,6 +4909,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -5359,7 +5369,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.anchura = '';
       this.altura = '';
       this.id_categoria = '';
-      this.id_empresa = ''; //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
+      this.id_empresa = '';
+      var me = this; //se hace un request post con el url /empresas para que con su respuesta se realice la insercion
 
       axios.post('./productos', params).then(function (response) {
         var prod = response.data;
@@ -5375,16 +5386,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'Content-Type': 'multipart/form-data'
           }
         }).then(function (response) {
-          console.log(response);
-        })["catch"](function (error) {
-          console.log(error);
-        }); //Actualizando la lista de productos.
+          console.log(response); //Actualizando la lista de productos.
 
-        var me = _this;
-        var url = './productosall'; //url que retorna los registros de la tabla empresas
+          var url = './productosall'; //url que retorna los registros de la tabla empresas
 
-        axios.get(url).then(function (response) {
-          me.prods = response.data;
+          axios.get(url).then(function (response) {
+            me.prods = response.data;
+          })["catch"](function (error) {
+            console.log(error);
+          });
         })["catch"](function (error) {
           console.log(error);
         });
@@ -5421,7 +5431,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //Metodo para rellenar los campos del formulario al momento de seleccionar un usuario.
     camposUpdate: function camposUpdate(data) {
       //se abre el modal para actualizar producto
-      $('#modalUpdateProducto').modal('show');
+      $('#modalUpdateProducto').modal('show'); //se toman los valores para usarlos como parametros
+
       this.update = data.id;
       var me = this;
       var url = './productos/' + this.update;
@@ -5461,6 +5472,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log(error);
       });
     },
+    //metodo para tomar la imagen
     handleFilesUpload: function handleFilesUpload(e) {
       var file = e.target.files[0];
       console.log(file);
@@ -5481,6 +5493,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -5815,6 +5828,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -42742,7 +42756,7 @@ var render = function() {
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "main-card mb-3 card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v("Categorias de Empresas\n                    ")
+              _vm._v("Categorias de Empresas\r\n                        ")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "table-responsive" }, [
@@ -43107,7 +43121,9 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", [
-            _vm._v("Lista de Categorías de Empresas\n                    ")
+            _vm._v(
+              "Lista de Categorías de Empresas\r\n                        "
+            )
           ])
         ])
       ])
@@ -43293,7 +43309,7 @@ var render = function() {
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "main-card mb-3 card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v("Categorías de Productos\n                    ")
+              _vm._v("Categorías de Productos\r\n                        ")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "table-responsive" }, [
@@ -43658,7 +43674,9 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", [
-            _vm._v("Lista de Categorías de Productos\n                    ")
+            _vm._v(
+              "Lista de Categorías de Productos\r\n                        "
+            )
           ])
         ])
       ])
@@ -43844,7 +43862,7 @@ var render = function() {
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "main-card mb-3 card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v("Empresas Activas\n                    ")
+              _vm._v("Empresas Activas\r\n                        ")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "table-responsive" }, [
@@ -44764,7 +44782,7 @@ var staticRenderFns = [
             _c("i", { staticClass: "fas fa-briefcase" })
           ]),
           _vm._v(" "),
-          _c("div", [_vm._v("Lista de Empresas\n                    ")])
+          _c("div", [_vm._v("Lista de Empresas\r\n                        ")])
         ])
       ])
     ])
@@ -45006,7 +45024,7 @@ var render = function() {
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "main-card mb-3 card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v("Tus Pedidos\n                    ")
+              _vm._v("Tus Pedidos\r\n                        ")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "table-responsive" }, [
@@ -45071,7 +45089,9 @@ var staticRenderFns = [
             _c("i", { staticClass: "fas fa-list" })
           ]),
           _vm._v(" "),
-          _c("div", [_vm._v("Historial de Pedidos\n                    ")])
+          _c("div", [
+            _vm._v("Historial de Pedidos\r\n                        ")
+          ])
         ])
       ])
     ])
@@ -45754,12 +45774,6 @@ var render = function() {
                         "tbody",
                         _vm._l(_vm.prods, function(prod) {
                           return _c("tr", { key: prod.id }, [
-                            _c(
-                              "td",
-                              { staticClass: "text-center text-muted" },
-                              [_vm._v(_vm._s(prod.id))]
-                            ),
-                            _vm._v(" "),
                             _c("td", [
                               _c("img", {
                                 attrs: {
@@ -45808,7 +45822,7 @@ var render = function() {
                             _c(
                               "a",
                               {
-                                staticClass: "btn btn-primary center",
+                                staticClass: "btn btn-primary center mt-2 mb-2",
                                 attrs: {
                                   href: "micrositiov?id=" + prod.id_empresa,
                                   width: "100%",
@@ -45847,7 +45861,7 @@ var render = function() {
                             _c(
                               "a",
                               {
-                                staticClass: "btn btn-primary center",
+                                staticClass: "btn btn-primary center mt2 mb-2",
                                 staticStyle: { color: "white" },
                                 attrs: { width: "100%", height: "100%" },
                                 on: {
@@ -45926,7 +45940,7 @@ var render = function() {
                             _c(
                               "a",
                               {
-                                staticClass: "btn btn-primary center",
+                                staticClass: "btn btn-primary center ml-3",
                                 staticStyle: { color: "white" },
                                 attrs: { height: "100%" },
                                 on: {
@@ -46043,9 +46057,9 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", [
-            _vm._v("Mapa\n                        "),
+            _vm._v("Mapa\r\n                            "),
             _c("div", { staticClass: "page-title-subheading" }, [
-              _vm._v("Buscar una empresa.\n                        ")
+              _vm._v("Buscar una empresa.\r\n                            ")
             ])
           ])
         ])
@@ -50156,7 +50170,7 @@ var render = function() {
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "main-card mb-3 card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v("Ubicaciones de empresa\n                    ")
+              _vm._v("Ubicaciones de empresa\r\n                        ")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "table-responsive" }, [
@@ -50705,7 +50719,9 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", [
-            _vm._v("Lista de Ubicaciones de empresa\n                    ")
+            _vm._v(
+              "Lista de Ubicaciones de empresa\r\n                        "
+            )
           ])
         ])
       ])
@@ -50896,7 +50912,7 @@ var render = function() {
           _c("div", { staticClass: "main-card mb-3 card" }, [
             _c("div", { staticClass: "card-header" }, [
               _vm._v(
-                "Usuarios Activos\n                        \n                    "
+                "Usuarios Activos\r\n                            \r\n                        "
               )
             ]),
             _vm._v(" "),
@@ -51673,7 +51689,7 @@ var staticRenderFns = [
             _c("i", { staticClass: "fas fa-users" })
           ]),
           _vm._v(" "),
-          _c("div", [_vm._v("Lista de Usuarios\n                    ")])
+          _c("div", [_vm._v("Lista de Usuarios\r\n                        ")])
         ])
       ])
     ])
@@ -66560,7 +66576,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_1__, {
   load: {
-    key: 'AIzaSyBc_wz4sMOOGvERLu6E6jGM8hb_YlLr414',
+    key: 'AIzaSyCeaxA8PigzhmvYSteAVU3dZS6S0h87UEI',
     libraries: 'places' // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
